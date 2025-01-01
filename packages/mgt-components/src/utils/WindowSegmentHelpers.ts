@@ -38,7 +38,7 @@ export interface ISegmentAwareWindow extends Window {
  * @export
  * @returns {boolean}
  */
-export const isWindowSegmentAware = (): boolean => {
+export let isWindowSegmentAware = (): boolean => {
   return (window as unknown as ISegmentAwareWindow).getWindowSegments !== undefined;
 };
 
@@ -48,6 +48,6 @@ export const isWindowSegmentAware = (): boolean => {
  * @export
  * @returns {ISegmentAwareWindow}
  */
-export const getSegmentAwareWindow = (): ISegmentAwareWindow => {
+export let getSegmentAwareWindow = (): ISegmentAwareWindow => {
   return isWindowSegmentAware() ? (window as unknown as ISegmentAwareWindow) : null;
 };
