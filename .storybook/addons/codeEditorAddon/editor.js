@@ -88,7 +88,7 @@ export class EditorElement extends LitElement {
   }
 
   set files(value) {
-    const oldValue = this.files;
+    let oldValue = this.files;
     this.internalFiles = value;
 
     for (let type of this.fileTypes) {
@@ -163,9 +163,9 @@ export class EditorElement extends LitElement {
       this.shadowRoot.getElementById(this.currentType).focus();
     });
 
-    const changeViewZones = () => {
+    let changeViewZones = () => {
       this.editor.changeViewZones(changeAccessor => {
-        const domNode = document.createElement('div');
+        let domNode = document.createElement('div');
         changeAccessor.addZone({
           afterLineNumber: 0,
           heightInLines: 1,
@@ -226,7 +226,7 @@ export class EditorElement extends LitElement {
   };
 
   tabKeyDown = e => {
-    const tabs = this.renderRoot.querySelectorAll('.tab');
+    let tabs = this.renderRoot.querySelectorAll('.tab');
     // Move right
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       tabs[this.tabFocus].setAttribute('tabindex', -1);
