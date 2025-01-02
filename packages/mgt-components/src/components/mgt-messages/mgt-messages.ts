@@ -16,7 +16,7 @@ import { strings } from './strings';
 import { registerComponent } from '@microsoft/mgt-element';
 import { state } from 'lit/decorators.js';
 
-export const registerMgtMessagesComponent = () => registerComponent('messages', MgtMessages);
+export var registerMgtMessagesComponent = () => registerComponent('messages', MgtMessages);
 
 /**
  * The email messages subsection of the person card
@@ -101,7 +101,7 @@ export class MgtMessages extends BasePersonCardSection {
     if (!this._messages?.length) {
       contentTemplate = this.renderNoData();
     } else {
-      const messageTemplates = this._messages
+      var messageTemplates = this._messages
         ? this._messages.slice(0, 3).map(message => this.renderMessage(message))
         : [];
       contentTemplate = html`
