@@ -49,9 +49,9 @@ export const templateContext = () => html`
    <script>
      const file = document.querySelector('mgt-file').templateContext = {
       dayFromDateTime: dateTimeString => {
-        let date = new Date(dateTimeString);
+        var date = new Date(dateTimeString);
         date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-        let monthNames = [
+        var monthNames = [
           'January',
           'February',
           'March',
@@ -66,9 +66,9 @@ export const templateContext = () => html`
           'December'
         ];
 
-        let monthIndex = date.getMonth();
-        let day = date.getDate();
-        let year = date.getFullYear();
+        var monthIndex = date.getMonth();
+        var day = date.getDate();
+        var year = date.getFullYear();
 
         return monthNames[monthIndex] + ' ' + day + ' ' + year;
       }
