@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let defaultTemplates = () => html`
+export const defaultTemplates = () => html`
   <mgt-person-card person-query="me">
     <template data-type="default">
       <div>
@@ -26,7 +26,7 @@ export let defaultTemplates = () => html`
 
 `;
 
-export let personDetails = () => html`
+export const personDetails = () => html`
     <mgt-person person-query="me" view="twolines" person-card="hover">
       <template data-type="person-card">
         <mgt-person-card inherit-details>
@@ -40,7 +40,7 @@ export let personDetails = () => html`
     </mgt-person>
 `;
 
-export let additionalDetails = () => html`
+export const additionalDetails = () => html`
     <mgt-person person-query="me" view="twolines" person-card="hover">
       <template data-type="person-card">
         <mgt-person-card inherit-details>
