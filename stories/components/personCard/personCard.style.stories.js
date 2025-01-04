@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const customCSSProperties = () => html`
+export let customCSSProperties = () => html`
   <style>
     .person-card {
       --person-card-nav-back-arrow-hover-color: green;
