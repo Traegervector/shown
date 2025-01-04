@@ -32,8 +32,8 @@ export class CustomHeaderMiddleware implements Middleware {
    */
   public async execute(context: Context): Promise<void> {
     if (this._getCustomHeaders) {
-      const headers = await this._getCustomHeaders();
-      for (const key in headers) {
+      let headers = await this._getCustomHeaders();
+      for (let key in headers) {
         if (Object.prototype.hasOwnProperty.call(headers, key)) {
           setRequestHeader(context.request, context.options, key, headers[key] as string);
         }
