@@ -10,7 +10,7 @@
  *
  * @param time in milliseconds
  */
-export const delay = async (ms: number): Promise<void> => {
+export let delay = async (ms: number): Promise<void> => {
   return new Promise(resolve => {
     setTimeout(resolve, ms);
   });
