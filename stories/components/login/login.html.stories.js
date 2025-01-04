@@ -14,23 +14,23 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let Login = () => html`
+export const Login = () => html`
   <mgt-login></mgt-login>
 `;
 
-export let CompactLogin = () => html`
+export const CompactLogin = () => html`
   <mgt-login login-view="compact"></mgt-login>
 `;
 
-export let AvatarLogin = () => html`
+export const AvatarLogin = () => html`
   <mgt-login login-view="avatar"></mgt-login>
 `;
 
-export let ShowPresenceLogin = () => html`
+export const ShowPresenceLogin = () => html`
   <mgt-login show-presence login-view="full"></mgt-login>
 `;
 
-export let RightAligned = () => html`
+export const RightAligned = () => html`
 <div class="right">
     <mgt-login login-view="compact"></mgt-login>
 </div>
@@ -43,7 +43,7 @@ export let RightAligned = () => html`
 </style>
 `;
 
-export let Templates = () => html`
+export const Templates = () => html`
   <mgt-login>
     <template data-type="signed-out-button-content">
       👋
@@ -83,16 +83,16 @@ export let Templates = () => html`
   </style>
 `;
 
-export let RTL = () => html`
+export const RTL = () => html`
   <body dir="rtl">
     <mgt-login></mgt-login>
   </body>
 `;
 
-export let Events = () => html`
+export const Events = () => html`
 <mgt-login></mgt-login>
 <script>
-  let login = document.querySelector('mgt-login');
+  const login = document.querySelector('mgt-login');
   login.addEventListener('loginInitiated', (e) => {
     console.log("Login Initiated");
   })
@@ -111,7 +111,7 @@ export let Events = () => html`
 </script>
 `;
 
-export let Localization = () => html`
+export const Localization = () => html`
   <mgt-login></mgt-login>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -127,14 +127,14 @@ export let Localization = () => html`
   </script>
 `;
 
-export let MultipleAccounts = () => html`
+export const MultipleAccounts = () => html`
 <mgt-login></mgt-login>
 Note: this story configures the MockProvider with data to represent the case of multiple signed in accounts.
 It is not possible to sign in with additional accounts or switch the active account.
 Please refer to the JavaScript tab if you wish to change which accounts are being show here.
 <script>
   import { Providers, MockProvider } from './mgt.storybook.js';
-  let signedInAccounts = [{
+  const signedInAccounts = [{
       name: 'Megan Bowen',
       mail: 'MeganB@M365x214355.onmicrosoft.com',
       id: '48d31887-5fad-4d73-a9f5-3c356e68a038'
