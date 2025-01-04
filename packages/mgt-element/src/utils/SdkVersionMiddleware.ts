@@ -39,31 +39,31 @@ export class SdkVersionMiddleware implements Middleware {
       if (typeof context.request === 'string') {
         if (validateBaseURL(context.request)) {
           // Header parts must follow the format: 'name/version'
-          const headerParts: string[] = [];
+          let headerParts: string[] = [];
 
-          const componentOptions = context.middlewareControl.getMiddlewareOptions(
+          let componentOptions = context.middlewareControl.getMiddlewareOptions(
             ComponentMiddlewareOptions
           ) as ComponentMiddlewareOptions;
 
           if (componentOptions) {
-            const componentVersion = `${componentOptions.componentName}/${this._packageVersion}`;
+            let componentVersion = `${componentOptions.componentName}/${this._packageVersion}`;
             headerParts.push(componentVersion);
           }
 
           if (this._providerName) {
-            const providerVersion = `${this._providerName}/${this._packageVersion}`;
+            let providerVersion = `${this._providerName}/${this._packageVersion}`;
             headerParts.push(providerVersion);
           }
 
           // Package version
-          const packageVersion = `mgt/${this._packageVersion}`;
+          let packageVersion = `mgt/${this._packageVersion}`;
           headerParts.push(packageVersion);
 
           // Existing SdkVersion header value
           headerParts.push(getRequestHeader(context.request, context.options, 'SdkVersion'));
 
           // Join the header parts together and update the SdkVersion request header value
-          const sdkVersionHeaderValue = headerParts.join(', ');
+          let sdkVersionHeaderValue = headerParts.join(', ');
           setRequestHeader(context.request, context.options, 'SdkVersion', sdkVersionHeaderValue);
         } else {
           // eslint-disable-next-line @typescript-eslint/dot-notation
