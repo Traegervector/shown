@@ -27,7 +27,7 @@ export class EventDispatcher<E> {
    */
 
   public fire(event: E) {
-    for (const handler of this.eventHandlers) {
+    for (var handler of this.eventHandlers) {
       handler(event);
     }
   }
