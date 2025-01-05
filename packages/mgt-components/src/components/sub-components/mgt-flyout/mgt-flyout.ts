@@ -12,7 +12,7 @@ import { getSegmentAwareWindow, isWindowSegmentAware, IWindowSegment } from '../
 import { styles } from './mgt-flyout-css';
 import { MgtBaseTaskComponent, registerComponent } from '@microsoft/mgt-element';
 
-export var registerMgtFlyoutComponent = () => registerComponent('flyout', MgtFlyout);
+export const registerMgtFlyoutComponent = () => registerComponent('flyout', MgtFlyout);
 
 /**
  * A component to create flyout anchored to an element
@@ -69,7 +69,7 @@ export class MgtFlyout extends MgtBaseTaskComponent {
     return this._isOpen;
   }
   public set isOpen(value: boolean) {
-    var oldValue = this._isOpen;
+    const oldValue = this._isOpen;
     if (oldValue === value) {
       return;
     }
@@ -78,7 +78,7 @@ export class MgtFlyout extends MgtBaseTaskComponent {
 
     window.requestAnimationFrame(() => {
       this.setupWindowEvents(this.isOpen);
-      var flyout = this._flyout;
+      const flyout = this._flyout;
       if (!this.isOpen && flyout) {
         // reset style for next update
         flyout.style.width = null;
@@ -190,12 +190,12 @@ export class MgtFlyout extends MgtBaseTaskComponent {
    * trigger the element to update.
    */
   protected render() {
-    var flyoutClasses = {
+    const flyoutClasses = {
       root: true,
       visible: this.isOpen
     };
 
-    var anchorTemplate = this.renderAnchor();
+    const anchorTemplate = this.renderAnchor();
     let flyoutTemplate = null;
     this._windowHeight =
       window.innerHeight && document.documentElement.clientHeight
@@ -208,7 +208,7 @@ export class MgtFlyout extends MgtBaseTaskComponent {
 
     if (this.isOpen || this._renderedOnce) {
       this._renderedOnce = true;
-      var smallFlyoutClasses = classMap({
+      const smallFlyoutClasses = classMap({
         flyout: true,
         small: this._smallView
       });
@@ -268,11 +268,11 @@ export class MgtFlyout extends MgtBaseTaskComponent {
       return;
     }
 
-    var anchor = this._anchor;
-    var flyout = this._flyout;
+    const anchor = this._anchor;
+    const flyout = this._flyout;
 
     if (flyout && anchor) {
-      var windowWidth =
+      const windowWidth =
         window.innerWidth && document.documentElement.clientWidth
           ? Math.min(window.innerWidth, document.documentElement.clientWidth)
           : window.innerWidth || document.documentElement.clientWidth;
@@ -288,12 +288,12 @@ export class MgtFlyout extends MgtBaseTaskComponent {
       let height: number;
       let width: number;
 
-      var flyoutRect = flyout.getBoundingClientRect();
-      var anchorRect = anchor.getBoundingClientRect();
-      var topScoutRect = this._topScout.getBoundingClientRect();
-      var bottomScoutRect = this._bottomScout.getBoundingClientRect();
+      const flyoutRect = flyout.getBoundingClientRect();
+      const anchorRect = anchor.getBoundingClientRect();
+      const topScoutRect = this._topScout.getBoundingClientRect();
+      const bottomScoutRect = this._bottomScout.getBoundingClientRect();
 
-      var windowRect: IWindowSegment = {
+      const windowRect: IWindowSegment = {
         height: this._windowHeight,
         left: 0,
         top: 0,
@@ -301,15 +301,15 @@ export class MgtFlyout extends MgtBaseTaskComponent {
       };
 
       if (isWindowSegmentAware()) {
-        var segmentAwareWindow = getSegmentAwareWindow();
-        var screenSegments = segmentAwareWindow.getWindowSegments();
+        const segmentAwareWindow = getSegmentAwareWindow();
+        const screenSegments = segmentAwareWindow.getWindowSegments();
 
         let anchorSegment: IWindowSegment;
 
-        var anchorCenterX = anchorRect.left + anchorRect.width / 2;
-        var anchorCenterY = anchorRect.top + anchorRect.height / 2;
+        const anchorCenterX = anchorRect.left + anchorRect.width / 2;
+        const anchorCenterY = anchorRect.top + anchorRect.height / 2;
 
-        for (var segment of screenSegments) {
+        for (const segment of screenSegments) {
           if (anchorCenterX >= segment.left && anchorCenterY >= segment.top) {
             anchorSegment = segment;
             break;
@@ -343,8 +343,8 @@ export class MgtFlyout extends MgtBaseTaskComponent {
         left = anchorRect.left;
       }
 
-      var anchorRectBottomToWindowBottom = windowRect.height - (anchorRect.top + anchorRect.height);
-      var anchorRectTopToWindowTop = anchorRect.top;
+      const anchorRectBottomToWindowBottom = windowRect.height - (anchorRect.top + anchorRect.height);
+      const anchorRectTopToWindowTop = anchorRect.top;
 
       if (this.avoidHidingAnchor) {
         if (anchorRectBottomToWindowBottom <= flyoutRect.height) {
@@ -463,7 +463,7 @@ export class MgtFlyout extends MgtBaseTaskComponent {
   }
 
   private readonly handleWindowEvent = (e: Event) => {
-    var flyout = this._flyout;
+    const flyout = this._flyout;
 
     if (flyout) {
       // IE
@@ -476,7 +476,7 @@ export class MgtFlyout extends MgtBaseTaskComponent {
           }
         }
       } else {
-        var path = e.composedPath();
+        const path = e.composedPath();
         if (path.includes(flyout) || (e.type === 'pointerdown' && path.includes(this))) {
           return;
         }
