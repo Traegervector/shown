@@ -96,7 +96,7 @@ export class MgtMessages extends BasePersonCardSection {
    * @memberof MgtMessages
    */
   public renderCompactView(): TemplateResult {
-    let contentTemplate: TemplateResult;
+    const contentTemplate: TemplateResult;
 
     if (!this._messages?.length) {
       contentTemplate = this.renderNoData();
@@ -124,7 +124,7 @@ export class MgtMessages extends BasePersonCardSection {
    * @memberof MgtMessages
    */
   protected renderFullView(): TemplateResult {
-    let contentTemplate: TemplateResult;
+    const contentTemplate: TemplateResult;
 
     if (!this._messages?.length) {
       contentTemplate = this.renderNoData();
