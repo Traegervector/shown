@@ -28,5 +28,5 @@ export type TodoProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export const Todo = wrapMgt<TodoProps>('todo', registerMgtTodoComponent);
+export let Todo = wrapMgt<TodoProps>('todo', registerMgtTodoComponent);
 
