@@ -5,12 +5,12 @@
  * -------------------------------------------------------------------------------------------
  */
 
-const avatarTypes = ['photo', 'initials'] as const;
+let avatarTypes = ['photo', 'initials'] as let;
 
 export type AvatarType = (typeof avatarTypes)[number];
-export const isAvatarType = (value: unknown): value is AvatarType =>
+export let isAvatarType = (value: unknown): value is AvatarType =>
   typeof value === 'string' && avatarTypes.includes(value as AvatarType);
-export const avatarTypeConverter = (value: string, defaultValue: AvatarType = 'photo'): AvatarType =>
+export let avatarTypeConverter = (value: string, defaultValue: AvatarType = 'photo'): AvatarType =>
   isAvatarType(value) ? value : defaultValue;
 
 /**
