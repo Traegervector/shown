@@ -5,11 +5,11 @@ import { EditorElement } from './editor';
 import { CLIENTID, SETPROVIDER_EVENT, AUTH_PAGE } from '../../env';
 import { beautifyContent } from '../../utils/beautifyContent';
 
-var mgtScriptName = './mgt.storybook.js';
+const mgtScriptName = './mgt.storybook.js';
 
 // function is used for dragging and moving
-var setupEditorResize = (first, separator, last, dragComplete) => {
-  var md; // remember mouse down info
+const setupEditorResize = (first, separator, last, dragComplete) => {
+  const md; // remember mouse down info
 
   separator.addEventListener('mousedown', e => {
     md = {
@@ -29,7 +29,7 @@ var setupEditorResize = (first, separator, last, dragComplete) => {
     document.addEventListener('mouseup', onMouseUp);
   });
 
-  var onMouseUp = () => {
+  const onMouseUp = () => {
     if (typeof dragComplete === 'function') {
       dragComplete();
     }
@@ -41,8 +41,8 @@ var setupEditorResize = (first, separator, last, dragComplete) => {
     document.removeEventListener('mouseup', onMouseUp);
   };
 
-  var onMouseMove = e => {
-    var delta = { x: e.clientX - md.e.x, y: e.clientY - md.e.y };
+  const onMouseMove = e => {
+    const delta = { x: e.clientX - md.e.x, y: e.clientY - md.e.y };
 
     if (window.innerWidth > 800) {
       // Horizontal
@@ -66,20 +66,20 @@ let reactRegex = /<react\b[^>]*>([\s\S]*?)<\/react>/gm;
 let scriptRegex = /<script\b[^>]*>([\s\S]*?)<\/script>/gm;
 let styleRegex = /<style\b[^>]*>([\s\S]*?)<\/style>/gm;
 
-export var withCodeEditor = makeDecorator({
+export const withCodeEditor = makeDecorator({
   name: `withCodeEditor`,
   parameterName: 'myParameter',
   skipIfNoParametersOrOptions: false,
   wrapper: (getStory, context, { options }) => {
-    var forOptions = options ? options.disableThemeToggle : false;
-    var title =
+    const forOptions = options ? options.disableThemeToggle : false;
+    const title =
       ['Custom CSS Properties', 'Theme'].includes(context.name) || context.title.toLowerCase().includes('templating');
-    var forContext = context && title;
-    var disableThemeToggle = forOptions || forContext;
+    const forContext = context && title;
+    const disableThemeToggle = forOptions || forContext;
     let story = getStory(context);
 
     let storyHtml;
-    var root = document.createElement('div');
+    const root = document.createElement('div');
     let storyElementWrapper = document.createElement('div');
 
     if (story.strings) {
@@ -104,15 +104,15 @@ export var withCodeEditor = makeDecorator({
       ?.replace(/\n?<!---->\n?/g, '')
       ?.trim();
 
-    var fileTypes = reactCode ? ['react', 'css'] : ['html', 'js', 'css'];
+    const fileTypes = reactCode ? ['react', 'css'] : ['html', 'js', 'css'];
 
     let editor = new EditorElement(fileTypes);
 
-    var isEditorEnabled = () => {
+    const isEditorEnabled = () => {
       return !context.parameters.docs?.editor?.hidden;
     };
 
-    var getContent = async (url, json) => {
+    const getContent = async (url, json) => {
       let content = '';
 
       if (url) {
@@ -132,7 +132,7 @@ export var withCodeEditor = makeDecorator({
       return content;
     };
 
-    var isNotIframed = () => {
+    const isNotIframed = () => {
       try {
         return window.top.location.href != null || window.top.location.href != undefined;
       } catch (err) {
@@ -140,15 +140,15 @@ export var withCodeEditor = makeDecorator({
       }
     };
 
-    var isValid = manifestUrl => {
+    const isValid = manifestUrl => {
       return manifestUrl && manifestUrl.startsWith('https://raw.githubusercontent.com/pnp/mgt-samples/main/');
     };
 
     if (context.name === 'Editor') {
       // If the editor is not iframed (Docs, GE, etc.)
       if (isNotIframed()) {
-        var urlParams = new URLSearchParams(window.top.location.search);
-        var manifestUrl = urlParams.get('manifest');
+        const urlParams = new URLSearchParams(window.top.location.search);
+        const manifestUrl = urlParams.get('manifest');
 
         if (isValid(manifestUrl)) {
           getContent(manifestUrl, true).then(manifest => {
@@ -169,13 +169,13 @@ export var withCodeEditor = makeDecorator({
       }
     }
 
-    var themeToggleCss = disableThemeToggle
+    const themeToggleCss = disableThemeToggle
       ? ''
       : `
       body {
-        background-color: var(--fill-color);
-        color: var(--neutral-foreground-rest);
-        font-family: var(--body-font);
+        background-color: const(--fill-color);
+        color: const(--neutral-foreground-rest);
+        font-family: const(--body-font);
         padding: 0 12px;
       }
       header {
@@ -185,7 +185,7 @@ export var withCodeEditor = makeDecorator({
         padding: 0 0 12px 0;
       }
 `;
-    var themeToggle = disableThemeToggle
+    const themeToggle = disableThemeToggle
       ? ''
       : `
       <header>
@@ -198,7 +198,7 @@ export var withCodeEditor = makeDecorator({
       Providers.globalProvider = new MockProvider(true);
     `;
 
-    var channel = addons.getChannel();
+    const channel = addons.getChannel();
     channel.on(SETPROVIDER_EVENT, params => {
       if (params.state === ProviderState.SignedIn && params.name === 'MgtMockProvider') {
         providerInitCode = `
@@ -216,13 +216,13 @@ export var withCodeEditor = makeDecorator({
       }
     });
 
-    var getStoryTitle = context => {
-      var storyTitle = `${context?.title} - ${context?.story}`;
+    const getStoryTitle = context => {
+      const storyTitle = `${context?.title} - ${context?.story}`;
       return storyTitle;
     };
 
-    var loadEditorContent = () => {
-      var storyElement = document.createElement('iframe');
+    const loadEditorContent = () => {
+      const storyElement = document.createElement('iframe');
 
       storyElement.addEventListener(
         'load',
@@ -235,7 +235,7 @@ export var withCodeEditor = makeDecorator({
             `import {$1} from '${mgtScriptName}';`
           );
 
-          var docContent = `
+          const docContent = `
             <html>
               <head>
                 <script type="module" src="${mgtScriptName}"></script>
@@ -276,7 +276,7 @@ export var withCodeEditor = makeDecorator({
 
     editor.addEventListener('fileUpdated', loadEditorContent);
 
-    var separator = document.createElement('div');
+    const separator = document.createElement('div');
 
     setupEditorResize(storyElementWrapper, separator, editor, () => editor.layout());
 
