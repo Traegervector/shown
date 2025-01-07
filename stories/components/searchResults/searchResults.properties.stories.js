@@ -14,17 +14,17 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let setSearchResultsQueryString = () => html`
+export const setSearchResultsQueryString = () => html`
   <mgt-search-results query-string="contoso">
   </mgt-search-results>
 `;
 
-export let setSearchResultsQueryTemplate = () => html`
+export const setSearchResultsQueryTemplate = () => html`
   <mgt-search-results version="beta" query-string="contoso" query-template="({searchTerms}) Title:Northwind">
   </mgt-search-results>
 `;
 
-export let setSearchResultsEntityTypes = () => html`
+export const setSearchResultsEntityTypes = () => html`
   <style>
     .example {
        margin-bottom: 20px;
@@ -113,57 +113,57 @@ export let setSearchResultsEntityTypes = () => html`
   </div>
 `;
 
-export let setSearchResultsEntityTypesCombined = () => html`
+export const setSearchResultsEntityTypesCombined = () => html`
   <mgt-search-results query-string="contoso" entity-types="driveItem,listItem">
   </mgt-search-results>
 `;
 
-export let setSearchResultsScopes = () => html`
+export const setSearchResultsScopes = () => html`
   <mgt-search-results query-string="contoso" scopes="User.Read.All,Files.Read.All">
   </mgt-search-results>
 `;
 
-export let setSearchResultsContentSources = () => html`
+export const setSearchResultsContentSources = () => html`
   <mgt-search-results query-string="contoso" entity-types="externalItem" content-sources="/external/connections/contosoProducts" scopes="ExternalItem.Read.All">
   </mgt-search-results>
 `;
 
-export let setSearchResultsVersion = () => html`
+export const setSearchResultsVersion = () => html`
   <mgt-search-results query-string="contoso" entity-types="bookmark" version="beta" scopes="Bookmark.Read.All">
   </mgt-search-results>
 `;
 
-export let setSearchResultsSize = () => html`
+export const setSearchResultsSize = () => html`
   <mgt-search-results query-string="contoso" size="20">
   </mgt-search-results>
 `;
 
-export let setSearchResultsPagingMax = () => html`
+export const setSearchResultsPagingMax = () => html`
   <mgt-search-results query-string="contoso" paging-max="10">
   </mgt-search-results>
 `;
 
-export let setSearchResultsFetchThumbnail = () => html`
+export const setSearchResultsFetchThumbnail = () => html`
   <mgt-search-results query-string="contoso" fetch-thumbnail>
   </mgt-search-results>
 `;
 
-export let setSearchResultsFields = () => html`
+export const setSearchResultsFields = () => html`
   <mgt-search-results query-string="contoso" version="beta" entity-types="driveItem" fields="Title,ID,ContentTypeId">
   </mgt-search-results>
 `;
 
-export let setSearchResultsEnableTopResults = () => html`
+export const setSearchResultsEnableTopResults = () => html`
   <mgt-search-results query-string="marketing" entity-types="message" enable-top-results scopes="Mail.Read">
   </mgt-search-results>
 `;
 
-export let setSearchResultsCacheEnabled = () => html`
+export const setSearchResultsCacheEnabled = () => html`
   <mgt-search-results query-string="contoso" cache-enabled>
   </mgt-search-results>
 `;
 
-export let setSearchResultsCacheInvalidationPeriod = () => html`
+export const setSearchResultsCacheInvalidationPeriod = () => html`
   <mgt-search-results query-string="contoso" cache-enabled cache-invalidation-period="30000">
   </mgt-search-results>
 `;
