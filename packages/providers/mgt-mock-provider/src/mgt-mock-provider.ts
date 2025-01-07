@@ -11,7 +11,7 @@ import { Providers } from '@microsoft/mgt-element';
 import { MockProvider } from '@microsoft/mgt-element';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export let registerMgtMockProvider = () => {
+export const registerMgtMockProvider = () => {
   registerComponent('mock-provider', MgtMockProvider);
 };
 
