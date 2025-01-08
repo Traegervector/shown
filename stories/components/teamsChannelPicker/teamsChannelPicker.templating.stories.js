@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let error = () => html`
+export const error = () => html`
   <mgt-teams-channel-picker>
     <template data-type="error">
       <p>Sorry, no Teams or Channels were found</p>
@@ -22,7 +22,7 @@ export let error = () => html`
   </mgt-teams-channel-picker>
  `;
 
-export let loading = () => html`
+export const loading = () => html`
 <mgt-teams-channel-picker>
   <template data-type="loading">
     <p>Loading results....</p>
