@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export let fileList = () => html`
+export const fileList = () => html`
   <mgt-file-list></mgt-file-list>
 `;
