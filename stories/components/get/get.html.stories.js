@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let Get = () => html`
+export const Get = () => html`
 <mgt-get resource="/me/messages" scopes="mail.read">
   <template>
     <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -22,7 +22,7 @@ export let Get = () => html`
 </mgt-get>
 `;
 
-export let GetEmail = () => html`
+export const GetEmail = () => html`
   <mgt-get resource="/me/messages" version="beta" scopes="mail.read" max-pages="2">
     <template>
       <div class="email" data-for="email in value">
@@ -86,7 +86,7 @@ export let GetEmail = () => html`
   </style>
 `;
 
-export let ExtendingPersonCard = () => html`
+export const ExtendingPersonCard = () => html`
   <mgt-person person-query="Isaiah" view="twolines" person-card="hover">
     <template data-type="person-card">
       <mgt-person-card inherit-details>
@@ -140,7 +140,7 @@ export let ExtendingPersonCard = () => html`
   </mgt-person>
 `;
 
-export let UsingImageType = () => html`
+export const UsingImageType = () => html`
   <mgt-get resource="me">
     <template>
       <mgt-get resource="users/{{id}}/photo/$value" type="image">
@@ -152,7 +152,7 @@ export let UsingImageType = () => html`
   </mgt-get>
 `;
 
-export let UsingCaching = () => html`
+export const UsingCaching = () => html`
   <mgt-get resource="me" cache-enabled="true">
     <template>
       Hello {{ displayName }}
@@ -160,7 +160,7 @@ export let UsingCaching = () => html`
   </mgt-get>
 `;
 
-export let PollingRate = () => html`
+export const PollingRate = () => html`
   <mgt-get resource="/me/presence" version="beta" scopes="Presence.Read" polling-rate="2000">
     <template>
       {{availability}}
@@ -168,7 +168,7 @@ export let PollingRate = () => html`
   </mgt-get>
 `;
 
-export let refresh = () => html`
+export const refresh = () => html`
 <div>
     <label>get.refresh(false)</label>
     <button id="false">Soft refresh</button>
@@ -186,16 +186,16 @@ export let refresh = () => html`
 </mgt-get>
 
 <script>
-let softRefreshButton = document.querySelector('#false');
-let hardRefreshButton = document.querySelector('#true');
-let getElement = document.querySelector('mgt-get');
+const softRefreshButton = document.querySelector('#false');
+const hardRefreshButton = document.querySelector('#true');
+const getElement = document.querySelector('mgt-get');
 
-let softRefresh = () => {
+const softRefresh = () => {
   alert('requesting soft refresh of mgt-get component');
   getElement.refresh(false);
 };
 
-let hardRefresh = () => {
+const hardRefresh = () => {
   alert('requesting hard refresh of mgt-get component');
   getElement.refresh(true);
 };
@@ -206,7 +206,7 @@ hardRefreshButton.addEventListener('click', hardRefresh)
 </script>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-get resource="/me/messages" scopes="mail.read">
     <template>
       <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -214,7 +214,7 @@ export let events = () => html`
   </mgt-get>
 
   <script>
-    let get = document.querySelector('mgt-get');
+    const get = document.querySelector('mgt-get');
     get.addEventListener('updated', e => {
       console.log('updated', e);
     });
