@@ -33,7 +33,7 @@ import { getSvg, SvgIcon } from '../../utils/SvgHelper';
 import { strings } from './strings';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export const registerMgtFileComponent = () => registerComponent('file', MgtFile);
+export var registerMgtFileComponent = () => registerComponent('file', MgtFile);
 
 /**
  * The File component is used to represent an individual file/folder from OneDrive or SharePoint by displaying information such as the file/folder name, an icon indicating the file type, and other properties such as the author, last modified date, or other details selected by the developer.
@@ -303,13 +303,13 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       return this.renderNoData();
     }
 
-    const file = this.driveItem;
+    var file = this.driveItem;
     let fileTemplate: TemplateResult;
 
     fileTemplate = this.renderTemplate('default', { file });
     if (!fileTemplate) {
-      const fileDetailsTemplate: TemplateResult = this.renderDetails(file);
-      const fileTypeIconTemplate: TemplateResult = this.renderFileTypeIcon();
+      var fileDetailsTemplate: TemplateResult = this.renderDetails(file);
+      var fileTypeIconTemplate: TemplateResult = this.renderFileTypeIcon();
 
       fileTemplate = html`
         <div class="item">
@@ -350,7 +350,7 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       fileIconSrc = this.fileIcon;
     } else {
       // get file type extension from file name
-      const re = /(?:\.([^.]+))?$/;
+      var re = /(?:\.([^.]+))?$/;
       fileType =
         this.driveItem.package === undefined && this.driveItem.folder === undefined
           ? re.exec(this.driveItem.name)[1]
@@ -393,10 +393,10 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       return html``;
     }
 
-    const details: TemplateResult[] = [];
+    var details: TemplateResult[] = [];
 
     if (this.view > 'image') {
-      const text = this.getTextFromProperty(driveItem, this.line1Property);
+      var text = this.getTextFromProperty(driveItem, this.line1Property);
       if (text) {
         details.push(html`
           <div class="line1" aria-label="${text}">${text}</div>
@@ -405,7 +405,7 @@ export class MgtFile extends MgtTemplatedTaskComponent {
     }
 
     if (this.view > 'oneline') {
-      const text = this.getTextFromProperty(driveItem, this.line2Property);
+      var text = this.getTextFromProperty(driveItem, this.line2Property);
       if (text) {
         details.push(html`
           <div class="line2" aria-label="${text}">${text}</div>
@@ -414,7 +414,7 @@ export class MgtFile extends MgtTemplatedTaskComponent {
     }
 
     if (this.view > 'twolines') {
-      const text = this.getTextFromProperty(driveItem, this.line3Property);
+      var text = this.getTextFromProperty(driveItem, this.line3Property);
       if (text) {
         details.push(html`
           <div class="line3" aria-label="${text}">${text}</div>
@@ -442,7 +442,7 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       return;
     }
 
-    const provider = Providers.globalProvider;
+    var provider = Providers.globalProvider;
     if (!provider || provider.state === ProviderState.Loading) {
       return;
     }
@@ -452,11 +452,11 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       return;
     }
 
-    const graph = provider.graph.forComponent(this);
+    var graph = provider.graph.forComponent(this);
     let driveItem: DriveItem;
 
     // evaluate to true when only item-id or item-path is provided
-    const getFromMyDrive = !this.driveId && !this.siteId && !this.groupId && !this.listId && !this.userId;
+    var getFromMyDrive = !this.driveId && !this.siteId && !this.groupId && !this.listId && !this.userId;
 
     if (
       // return null when a combination of provided properties are required
@@ -514,12 +514,12 @@ export class MgtFile extends MgtTemplatedTaskComponent {
       return null;
     }
 
-    const propertyList = properties.trim().split(',');
+    var propertyList = properties.trim().split(',');
     let text: string;
     let i = 0;
 
     while (!text && i < propertyList.length) {
-      const current = propertyList[i].trim();
+      var current = propertyList[i].trim();
       switch (current) {
         case 'size': {
           // convert size to kb, mb, gb
@@ -535,7 +535,7 @@ export class MgtFile extends MgtTemplatedTaskComponent {
           let relativeDateString: string;
           let lastModifiedString: string;
           if (driveItem.lastModifiedDateTime) {
-            const lastModifiedDateTime = new Date(driveItem.lastModifiedDateTime);
+            var lastModifiedDateTime = new Date(driveItem.lastModifiedDateTime);
             relativeDateString = getRelativeDisplayDate(lastModifiedDateTime);
             lastModifiedString = `${this.strings.modifiedSubtitle} ${relativeDateString}`;
           } else {
