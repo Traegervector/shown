@@ -43,7 +43,7 @@ export class CacheStore<T extends CacheItem> {
       return null;
     }
     try {
-      let db = await this.getDb();
+      const db = await this.getDb();
       return db.get(this.store, key) as unknown as T;
     } catch (e) {
       return null;
@@ -90,24 +90,24 @@ export class CacheStore<T extends CacheItem> {
    * Returns the name of the parent DB that the cache store belongs to
    */
   public async getDBName() {
-    let id = await Providers.getCacheId();
+    const id = await Providers.getCacheId();
     if (id) {
       return `mgt-${this.schema.name}` + `-${id}`;
     }
   }
 
   private async getDb() {
-    let dbName = await this.getDBName();
+    const dbName = await this.getDBName();
     if (dbName) {
       return openDB(dbName, this.schema.version, {
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
         upgrade: (db, _oldVersion, _newVersion, _transaction) => {
-          let dbArray: string[] = (JSON.parse(localStorage.getItem(dbListKey)) as string[]) || [];
+          const dbArray: string[] = (JSON.parse(localStorage.getItem(dbListKey)) as string[]) || [];
           if (!dbArray.includes(dbName)) {
             dbArray.push(dbName);
           }
           localStorage.setItem(dbListKey, JSON.stringify(dbArray));
-          for (let storeName in this.schema.stores) {
+          for (const storeName in this.schema.stores) {
             if (
               Object.prototype.hasOwnProperty.call(this.schema.stores, storeName) &&
               !db.objectStoreNames.contains(storeName)
