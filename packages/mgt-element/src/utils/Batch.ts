@@ -64,8 +64,8 @@ export class Batch<T = any> implements IBatch<T> {
    * @memberof Batch
    */
   public get(id: string, resource: string, scopes?: string[], headers?: Record<string, string>) {
-    const index = this.nextIndex++;
-    const request = new BatchRequest(index, id, resource, 'GET');
+    let index = this.nextIndex++;
+    let request = new BatchRequest(index, id, resource, 'GET');
     request.headers = headers;
     this.allRequests.push(request);
     this.requestsQueue.push(index);
@@ -82,7 +82,7 @@ export class Batch<T = any> implements IBatch<T> {
    * @memberof Batch
    */
   public async executeNext(): Promise<Map<string, BatchResponse<T>>> {
-    const responses = new Map<string, BatchResponse<T>>();
+    let responses = new Map<string, BatchResponse<T>>();
 
     if (this.retryAfter) {
       await delay(this.retryAfter * 1000);
@@ -94,11 +94,11 @@ export class Batch<T = any> implements IBatch<T> {
     }
 
     // batch can support up to 20 requests
-    const nextBatch = this.requestsQueue.splice(0, 20);
+    let nextBatch = this.requestsQueue.splice(0, 20);
 
-    const batchRequestContent = new BatchRequestContent();
+    let batchRequestContent = new BatchRequestContent();
 
-    for (const request of nextBatch.map(i => this.allRequests[i])) {
+    for (let request of nextBatch.map(i => this.allRequests[i])) {
       batchRequestContent.addRequest({
         id: request.index.toString(),
         request: new Request(Batch.baseUrl + request.resource, {
@@ -108,16 +108,16 @@ export class Batch<T = any> implements IBatch<T> {
       });
     }
 
-    const middlewareOptions: MiddlewareOptions[] = this.scopes.length ? prepScopes(this.scopes) : [];
-    const batchRequest = this.graph.api('$batch').middlewareOptions(middlewareOptions);
+    let middlewareOptions: MiddlewareOptions[] = this.scopes.length ? prepScopes(this.scopes) : [];
+    let batchRequest = this.graph.api('$batch').middlewareOptions(middlewareOptions);
 
-    const batchRequestBody = await batchRequestContent.getContent();
-    const batchResponse: BatchResponseBody = (await batchRequest.post(batchRequestBody)) as BatchResponseBody;
+    let batchRequestBody = await batchRequestContent.getContent();
+    let batchResponse: BatchResponseBody = (await batchRequest.post(batchRequestBody)) as BatchResponseBody;
 
-    for (const r of batchResponse.responses) {
-      const response = new BatchResponse();
-      const index = parseInt(r.id, 10);
-      const request: BatchRequest = this.allRequests[index];
+    for (let r of batchResponse.responses) {
+      let response = new BatchResponse();
+      let index = parseInt(r.id, 10);
+      let request: BatchRequest = this.allRequests[index];
 
       response.id = request.id;
       response.index = request.index;
@@ -128,7 +128,7 @@ export class Batch<T = any> implements IBatch<T> {
           // this request was throttled
           // add request back to queue and set retry wait time
           this.requestsQueue.unshift(index);
-          const requestRetryAfter = r.headers['Retry-After'];
+          let requestRetryAfter = r.headers['Retry-After'];
           this.retryAfter = Math.max(this.retryAfter, parseInt(requestRetryAfter, 10) || 1);
         }
         continue;
@@ -159,11 +159,11 @@ export class Batch<T = any> implements IBatch<T> {
    * @memberof Batch
    */
   public async executeAll(): Promise<Map<string, BatchResponse<T>>> {
-    const responses = new Map<string, BatchResponse<T>>();
+    let responses = new Map<string, BatchResponse<T>>();
 
     while (this.hasRequests) {
-      const r = await this.executeNext();
-      for (const [key, value] of r) {
+      let r = await this.executeNext();
+      for (let [key, value] of r) {
         responses.set(key, value);
       }
     }
