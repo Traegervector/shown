@@ -16,17 +16,17 @@ import { expect } from '@open-wc/testing';
 import { equals } from './equals';
 
 describe('objectEquals', () => {
-  let circularObject = { a: undefined };
+  const circularObject = { a: undefined };
   circularObject.a = circularObject;
 
-  let circularArray: unknown[] = [];
+  const circularArray: unknown[] = [];
   circularArray[0] = circularArray;
 
   // Any other object that is not an object literal or an array will compare by reference
-  let simpleDate = new Date(0);
+  const simpleDate = new Date(0);
 
   it('should return true', () => {
-    let testValues = [
+    const testValues = [
       [{}, {}],
       [
         { a: 1, b: true, c: 'foo' },
@@ -44,13 +44,13 @@ describe('objectEquals', () => {
       ],
       [{ a: simpleDate }, { a: simpleDate }]
     ];
-    for (let [o1, o2] of testValues) {
+    for (const [o1, o2] of testValues) {
       expect(equals(o1, o2)).to.be.true;
     }
   });
 
   it('should return false ', () => {
-    let testValues = [
+    const testValues = [
       [{ a: {} }, { a: [] }],
       [{ a: [1, 2, 3] }, { a: [3, 2, 1] }],
       [{ a: [1, [2, [3]]] }, { a: [1, [2, [4]]] }],
@@ -59,7 +59,7 @@ describe('objectEquals', () => {
       [circularObject, circularArray],
       [circularObject, { b: circularObject }]
     ];
-    for (let [o1, o2] of testValues) {
+    for (const [o1, o2] of testValues) {
       expect(equals(o1, o2)).to.be.false;
     }
   });
