@@ -9,7 +9,7 @@ import { property } from 'lit/decorators.js';
 import { Providers, LoginType, MgtBaseProvider, registerComponent } from '@microsoft/mgt-element';
 import { Msal2Config, Msal2Provider, PromptType } from './Msal2Provider';
 
-export var registerMgtMsal2Provider = () => {
+export const registerMgtMsal2Provider = () => {
   registerComponent('msal2-provider', MgtMsal2Provider);
 };
 
@@ -146,14 +146,14 @@ class MgtMsal2Provider extends MgtBaseProvider {
    */
   protected initializeProvider() {
     if (this.clientId) {
-      var config: Msal2Config = {
+      const config: Msal2Config = {
         clientId: this.clientId
       };
 
       if (this.loginType && this.loginType.length > 1) {
         let loginType: string = this.loginType.toLowerCase();
         loginType = loginType[0].toUpperCase() + loginType.slice(1);
-        var loginTypeEnum = LoginType[loginType] as LoginType;
+        const loginTypeEnum = LoginType[loginType] as LoginType;
         config.loginType = loginTypeEnum;
       }
 
@@ -162,7 +162,7 @@ class MgtMsal2Provider extends MgtBaseProvider {
       }
 
       if (this.scopes) {
-        var scope = this.scopes.split(',');
+        const scope = this.scopes.split(',');
         if (scope && scope.length > 0) {
           config.scopes = scope;
         }
@@ -181,8 +181,8 @@ class MgtMsal2Provider extends MgtBaseProvider {
       }
 
       if (this.prompt) {
-        var prompt: string = this.prompt.toUpperCase();
-        var promptEnum = PromptType[prompt] as PromptType;
+        const prompt: string = this.prompt.toUpperCase();
+        const promptEnum = PromptType[prompt] as PromptType;
         config.prompt = promptEnum;
       }
 
