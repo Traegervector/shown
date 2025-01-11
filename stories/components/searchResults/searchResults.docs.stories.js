@@ -21,7 +21,7 @@ export default {
   }
 };
 
-export const searchResults = () => html`
+export let searchResults = () => html`
   <mgt-search-results
     entity-types="driveItem"
     fetch-thumbnail="true"
