@@ -16,7 +16,7 @@ export default {
   }
 };
 
-export const Localization = () => html`
+export let Localization = () => html`
   <mgt-login></mgt-login>
   <mgt-people-picker></mgt-people-picker>
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
@@ -89,7 +89,7 @@ export const Localization = () => html`
   </script>
 `;
 
-export const Cache = () => html`
+export let Cache = () => html`
 <fluent-button id="ClearCacheButton" appearance="accent">Clear Cache</fluent-button>
 <div id="status" class="notes"></div>
 <span class="notes"
@@ -122,23 +122,23 @@ export const Cache = () => html`
 import { CacheService, Providers } from '@microsoft/mgt-element';
 CacheService.config.isEnabled = true;
 
-const status = document.getElementById('status');
+let status = document.getElementById('status');
 status.innerHTML = 'Cache is enabled: ' + CacheService.config.isEnabled;
 
-const clearCache = async () => {
+let clearCache = async () => {
   // get the id of the current cache
-  const id = await Providers.getCacheId();
+  let id = await Providers.getCacheId();
   status.innerHTML = 'Clearing cache ' + id + ', this may take a little while...';
   // clear the current cache
   await CacheService.clearCacheById(id);
   status.innerHTML = 'Cache cleared.';
 }
 
-const onClearCacheButtonClick = () => {
+let onClearCacheButtonClick = () => {
   void clearCache();
 };
 
-const clearCacheButton = document.getElementById('ClearCacheButton');
+let clearCacheButton = document.getElementById('ClearCacheButton');
 clearCacheButton.addEventListener('click', onClearCacheButtonClick);
 
 // this is the config object
@@ -169,7 +169,7 @@ clearCacheButton.addEventListener('click', onClearCacheButtonClick);
   </script>
 `;
 
-export const Theme = () => html`
+export let Theme = () => html`
 <div>
   <p>This demonstrates how to set the theme globally without using a theme toggle and customize styling within specific scopes</p>
   <p>Please refer to the JS and CSS tabs in the editor for implentation details</p>
@@ -187,7 +187,7 @@ export const Theme = () => html`
 </div>
 <script>
 import { applyTheme } from '@microsoft/mgt-components';
-const body = document.querySelector('body');
+let body = document.querySelector('body');
 if(body) applyTheme('dark', body);
 </script>
 <style>
@@ -224,21 +224,21 @@ body {
 </style>
 `;
 
-export const IsSignedIn = () => html`
+export let IsSignedIn = () => html`
   <p>This demonstrates how to use the <code>isSignedIn</code> utility function in JavaScript. If you're signed in, <code>mgt-person</code> is rendered below.</p>
   <div id="person"></div>
   <script>
     import { isSignedIn } from '@microsoft/mgt-element';
-    const person = document.getElementById("person");
+    let person = document.getElementById("person");
     if(isSignedIn() && person){
-      const mgtPerson = document.createElement("mgt-person");
+      let mgtPerson = document.createElement("mgt-person");
       mgtPerson.setAttribute("person-query", "me");
       person.appendChild(mgtPerson);
     }
 </script>
 `;
 
-export const Calendar = () => html`
+export let Calendar = () => html`
   <mgt-login></mgt-login></mgt-login>
   <mgt-agenda group-by-day></mgt-agenda>
 `;
