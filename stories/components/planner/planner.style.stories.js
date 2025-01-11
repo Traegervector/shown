@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let customCSSProperties = () => html`
+export const customCSSProperties = () => html`
   <style>
     .tasks {
         --tasks-header-padding: 28px 14px;
