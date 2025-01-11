@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export let picker = () => html`
+export const picker = () => html`
   <mgt-picker resource="me/todo/lists" scopes="tasks.read" placeholder="Select a task list" key-name="displayName"></mgt-picker>
 `;
