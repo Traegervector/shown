@@ -17,10 +17,10 @@ import { validUserByIdScopes } from '../../graph/graph.user';
 import { validInsightScopes } from '../../graph/graph.files';
 import { schemas } from '../../graph/cacheStores';
 
-var userProperties =
+const userProperties =
   'businessPhones,companyName,department,displayName,givenName,jobTitle,mail,mobilePhone,officeLocation,preferredLanguage,surname,userPrincipalName,id,accountEnabled';
 
-var batchKeys = {
+const batchKeys = {
   directReports: 'directReports',
   files: 'files',
   messages: 'messages',
@@ -30,7 +30,7 @@ var batchKeys = {
 
 interface CacheCardState extends MgtPersonCardState, CacheItem {}
 
-export var getCardStateInvalidationTime = (): number =>
+export const getCardStateInvalidationTime = (): number =>
   CacheService.config.users.invalidationPeriod || CacheService.config.defaultInvalidationPeriod;
 
 /**
@@ -43,29 +43,29 @@ export var getCardStateInvalidationTime = (): number =>
  * @param {MgtPersonCardConfig} config
  * @return {*}  {Promise<MgtPersonCardState>}
  */
-export var getPersonCardGraphData = async (
+export const getPersonCardGraphData = async (
   graph: IGraph,
   personDetails: IDynamicPerson,
   isMe: boolean
 ): Promise<MgtPersonCardState> => {
-  var userId: string = personDetails?.id || (personDetails as Person)?.userPrincipalName;
-  var email = getEmailFromGraphEntity(personDetails);
-  var cache: CacheStore<CacheCardState> = CacheService.getCache<CacheCardState>(
+  const userId: string = personDetails?.id || (personDetails as Person)?.userPrincipalName;
+  const email = getEmailFromGraphEntity(personDetails);
+  const cache: CacheStore<CacheCardState> = CacheService.getCache<CacheCardState>(
     schemas.users,
     schemas.users.stores.cardState
   );
-  var cardState = await cache.getValue(userId);
+  const cardState = await cache.getValue(userId);
 
   if (cardState && getCardStateInvalidationTime() > Date.now() - cardState.timeCached) {
     return cardState;
   }
 
-  var isContactOrGroup =
+  const isContactOrGroup =
     'classification' in personDetails ||
     ('personType' in personDetails &&
       (personDetails.personType.subclass === 'PersonalContact' || personDetails.personType.class === 'Group'));
 
-  var batch = graph.createBatch();
+  const batch = graph.createBatch();
 
   if (!isContactOrGroup) {
     if (MgtPersonCardConfig.sections.organization) {
@@ -86,7 +86,7 @@ export var getPersonCardGraphData = async (
   }
 
   let response: Map<string, BatchResponse>;
-  var data: MgtPersonCardState = {}; // TODO
+  const data: MgtPersonCardState = {}; // TODO
   try {
     response = await batch.executeAll();
   } catch {
@@ -94,7 +94,7 @@ export var getPersonCardGraphData = async (
   }
 
   if (response) {
-    for (var [key, value] of response) {
+    for (const [key, value] of response) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access
       data[key] = value.content?.value || value.content;
     }
@@ -102,7 +102,7 @@ export var getPersonCardGraphData = async (
 
   if (!isContactOrGroup && MgtPersonCardConfig.sections.profile) {
     try {
-      var profile = await getProfile(graph, userId);
+      const profile = await getProfile(graph, userId);
       if (profile) {
         data.profile = profile;
       }
@@ -121,8 +121,8 @@ export var getPersonCardGraphData = async (
   return data;
 };
 
-var buildOrgStructureRequest = (batch: IBatch, userId: string) => {
-  var expandManagers = `manager($levels=max;$select=${userProperties})`;
+const buildOrgStructureRequest = (batch: IBatch, userId: string) => {
+  const expandManagers = `manager($levels=max;$select=${userProperties})`;
 
   batch.get(
     batchKeys.person,
@@ -136,16 +136,16 @@ var buildOrgStructureRequest = (batch: IBatch, userId: string) => {
   batch.get(batchKeys.directReports, `users/${userId}/directReports?$select=${userProperties}`);
 };
 
-var validPeopleScopes = ['People.Read.All'];
-var buildWorksWithRequest = (batch: IBatch, userId: string) => {
+const validPeopleScopes = ['People.Read.All'];
+const buildWorksWithRequest = (batch: IBatch, userId: string) => {
   batch.get(batchKeys.people, `users/${userId}/people?$filter=personType/class eq 'Person'`, validPeopleScopes);
 };
-var validMailSearchScopes = ['Mail.ReadBasic', 'Mail.Read', 'Mail.ReadWrite'];
-var buildMessagesWithUserRequest = (batch: IBatch, emailAddress: string) => {
+const validMailSearchScopes = ['Mail.ReadBasic', 'Mail.Read', 'Mail.ReadWrite'];
+const buildMessagesWithUserRequest = (batch: IBatch, emailAddress: string) => {
   batch.get(batchKeys.messages, `me/messages?$search="from:${emailAddress}"`, validMailSearchScopes);
 };
 
-var buildFilesRequest = (batch: IBatch, emailAddress?: string) => {
+const buildFilesRequest = (batch: IBatch, emailAddress?: string) => {
   let request: string;
 
   if (emailAddress) {
@@ -157,7 +157,7 @@ var buildFilesRequest = (batch: IBatch, emailAddress?: string) => {
   batch.get(batchKeys.files, request, validInsightScopes);
 };
 
-var validProfileScopes = ['User.Read.All', 'User.ReadWrite.All'];
+const validProfileScopes = ['User.Read.All', 'User.ReadWrite.All'];
 /**
  * Get the profile for a user
  *
@@ -165,14 +165,14 @@ var validProfileScopes = ['User.Read.All', 'User.ReadWrite.All'];
  * @param {string} userId
  * @return {*}  {Promise<Profile>}
  */
-var getProfile = async (graph: IGraph, userId: string): Promise<Profile> =>
+const getProfile = async (graph: IGraph, userId: string): Promise<Profile> =>
   (await graph
     .api(`/users/${userId}/profile`)
     .version('beta')
     .middlewareOptions(prepScopes(validProfileScopes))
     .get()) as Profile;
 
-var validCreateChatScopes = ['Chat.Create', 'Chat.ReadWrite'];
+const validCreateChatScopes = ['Chat.Create', 'Chat.ReadWrite'];
 
 /**
  * Initiate a chat to a user
@@ -182,8 +182,8 @@ var validCreateChatScopes = ['Chat.Create', 'Chat.ReadWrite'];
  * @param {{ chatType: string; members: [{"@odata.type": string,"roles": ["owner"],"user@odata.bind": string},{"@odata.type": string,"roles": ["owner"],"user@odata.bind": string}]  }} chatData
  * @return {*}  {Promise<Chat>}
  */
-export var createChat = async (graph: IGraph, person: string, user: string): Promise<Chat> => {
-  var chatData = {
+export const createChat = async (graph: IGraph, person: string, user: string): Promise<Chat> => {
+  const chatData = {
     chatType: 'oneOnOne',
     members: [
       {
@@ -205,7 +205,7 @@ export var createChat = async (graph: IGraph, person: string, user: string): Pro
     .post(chatData)) as Chat;
 };
 
-var validSendChatMessageScopes = ['ChatMessage.Send', 'Chat.ReadWrite'];
+const validSendChatMessageScopes = ['ChatMessage.Send', 'Chat.ReadWrite'];
 
 /**
  * Send a chat message to a user
@@ -215,7 +215,7 @@ var validSendChatMessageScopes = ['ChatMessage.Send', 'Chat.ReadWrite'];
  * @param {{ body: {"content": string}  }} messageData
  * @return {*}  {Promise<ChatMessage>}
  */
-export var sendMessage = async (
+export const sendMessage = async (
   graph: IGraph,
   chatId: string,
   messageData: Pick<ChatMessage, 'body'>
