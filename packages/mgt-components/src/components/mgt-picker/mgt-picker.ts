@@ -18,7 +18,7 @@ import { DataChangedDetail, registerMgtGetComponent } from '../mgt-get/mgt-get';
 import { styles } from './mgt-picker-css';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export const registerMgtPickerComponent = () => {
+export var registerMgtPickerComponent = () => {
   registerFluentComponents(fluentCombobox, fluentOption);
 
   registerMgtGetComponent();
@@ -222,7 +222,7 @@ export class MgtPicker extends MgtTemplatedTaskComponent {
    * trigger the element to update.
    */
   public renderContent = () => {
-    const error = this.error ? (this.error as Error) : null;
+    var error = this.error ? (this.error as Error) : null;
     if (error && this.hasTemplate('error')) {
       return this.renderTemplate('error', { error }, 'error');
     } else if (this.hasTemplate('no-data')) {
@@ -259,10 +259,10 @@ export class MgtPicker extends MgtTemplatedTaskComponent {
   }
 
   private getNestedPropertyValue(item: Entity, keyName: string) {
-    const keys = keyName.split('.');
+    var keys = keyName.split('.');
     let value: Entity | object | string = item;
 
-    for (const key of keys) {
+    for (var key of keys) {
       value = value[key] as object | string;
 
       if (value === undefined) {
@@ -300,7 +300,7 @@ export class MgtPicker extends MgtTemplatedTaskComponent {
    */
   protected firstUpdated(changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties);
-    const parent = this.renderRoot;
+    var parent = this.renderRoot;
     if (parent) {
       parent.addEventListener('dataChange', (e: CustomEvent<DataChangedDetail>): void => this.handleDataChange(e));
     } else {
@@ -309,8 +309,8 @@ export class MgtPicker extends MgtTemplatedTaskComponent {
   }
 
   private handleDataChange(e: CustomEvent<DataChangedDetail>): void {
-    const response = e.detail.response.value;
-    const error = e.detail.error ? e.detail.error : null;
+    var response = e.detail.response.value;
+    var error = e.detail.error ? e.detail.error : null;
     this.response = response;
     this.error = error;
   }
@@ -328,9 +328,9 @@ export class MgtPicker extends MgtTemplatedTaskComponent {
   private readonly handleComboboxKeydown = (e: KeyboardEvent) => {
     let value: string;
     let item: Entity;
-    const keyName: string = e.key;
-    const comboBox: HTMLElement = e.target as HTMLElement;
-    const fluentOptionEl = comboBox.querySelector('.selected');
+    var keyName: string = e.key;
+    var comboBox: HTMLElement = e.target as HTMLElement;
+    var fluentOptionEl = comboBox.querySelector('.selected');
     if (fluentOptionEl) {
       value = fluentOptionEl.getAttribute('value');
     }
