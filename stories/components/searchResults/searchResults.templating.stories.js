@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const DefaultTemplates = () => html`
+export let DefaultTemplates = () => html`
   <mgt-search-results query-string="contoso" entity-types="site">
     <template data-type="default">
         <div data-for="result in value[0].hitsContainers[0].hits">
@@ -27,7 +27,7 @@ export const DefaultTemplates = () => html`
   </mgt-search-results>
 `;
 
-export const noDataTemplate = () => html`
+export let noDataTemplate = () => html`
   <div>
     <div>No data template</div>
     <mgt-search-results query-string="xyxy" entity-types="driveItem">
