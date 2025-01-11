@@ -5,6 +5,6 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export let strings = {
+export const strings = {
   dotOptionsTitle: 'More options'
 };
