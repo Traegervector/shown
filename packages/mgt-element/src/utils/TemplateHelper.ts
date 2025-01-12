@@ -45,12 +45,12 @@ export class TemplateHelper {
     let rendered: Node;
 
     if (template.content?.childNodes.length) {
-      var templateContent = template.content.cloneNode(true);
+      const templateContent = template.content.cloneNode(true);
       rendered = this.renderNode(templateContent, root, context);
     } else if (template.childNodes.length) {
-      var div = document.createElement('div');
+      const div = document.createElement('div');
 
-      for (var node of template.childNodes) {
+      for (const node of template.childNodes) {
         div.appendChild(this.simpleCloneNode(node));
       }
       rendered = this.renderNode(div, root, context);
@@ -73,8 +73,8 @@ export class TemplateHelper {
     this._startExpression = startStr;
     this._endExpression = endStr;
 
-    var start = this.escapeRegex(this._startExpression);
-    var end = this.escapeRegex(this._endExpression);
+    const start = this.escapeRegex(this._startExpression);
+    const end = this.escapeRegex(this._endExpression);
 
     this._expression = new RegExp(`${start}\\s*([$\\w\\.,'"\\s()\\[\\]]+)\\s*${end}`, 'g');
   }
@@ -116,10 +116,10 @@ export class TemplateHelper {
       return null;
     }
 
-    var clone = node.cloneNode(false);
+    const clone = node.cloneNode(false);
 
-    for (var child of node.childNodes) {
-      var childClone = this.simpleCloneNode(child);
+    for (const child of node.childNodes) {
+      const childClone = this.simpleCloneNode(child);
       if (childClone) {
         clone.appendChild(childClone);
       }
@@ -130,7 +130,7 @@ export class TemplateHelper {
 
   private static expandExpressionsAsString(str: string, context: object) {
     return str.replace(this.expression, (match: string, p1: string) => {
-      var value = this.evalInContext(p1 || this.trimExpression(match), context);
+      const value = this.evalInContext(p1 || this.trimExpression(match), context);
       if (value) {
         if (typeof value === 'object') {
           return JSON.stringify(value);
@@ -152,18 +152,18 @@ export class TemplateHelper {
       return node;
     }
 
-    var nodeElement = node as HTMLElement;
+    const nodeElement = node as HTMLElement;
 
     // replace attribute values
     if (nodeElement.attributes) {
-      for (var attribute of nodeElement.attributes) {
+      for (const attribute of nodeElement.attributes) {
         if (attribute.name === 'data-props') {
-          var propsValue = this.trimExpression(attribute.value);
-          for (var prop of propsValue.split(',')) {
-            var keyValue = prop.trim().split(':');
+          const propsValue = this.trimExpression(attribute.value);
+          for (const prop of propsValue.split(',')) {
+            const keyValue = prop.trim().split(':');
             if (keyValue.length === 2) {
-              var key = keyValue[0].trim();
-              var value = this.evalInContext(keyValue[1].trim(), context);
+              const key = keyValue[0].trim();
+              const value = this.evalInContext(keyValue[1].trim(), context);
 
               if (key.startsWith('@')) {
                 // event
@@ -184,21 +184,21 @@ export class TemplateHelper {
 
     // don't process nodes that will loop yet, but
     // keep a reference of them
-    var loopChildren: HTMLElement[] = [];
+    const loopChildren: HTMLElement[] = [];
 
     // list of children to remove (ex, when data-if == false)
-    var removeChildren = [];
+    const removeChildren = [];
     let previousChildWasIfAndTrue = false;
 
-    for (var childNode of node.childNodes) {
-      var childElement = childNode as HTMLElement;
+    for (const childNode of node.childNodes) {
+      const childElement = childNode as HTMLElement;
       let previousChildWasIfAndTrueSet = false;
 
       if (childElement.dataset) {
         let childWillBeRemoved = false;
 
         if (childElement.dataset.if) {
-          var expression = childElement.dataset.if;
+          const expression = childElement.dataset.if;
           if (!this.evalBoolInContext(this.trimExpression(expression), context)) {
             removeChildren.push(childElement);
             childWillBeRemoved = true;
@@ -233,21 +233,21 @@ export class TemplateHelper {
     }
 
     // now handle nodes that need to be removed
-    for (var child of removeChildren) {
+    for (const child of removeChildren) {
       nodeElement.removeChild(child);
     }
 
     // now handle nodes that should loop
-    for (var childElement of loopChildren) {
-      var loopExpression = childElement.dataset.for;
-      var loopTokens = this.trimExpression(loopExpression).split(/\s(in|of)\s/i);
+    for (const childElement of loopChildren) {
+      const loopExpression = childElement.dataset.for;
+      const loopTokens = this.trimExpression(loopExpression).split(/\s(in|of)\s/i);
 
       if (loopTokens.length === 3) {
         // don't really care what's in the middle at this point
-        var itemName = loopTokens[0].trim();
-        var listKey = loopTokens[2].trim();
+        const itemName = loopTokens[0].trim();
+        const listKey = loopTokens[2].trim();
 
-        var list = this.evalInContext(listKey, context);
+        const list = this.evalInContext(listKey, context);
         if (Array.isArray(list)) {
           // first remove the child
           // we will need to make copy of the child for
@@ -255,14 +255,14 @@ export class TemplateHelper {
           childElement.removeAttribute('data-for');
 
           for (let j = 0; j < list.length; j++) {
-            var newContext = {
+            const newContext = {
               $index: j,
               ...context
             };
             // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
             newContext[itemName] = list[j];
 
-            var clone = childElement.cloneNode(true);
+            const clone = childElement.cloneNode(true);
             this.renderNode(clone, root, newContext);
             nodeElement.insertBefore(clone, childElement);
           }
@@ -283,7 +283,7 @@ export class TemplateHelper {
   private static evalInContext(expression: string, context: object): unknown {
     context = { ...context, ...this.globalContext };
     // eslint-disable-next-line @typescript-eslint/no-implied-eval
-    var func = new Function('with(this) { return ' + expression + ';}');
+    const func = new Function('with(this) { return ' + expression + ';}');
     let result: unknown;
     try {
       result = func.call(context);
