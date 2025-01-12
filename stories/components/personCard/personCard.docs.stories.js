@@ -21,18 +21,18 @@ export default {
   }
 };
 
-export let personCard = () => html`
+export const personCard = () => html`
   <mgt-person-card person-query="me" id="online" show-presence></mgt-person-card>
 
   <!-- Person Card without Presence -->
   <!-- <mgt-person-card person-query="me"></mgt-person-card> -->
   <script>
-    let online = {
+    const online = {
       activity: 'Available',
       availability: 'Available',
       id: null
     };
-    let onlinePerson = document.getElementById('online');
+    const onlinePerson = document.getElementById('online');
     onlinePerson.personPresence = online;
   </script>
 `;
