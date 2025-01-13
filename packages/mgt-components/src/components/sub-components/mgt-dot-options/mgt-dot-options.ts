@@ -21,7 +21,7 @@ import { SvgIcon, getSvg } from '../../../utils/SvgHelper';
  */
 type MenuOptionEventFunction = (e: Event) => void;
 
-export const registerMgtDotOptionsComponent = () => {
+export let registerMgtDotOptionsComponent = () => {
   registerFluentComponents(fluentMenu, fluentMenuItem, fluentButton);
   registerComponent('dot-options', MgtDotOptions);
 };
@@ -90,7 +90,7 @@ export class MgtDotOptions extends MgtBaseTaskComponent {
    * Invoked from the base class render method when the _task is in a completed state.
    */
   public readonly renderContent = () => {
-    const menuOptions = Object.keys(this.options);
+    let menuOptions = Object.keys(this.options);
     return html`
       <fluent-button
         appearance="stealth"
