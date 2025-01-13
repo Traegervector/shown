@@ -43,7 +43,7 @@ import { getPersonCardGraphData } from '../mgt-person-card/mgt-person-card.graph
 /**
  * Person properties part of original set provided by graph by default
  */
-export var defaultPersonProperties = [
+export const defaultPersonProperties = [
   'businessPhones',
   'displayName',
   'givenName',
@@ -59,7 +59,7 @@ export var defaultPersonProperties = [
   'userType'
 ];
 
-export var registerMgtPersonComponent = () => {
+export const registerMgtPersonComponent = () => {
   registerFluentComponents(fluentSkeleton);
 
   // register self first to avoid infinte loop due to circular ref between person and person card
@@ -423,7 +423,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   public static get requiredScopes(): string[] {
-    var scopes = ['user.readbasic.all', 'user.read', 'people.read', 'presence.read.all', 'presence.read'];
+    const scopes = ['user.readbasic.all', 'user.read', 'people.read', 'presence.read.all', 'presence.read'];
 
     if (MgtPerson.config.useContactApis) {
       scopes.push('contacts.read');
@@ -530,9 +530,9 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
 
   protected readonly renderContent = () => {
     // Prep data
-    var person = this.personDetails || this.personDetailsInternal || this.fallbackDetails;
-    var image = this.getImage();
-    var presence = this.personPresence || this._fetchedPresence;
+    const person = this.personDetails || this.personDetailsInternal || this.fallbackDetails;
+    const image = this.getImage();
+    const presence = this.personPresence || this._fetchedPresence;
 
     if (!person && !image) {
       return this.renderNoData();
@@ -545,8 +545,8 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
     let personTemplate = this.renderTemplate('default', { person, personImage: image, personPresence: presence });
 
     if (!personTemplate) {
-      var detailsTemplate: TemplateResult = this.renderDetails(person, presence);
-      var imageWithPresenceTemplate: TemplateResult = this.renderAvatar(person, image, presence);
+      const detailsTemplate: TemplateResult = this.renderDetails(person, presence);
+      const imageWithPresenceTemplate: TemplateResult = this.renderAvatar(person, image, presence);
 
       personTemplate = html`
         ${imageWithPresenceTemplate}
@@ -554,12 +554,12 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       `;
     }
 
-    var showPersonCard = this.personCardInteraction !== 'none';
+    const showPersonCard = this.personCardInteraction !== 'none';
     if (showPersonCard) {
       personTemplate = this.renderFlyout(personTemplate, person, image, presence);
     }
 
-    var rootClasses = classMap({
+    const rootClasses = classMap({
       'person-root': true,
       small: !this.isThreeLines() && !this.isFourLines() && !this.isLargeAvatar(),
       large: this.avatarSize !== 'auto' && this.isLargeAvatar(),
@@ -594,7 +594,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   protected renderLoading = (): TemplateResult => {
-    var rootClasses = classMap({
+    const rootClasses = classMap({
       'person-root': true,
       small: !this.isThreeLines() && !this.isFourLines() && !this.isLargeAvatar(),
       large: this.avatarSize !== 'auto' && this.isLargeAvatar(),
@@ -606,7 +606,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       vertical: this.isVertical()
     });
 
-    var detailsClasses = classMap({
+    const detailsClasses = classMap({
       'details-wrapper': true,
       vertical: this.isVertical()
     });
@@ -626,7 +626,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
   };
 
   protected renderLoadingLines = (): TemplateResult[] => {
-    var lines: TemplateResult[] = [];
+    const lines: TemplateResult[] = [];
     if (this.isNoLine()) return lines;
     if (this.isOneLine()) {
       lines.push(this.renderLoadingLine(1));
@@ -650,7 +650,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
   };
 
   protected renderLoadingLine = (line: number): TemplateResult => {
-    var lineNumber = `line${line}`;
+    const lineNumber = `line${line}`;
     return html`
       <div class=${lineNumber}>
         <fluent-skeleton shimmer class="shimmer text" shape="rect"></fluent-skeleton>
@@ -679,12 +679,12 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   protected renderNoData(): TemplateResult {
-    var noDataTemplate = this.renderTemplate('no-data', null);
+    const noDataTemplate = this.renderTemplate('no-data', null);
     if (noDataTemplate) {
       return noDataTemplate;
     }
 
-    var avatarClasses = {
+    const avatarClasses = {
       'avatar-icon': true,
       vertical: this.isVertical(),
       small: !this.isLargeAvatar(),
@@ -722,29 +722,29 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   protected renderImage(personDetailsInternal: IDynamicPerson, imageSrc: string) {
-    var altText = `${this.strings.photoFor} ${personDetailsInternal.displayName}`;
-    var hasImage = imageSrc && !this._isInvalidImageSrc && this.avatarType === 'photo';
-    var imageOnly = this.avatarType === 'photo' && this.view === 'image';
-    var titleText =
+    const altText = `${this.strings.photoFor} ${personDetailsInternal.displayName}`;
+    const hasImage = imageSrc && !this._isInvalidImageSrc && this.avatarType === 'photo';
+    const imageOnly = this.avatarType === 'photo' && this.view === 'image';
+    const titleText =
       (personDetailsInternal?.displayName ||
         `${this.strings.emailAddress} ${getEmailFromGraphEntity(personDetailsInternal)}`) ??
       undefined;
-    var imageTemplate = html`<img
+    const imageTemplate = html`<img
       title="${ifDefined(imageOnly ? titleText : undefined)}"
       alt=${altText}
       src=${imageSrc}
       @error=${() => (this._isInvalidImageSrc = true)} />`;
 
-    var initials = personDetailsInternal ? this.getInitials(personDetailsInternal) : '';
-    var hasInitials = initials?.length;
-    var textClasses = classMap({
+    const initials = personDetailsInternal ? this.getInitials(personDetailsInternal) : '';
+    const hasInitials = initials?.length;
+    const textClasses = classMap({
       initials: hasInitials && !hasImage,
       'contact-icon': !hasInitials
     });
-    var contactIconTemplate = html`<i>${this.renderPersonIcon()}</i>`;
+    const contactIconTemplate = html`<i>${this.renderPersonIcon()}</i>`;
     // consider the image to presentational if the view is anything other than image.
     // this reduces the redundant announcement of the user's name.
-    var textTemplate = html`
+    const textTemplate = html`
       <span 
         title="${ifDefined(this.view === 'image' ? titleText : undefined)}"
         role="${ifDefined(this.view === 'image' ? undefined : 'presentation')}"
@@ -775,7 +775,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
     }
     let presenceIcon: TemplateResult;
 
-    var { activity, availability } = presence;
+    const { activity, availability } = presence;
     switch (availability) {
       case 'Available':
       case 'AvailableIdle':
@@ -858,13 +858,13 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
         break;
     }
 
-    var presenceWrapperClasses = classMap({
+    const presenceWrapperClasses = classMap({
       'presence-wrapper': true,
       noline: this.isNoLine(),
       oneline: this.isOneLine()
     });
 
-    var formattedActivity = (this.strings[activity] as string) ?? nothing;
+    const formattedActivity = (this.strings[activity] as string) ?? nothing;
 
     return html`
       <span
@@ -885,8 +885,8 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPersonCard
    */
   protected renderAvatar(personDetailsInternal: IDynamicPerson, image: string, presence: Presence): TemplateResult {
-    var imageTemplate: TemplateResult = this.renderImage(personDetailsInternal, image);
-    var presenceTemplate: TemplateResult = this.renderPresence(presence);
+    const imageTemplate: TemplateResult = this.renderImage(personDetailsInternal, image);
+    const presenceTemplate: TemplateResult = this.renderPresence(presence);
 
     return html`
       <div class="avatar-wrapper">
@@ -925,19 +925,19 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       return html``;
     }
 
-    var person: IDynamicPerson & { presenceActivity?: string; presenceAvailability?: string } = personProps;
+    const person: IDynamicPerson & { presenceActivity?: string; presenceAvailability?: string } = personProps;
     if (presence) {
       person.presenceActivity = presence?.activity;
       person.presenceAvailability = presence?.availability;
     }
 
-    var details: TemplateResult[] = [];
+    const details: TemplateResult[] = [];
 
     // we already returned on image, so we must have a first line
-    var line1text = this.getTextFromProperty(person, this.line1Property);
+    const line1text = this.getTextFromProperty(person, this.line1Property);
     if (this.hasTemplate('line1')) {
       // Render the line1 template
-      var template = this.renderTemplate('line1', { person });
+      const template = this.renderTemplate('line1', { person });
       details.push(html`
            <div class="line1" part="detail-line" @click=${() => this.handleLine1Clicked()}
             @keydown=${(e: KeyboardEvent) => e.key === 'Enter' && this.handleLine1Clicked()}
@@ -956,10 +956,10 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
 
     // if we have more than one line we add the second line
     if (!this.isOneLine()) {
-      var text = this.getTextFromProperty(person, this.line2Property);
+      const text = this.getTextFromProperty(person, this.line2Property);
       if (this.hasTemplate('line2')) {
         // Render the line2 template
-        var template = this.renderTemplate('line2', { person });
+        const template = this.renderTemplate('line2', { person });
         details.push(html`
            <div class="line2" part="detail-line" @click=${() => this.handleLine2Clicked()}
              @keydown=${(e: KeyboardEvent) => e.key === 'Enter' && this.handleLine2Clicked()}
@@ -979,10 +979,10 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
 
     // if we have a third or fourth line we add the third line
     if (this.isThreeLines() || this.isFourLines()) {
-      var text = this.getTextFromProperty(person, this.line3Property);
+      const text = this.getTextFromProperty(person, this.line3Property);
       if (this.hasTemplate('line3')) {
         // Render the line3 template
-        var template = this.renderTemplate('line3', { person });
+        const template = this.renderTemplate('line3', { person });
         details.push(html`
            <div class="line3" part="detail-line" @click=${() => this.handleLine3Clicked()}
              @keydown=${(e: KeyboardEvent) => e.key === 'Enter' && this.handleLine3Clicked()}
@@ -1002,10 +1002,10 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
 
     // add the fourth line if necessary
     if (this.isFourLines()) {
-      var text = this.getTextFromProperty(person, this.line4Property);
+      const text = this.getTextFromProperty(person, this.line4Property);
       if (this.hasTemplate('line4')) {
         // Render the line4 template
-        var template = this.renderTemplate('line4', { person });
+        const template = this.renderTemplate('line4', { person });
         details.push(html`
           <div class="line4" part="detail-line" @click=${() => this.handleLine4Clicked()}
             @keydown=${(e: KeyboardEvent) => e.key === 'Enter' && this.handleLine4Clicked()}
@@ -1023,7 +1023,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       }
     }
 
-    var detailsClasses = classMap({
+    const detailsClasses = classMap({
       'details-wrapper': true,
       vertical: this.isVertical()
     });
@@ -1048,7 +1048,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
     image: string,
     presence: Presence
   ): TemplateResult {
-    var flyoutContent =
+    const flyoutContent =
       this._personCardShouldRender && this._hasLoadedPersonCard
         ? html`
            <div slot="flyout" data-testid="flyout-slot">
@@ -1056,7 +1056,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
            </div>`
         : html``;
 
-    var slotClasses = classMap({
+    const slotClasses = classMap({
       small: !this.isThreeLines() && !this.isFourLines() && !this.isLargeAvatar(),
       large: this.avatarSize !== 'auto' && this.isLargeAvatar(),
       noline: this.isNoLine(),
@@ -1126,7 +1126,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   protected async loadState() {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (!provider || provider.state === ProviderState.Loading) {
       return;
     }
@@ -1136,7 +1136,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       return;
     }
 
-    var graph = provider.graph.forComponent(this);
+    const graph = provider.graph.forComponent(this);
 
     if ((this.verticalLayout && this.view !== 'fourlines') || this.fallbackDetails) {
       this.line2Property = 'email';
@@ -1199,7 +1199,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
         this.personDetailsInternal = people[0];
         this.personDetails = people[0];
         if (this.avatarType === 'photo' && !this.disableImageFetch) {
-          var image = await getPersonImage(graph, people[0], MgtPerson.config.useContactApis);
+          const image = await getPersonImage(graph, people[0], MgtPerson.config.useContactApis);
 
           if (image) {
             this.personDetailsInternal.personImage = image;
@@ -1219,7 +1219,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
     }
 
     // populate presence
-    var defaultPresence: Presence = {
+    const defaultPresence: Presence = {
       activity: 'Offline',
       availability: 'Offline',
       id: null
@@ -1229,7 +1229,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       try {
         if (details) {
           // setting userId to 'me' ensures only the presence.read permission is required
-          var userId = this.personQuery !== 'me' ? details?.id : null;
+          const userId = this.personQuery !== 'me' ? details?.id : null;
           this._fetchedPresence = await getUserPresence(graph, userId);
         } else {
           this._fetchedPresence = defaultPresence;
@@ -1264,7 +1264,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
     }
 
     if (!initials && person.displayName) {
-      var name = person.displayName.split(/\s+/);
+      const name = person.displayName.split(/\s+/);
       for (let i = 0; i < 2 && i < name.length; i++) {
         if (name[i][0] && this.isLetter(name[i][0])) {
           initials += name[i][0].toUpperCase();
@@ -1284,7 +1284,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       return this._fetchedImage;
     }
 
-    var person = this.personDetailsInternal || this.personDetails;
+    const person = this.personDetailsInternal || this.personDetails;
     return person?.personImage ? person.personImage : null;
   }
 
@@ -1301,12 +1301,12 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       return null;
     }
 
-    var properties = prop.trim().split(',');
+    const properties = prop.trim().split(',');
     let text: string;
     let i = 0;
 
     while (!text && i < properties.length) {
-      var currentProp = properties[i].trim();
+      const currentProp = properties[i].trim();
       switch (currentProp) {
         case 'mail':
         case 'email':
@@ -1352,7 +1352,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
   }
 
   private readonly handleMouseClick = (e: MouseEvent) => {
-    var element = e.target as HTMLElement;
+    const element = e.target as HTMLElement;
     // todo: fix for disambiguation
     if (
       this.personCardInteraction === 'click' &&
@@ -1363,15 +1363,15 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
   };
 
   private readonly handleKeyDown = (e: KeyboardEvent) => {
-    var personEl = this.renderRoot.querySelector<HTMLElement>('.person-root');
+    const personEl = this.renderRoot.querySelector<HTMLElement>('.person-root');
     // enter activates and focuses on person-card
     if (e) {
       if (e.key === 'Enter') {
         this.showPersonCard();
-        var flyout = this.flyout;
+        const flyout = this.flyout;
         if (flyout?.isOpen) {
           this._keyBoardFocus = debounce(() => {
-            var personCardEl = flyout.querySelector<HTMLElement>('.mgt-person-card');
+            const personCardEl = flyout.querySelector<HTMLElement>('.mgt-person-card');
             personCardEl.setAttribute('tabindex', '0');
             personCardEl.focus();
           }, 500);
@@ -1409,11 +1409,11 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
    * @memberof MgtPerson
    */
   public hidePersonCard = () => {
-    var flyout = this.flyout;
+    const flyout = this.flyout;
     if (flyout) {
       flyout.close();
     }
-    var personCard =
+    const personCard =
       this.querySelector<Element & IExpandable & IHistoryClearer>('.mgt-person-card') ||
       this.renderRoot.querySelector('.mgt-person-card');
     if (personCard) {
@@ -1425,7 +1425,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
   private readonly loadPersonCardResources = async () => {
     // if there could be a person-card then we should load those resources using a dynamic import
     if (this.personCardInteraction !== 'none' && !this._hasLoadedPersonCard) {
-      var { registerMgtPersonCardComponent } = await import('../mgt-person-card/mgt-person-card');
+      const { registerMgtPersonCardComponent } = await import('../mgt-person-card/mgt-person-card');
 
       // only register person card if it hasn't been registered yet
       if (!customElements.get(buildComponentName('person-card'))) registerMgtPersonCardComponent();
@@ -1440,7 +1440,7 @@ export class MgtPerson extends MgtTemplatedTaskComponent {
       void this.loadPersonCardResources();
     }
 
-    var flyout = this.flyout;
+    const flyout = this.flyout;
     if (flyout) {
       flyout.open();
     }
