@@ -37,10 +37,10 @@ import { parseColorHexRGB } from '@microsoft/fast-colors';
  */
 type Theme = 'light' | 'dark' | 'default' | 'contrast';
 
-let secondaryTextDefault = '#717171';
-let secondaryTextColor = DesignToken.create<string>('secondary-text-color').withDefault(secondaryTextDefault);
-let secondaryTextHoverDefault = '#1a1a1a';
-let secondaryTextHoverColor =
+const secondaryTextDefault = '#717171';
+const secondaryTextColor = DesignToken.create<string>('secondary-text-color').withDefault(secondaryTextDefault);
+const secondaryTextHoverDefault = '#1a1a1a';
+const secondaryTextHoverColor =
   DesignToken.create<string>('secondary-text-hover-color').withDefault(secondaryTextHoverDefault);
 
 /**
@@ -50,8 +50,8 @@ let secondaryTextHoverColor =
  * @param {Theme} theme - theme name, if an unknown theme is provided, the light theme will be applied
  * @param {HTMLElement} [element=document.body]
  */
-export let applyTheme = (theme: Theme, element: HTMLElement = document.body): void => {
-  let settings = getThemeSettings(theme);
+export const applyTheme = (theme: Theme, element: HTMLElement = document.body): void => {
+  const settings = getThemeSettings(theme);
   applyColorScheme(settings, element);
 };
 
@@ -91,7 +91,7 @@ interface ColorScheme {
  * @param {ColorScheme} settings
  * @param {HTMLElement} [element=document.body]
  */
-let applyColorScheme = (settings: ColorScheme, element: HTMLElement = document.body): void => {
+const applyColorScheme = (settings: ColorScheme, element: HTMLElement = document.body): void => {
   accentBaseColor.setValueFor(element, SwatchRGB.from(parseColorHexRGB(settings.accentBaseColor)));
   neutralBaseColor.setValueFor(element, SwatchRGB.from(parseColorHexRGB(settings.neutralBaseColor)));
   baseLayerLuminance.setValueFor(element, settings.baseLayerLuminance);
@@ -104,7 +104,7 @@ let applyColorScheme = (settings: ColorScheme, element: HTMLElement = document.b
  * @param {Theme} theme
  * @return {*}  {ThemeSettings}
  */
-let getThemeSettings = (theme: Theme): ColorScheme => {
+const getThemeSettings = (theme: Theme): ColorScheme => {
   switch (theme) {
     case 'contrast':
       return {
