@@ -122,7 +122,7 @@ export class SharePointProvider extends IProvider {
    * @memberof SharePointProvider
    */
   public async getAccessToken(): Promise<string> {
-    const baseUrl = this.baseURL ? this.baseURL : MICROSOFT_GRAPH_DEFAULT_ENDPOINT;
+    let baseUrl = this.baseURL ? this.baseURL : MICROSOFT_GRAPH_DEFAULT_ENDPOINT;
     return await this.provider.getToken(baseUrl);
   }
 
