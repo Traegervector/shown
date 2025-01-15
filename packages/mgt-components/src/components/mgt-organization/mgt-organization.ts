@@ -18,7 +18,7 @@ import { registerComponent } from '@microsoft/mgt-element';
 import { registerMgtPersonComponent } from '../mgt-person/mgt-person';
 import { state } from 'lit/decorators.js';
 
-export const registerMgtOrganizationComponent = () => {
+export var registerMgtOrganizationComponent = () => {
   registerMgtPersonComponent();
   registerComponent('organization', MgtOrganization);
 };
@@ -81,7 +81,7 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   public get displayName(): string {
-    const { person, directReports } = this._state;
+    var { person, directReports } = this._state;
 
     if (!person.manager && directReports?.length) {
       return `${this.strings.directReportsSectionTitle} (${directReports.length})`;
@@ -124,7 +124,7 @@ export class MgtOrganization extends BasePersonCardSection {
       return null;
     }
 
-    const { person, directReports } = this._state;
+    var { person, directReports } = this._state;
 
     if (!person) {
       return null;
@@ -155,15 +155,15 @@ export class MgtOrganization extends BasePersonCardSection {
       return null;
     }
 
-    const { person, directReports, people } = this._state;
+    var { person, directReports, people } = this._state;
 
     if (!person && !directReports && !people) {
       return null;
     } else {
-      const managerTemplates = this.renderManagers();
-      const currentUserTemplate = this.renderCurrentUser();
-      const directReportsTemplate = this.renderDirectReports();
-      const coworkersTemplate = this.renderCoworkers();
+      var managerTemplates = this.renderManagers();
+      var currentUserTemplate = this.renderCurrentUser();
+      var directReportsTemplate = this.renderDirectReports();
+      var coworkersTemplate = this.renderCoworkers();
 
       contentTemplate = html`
           ${managerTemplates} ${currentUserTemplate} ${directReportsTemplate} ${coworkersTemplate}
@@ -219,12 +219,12 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   protected renderManagers(): TemplateResult[] {
-    const { person } = this._state;
+    var { person } = this._state;
     if (!person?.manager) {
       return null;
     }
 
-    const managers: UserWithManager[] = [];
+    var managers: UserWithManager[] = [];
     let currentManager = person;
     while (currentManager.manager) {
       managers.push(currentManager.manager);
@@ -247,7 +247,7 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   protected renderDirectReports(): TemplateResult {
-    const { directReports } = this._state;
+    var { directReports } = this._state;
     if (!directReports?.length) {
       return null;
     }
@@ -292,7 +292,7 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   protected renderCompactDirectReports(): TemplateResult {
-    const { directReports } = this._state;
+    var { directReports } = this._state;
 
     return html`
       <div class="direct-report__compact">
@@ -327,7 +327,7 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   protected renderCurrentUser(): TemplateResult {
-    const { person } = this._state;
+    var { person } = this._state;
     return mgtHtml`
        <div class="org-member org-member--target">
          <div class="org-member__person">
@@ -382,12 +382,12 @@ export class MgtOrganization extends BasePersonCardSection {
    * @memberof MgtOrganization
    */
   protected renderCoworkers(): TemplateResult {
-    const { people } = this._state;
+    var { people } = this._state;
     if (!people?.length) {
       return null;
     }
 
-    const subtitle =
+    var subtitle =
       this._me.id === this._state.person.id
         ? this.strings.youWorkWithSubSectionTitle
         : `${this._state.person.givenName} ${this.strings.userWorksWithSubSectionTitle}`;
