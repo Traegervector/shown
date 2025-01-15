@@ -130,22 +130,22 @@ export abstract class MgtTemplatedComponent extends MgtBaseComponent {
     this._slotNamesAddedDuringRender.push(slotName);
     this._renderedSlots = true;
 
-    const template = html`
+    var template = html`
       <slot name=${slotName}></slot>
     `;
 
-    const dataContext = { ...context, ...this.templateContext };
+    var dataContext = { ...context, ...this.templateContext };
 
     if (Object.prototype.hasOwnProperty.call(this._renderedTemplates, slotName)) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      const { context: existingContext, slot } = this._renderedTemplates[slotName];
+      var { context: existingContext, slot } = this._renderedTemplates[slotName];
       if (equals(existingContext, dataContext)) {
         return template;
       }
       this.removeChild(slot);
     }
 
-    const div = document.createElement('div');
+    var div = document.createElement('div');
     div.slot = slotName;
     div.dataset.generated = 'template';
 
@@ -155,7 +155,7 @@ export abstract class MgtTemplatedComponent extends MgtBaseComponent {
 
     this._renderedTemplates[slotName] = { context: dataContext, slot: div };
 
-    const templateRenderedData: TemplateRenderedData = { templateType, context: dataContext, element: div };
+    var templateRenderedData: TemplateRenderedData = { templateType, context: dataContext, element: div };
     this.fireCustomEvent('templateRendered', templateRenderedData);
 
     return template;
@@ -174,12 +174,12 @@ export abstract class MgtTemplatedComponent extends MgtBaseComponent {
   }
 
   private getTemplates() {
-    const templates: Record<string, OrderedHtmlTemplate> = {};
+    var templates: Record<string, OrderedHtmlTemplate> = {};
 
     for (let i = 0; i < this.children.length; i++) {
-      const child = this.children[i];
+      var child = this.children[i];
       if (child.nodeName === 'TEMPLATE') {
-        const template = child as OrderedHtmlTemplate;
+        var template = child as OrderedHtmlTemplate;
         if (template.dataset.type) {
           templates[template.dataset.type] = template;
         } else {
@@ -213,7 +213,7 @@ export abstract class MgtTemplatedComponent extends MgtBaseComponent {
   private removeUnusedSlottedElements() {
     if (this._renderedSlots) {
       for (let i = 0; i < this.children.length; i++) {
-        const child = this.children[i] as HTMLElement;
+        var child = this.children[i] as HTMLElement;
         if (child.dataset?.generated && !this._slotNamesAddedDuringRender.includes(child.slot)) {
           this.removeChild(child);
           delete this._renderedTemplates[child.slot];
