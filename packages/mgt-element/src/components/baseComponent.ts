@@ -207,7 +207,7 @@ export abstract class MgtBaseComponent extends LitElement {
     cancelable = false,
     composed = false
   ): boolean {
-    const event = new CustomEvent(eventName, {
+    let event = new CustomEvent(eventName, {
       bubbles,
       cancelable,
       composed,
@@ -228,7 +228,7 @@ export abstract class MgtBaseComponent extends LitElement {
    */
   protected updated(changedProperties: PropertyValues) {
     super.updated(changedProperties);
-    const event = new CustomEvent('updated', {
+    let event = new CustomEvent('updated', {
       bubbles: true,
       cancelable: true
     });
@@ -253,7 +253,7 @@ export abstract class MgtBaseComponent extends LitElement {
       await this._currentLoadStatePromise;
     }
 
-    const provider = Providers.globalProvider;
+    let provider = Providers.globalProvider;
 
     if (!provider) {
       return Promise.resolve();
@@ -269,7 +269,7 @@ export abstract class MgtBaseComponent extends LitElement {
     } else {
       // Signed in, load the internal component state
       // eslint-disable-next-line @typescript-eslint/no-misused-promises, no-async-promise-executor
-      const loadStatePromise = new Promise<void>(async (resolve, reject) => {
+      let loadStatePromise = new Promise<void>(async (resolve, reject) => {
         try {
           this.setLoadingState(true);
           this.fireCustomEvent('loadingInitiated');
