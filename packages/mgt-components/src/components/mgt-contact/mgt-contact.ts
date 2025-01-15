@@ -32,7 +32,7 @@ interface IContactPart {
 
 type Protocol = 'mailto:' | 'tel:';
 
-export const registerMgtContactComponent = () => {
+export var registerMgtContactComponent = () => {
   registerComponent('contact', MgtContact);
 };
 
@@ -69,7 +69,7 @@ export class MgtContact extends BasePersonCardSection {
       return false;
     }
 
-    const availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
+    var availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
 
     return !!availableParts.length;
   }
@@ -176,7 +176,7 @@ export class MgtContact extends BasePersonCardSection {
    */
   public clearState() {
     super.clearState();
-    for (const key of Object.keys(this._contactParts)) {
+    for (var key of Object.keys(this._contactParts)) {
       this._contactParts[key].value = null;
     }
   }
@@ -192,7 +192,7 @@ export class MgtContact extends BasePersonCardSection {
       return null;
     }
 
-    const availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
+    var availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
 
     // Filter for compact mode parts with values
     let compactParts: IContactPart[] = Object.values(availableParts).filter(
@@ -203,7 +203,7 @@ export class MgtContact extends BasePersonCardSection {
       compactParts = Object.values(availableParts).slice(0, 2);
     }
 
-    const contentTemplate = html`
+    var contentTemplate = html`
       ${compactParts.map(p => this.renderContactPart(p))}
     `;
 
@@ -226,7 +226,7 @@ export class MgtContact extends BasePersonCardSection {
 
     if (this.hasData) {
       // Filter for parts with values only
-      const availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
+      var availableParts: IContactPart[] = Object.values(this._contactParts).filter((p: IContactPart) => !!p.value);
       contentTemplate = html`
         ${availableParts.map(part => this.renderContactPart(part))}
       `;
@@ -254,12 +254,12 @@ export class MgtContact extends BasePersonCardSection {
       isPhone = true;
     }
 
-    const partLinkClasses = {
+    var partLinkClasses = {
       part__link: true,
       phone: isPhone
     };
 
-    const valueTemplate = part.onClick
+    var valueTemplate = part.onClick
       ? html`
           <span class=${classMap(partLinkClasses)} @click=${(e: Event) => part.onClick(e)}>${part.value}</span>
         `
@@ -319,8 +319,8 @@ export class MgtContact extends BasePersonCardSection {
       return;
     }
 
-    const url = `https://teams.microsoft.com/l/chat/0/0?users=${upn}`;
-    const openWindow = () => window.open(url, '_blank', 'noreferrer');
+    var url = `https://teams.microsoft.com/l/chat/0/0?users=${upn}`;
+    var openWindow = () => window.open(url, '_blank', 'noreferrer');
 
     if (TeamsHelper.isAvailable) {
       TeamsHelper.executeDeepLink(url, (status: boolean) => {
