@@ -39,5 +39,5 @@ export type FileProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let File = wrapMgt<FileProps>('file', registerMgtFileComponent);
+export const File = wrapMgt<FileProps>('file', registerMgtFileComponent);
 
