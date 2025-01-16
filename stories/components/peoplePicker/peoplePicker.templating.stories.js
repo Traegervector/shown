@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let personTemplates = () => html`
+export const personTemplates = () => html`
 <mgt-people-picker>
   <template data-type="selected-person">
 		<div>
@@ -29,7 +29,7 @@ export let personTemplates = () => html`
 </mgt-people-picker>
 `;
 
-export let DefaultTemplates = () => html`
+export const DefaultTemplates = () => html`
 <mgt-people-picker>
   <template data-type="loading">
 		<div class="root">
