@@ -352,7 +352,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   private async initProvider(config: Msal2Config | Msal2PublicClientApplicationConfig) {
-    const msalConfig: Configuration = config.options || { auth: { clientId: '' } };
+    var msalConfig: Configuration = config.options || { auth: { clientId: '' } };
     this.ms_config = msalConfig;
     this.ms_config.cache = msalConfig.cache || {};
     this.ms_config.cache.cacheLocation = msalConfig.cache.cacheLocation || 'localStorage';
@@ -403,7 +403,7 @@ export class Msal2Provider extends IProvider {
     this.scopes = typeof config.scopes !== 'undefined' ? config.scopes : ['user.read'];
     this._prompt = typeof config.prompt !== 'undefined' ? config.prompt : PromptType.SELECT_ACCOUNT;
 
-    const msal2config = config as Msal2Config;
+    var msal2config = config as Msal2Config;
     this.isMultipleAccountEnabled =
       typeof msal2config.isMultiAccountEnabled !== 'undefined' ? msal2config.isMultiAccountEnabled : true;
     this.baseURL = typeof msal2config.baseURL !== 'undefined' ? msal2config.baseURL : this.baseURL;
@@ -411,7 +411,7 @@ export class Msal2Provider extends IProvider {
 
     this.graph = createFromProvider(this);
     try {
-      const tokenResponse = await this._publicClientApplication.handleRedirectPromise();
+      var tokenResponse = await this._publicClientApplication.handleRedirectPromise();
       if (tokenResponse !== null) {
         this.handleResponse(tokenResponse?.account);
       } else {
@@ -435,7 +435,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public async trySilentSignIn() {
-    const silentRequest: SsoSilentRequest = {
+    var silentRequest: SsoSilentRequest = {
       scopes: this.scopes,
       domainHint: this._domainHint
     };
@@ -444,7 +444,7 @@ export class Msal2Provider extends IProvider {
       silentRequest.loginHint = this._loginHint;
       try {
         this.setState(ProviderState.Loading);
-        const response = await this._publicClientApplication.ssoSilent(silentRequest);
+        var response = await this._publicClientApplication.ssoSilent(silentRequest);
         if (response) {
           this.handleResponse(response?.account);
         }
@@ -452,7 +452,7 @@ export class Msal2Provider extends IProvider {
         this.setState(ProviderState.SignedOut);
       }
     } else {
-      const account: AccountInfo = this.getAccount();
+      var account: AccountInfo = this.getAccount();
       if (account) {
         if (await this.getAccessToken(null)) {
           this.handleResponse(account);
@@ -470,7 +470,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public async login(): Promise<void> {
-    const loginRequest: PopupRequest = {
+    var loginRequest: PopupRequest = {
       scopes: this.scopes,
       loginHint: this._loginHint,
       prompt: this._prompt,
@@ -478,7 +478,7 @@ export class Msal2Provider extends IProvider {
     };
     if (this._loginType === LoginType.Popup) {
       try {
-        const response = await this._publicClientApplication.loginPopup(loginRequest);
+        var response = await this._publicClientApplication.loginPopup(loginRequest);
         this.handleResponse(response?.account);
       } catch (error) {
         switch (true) {
@@ -496,7 +496,7 @@ export class Msal2Provider extends IProvider {
         }
       }
     } else {
-      const loginRedirectRequest: RedirectRequest = { ...loginRequest };
+      var loginRedirectRequest: RedirectRequest = { ...loginRequest };
       await this._publicClientApplication.loginRedirect(loginRedirectRequest);
     }
   }
@@ -508,7 +508,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public getAllAccounts() {
-    const usernames: IProviderAccount[] = [];
+    var usernames: IProviderAccount[] = [];
     this._publicClientApplication.getAllAccounts().forEach((account: AccountInfo) => {
       usernames.push({ name: account.name, mail: account.username, id: account.homeAccountId } as IProviderAccount);
     });
@@ -522,9 +522,9 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public setActiveAccount(user: IProviderAccount) {
-    const accountToSet = this._publicClientApplication.getAccountByHomeId(user.id);
-    const activeAccount = this._publicClientApplication.getActiveAccount();
-    const storedAccount = this.getStoredAccount();
+    var accountToSet = this._publicClientApplication.getAccountByHomeId(user.id);
+    var activeAccount = this._publicClientApplication.getActiveAccount();
+    var storedAccount = this.getStoredAccount();
     // exit early if the account is already active and stored
     if (
       storedAccount &&
@@ -547,7 +547,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public getActiveAccount() {
-    const account = this._publicClientApplication.getActiveAccount();
+    var account = this._publicClientApplication.getActiveAccount();
 
     if (account) {
       return {
@@ -609,7 +609,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   private getStoredAccount() {
-    const homeId = this.storage().getItem(this.homeAccountKey);
+    var homeId = this.storage().getItem(this.homeAccountKey);
 
     return this._publicClientApplication.getAccountByHomeId(homeId);
   }
@@ -670,7 +670,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   protected getDeniedScopes() {
-    const scopesStr = sessionStorage.getItem(this.sessionStorageDeniedScopesKey);
+    var scopesStr = sessionStorage.getItem(this.sessionStorageDeniedScopesKey);
     return scopesStr ? (JSON.parse(scopesStr) as string[]) : null;
   }
 
@@ -684,7 +684,7 @@ export class Msal2Provider extends IProvider {
    */
   protected areScopesDenied(scopes: string[]) {
     if (scopes) {
-      const deniedScopes = this.getDeniedScopes();
+      var deniedScopes = this.getDeniedScopes();
       if (deniedScopes && deniedScopes.filter(s => -1 !== scopes.indexOf(s)).length > 0) {
         return true;
       }
@@ -710,7 +710,7 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   protected getAccount(): AccountInfo | null {
-    const account = this.getStoredAccount();
+    var account = this.getStoredAccount();
     if (account) {
       return account;
     } else if (this._publicClientApplication.getAllAccounts().length > 0) {
@@ -725,8 +725,8 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public async logout() {
-    const logOutAccount = this._publicClientApplication.getActiveAccount();
-    const logOutRequest: EndSessionRequest = {
+    var logOutAccount = this._publicClientApplication.getActiveAccount();
+    var logOutRequest: EndSessionRequest = {
       account: logOutAccount
     };
     this.clearStoredAccount();
@@ -751,14 +751,14 @@ export class Msal2Provider extends IProvider {
    * @memberof Msal2Provider
    */
   public async getAccessToken(opts?: AuthenticationProviderOptions): Promise<string> {
-    const scopes = opts?.scopes?.length ? opts.scopes : this.scopes;
-    const accessTokenRequest: SilentRequest = {
+    var scopes = opts?.scopes?.length ? opts.scopes : this.scopes;
+    var accessTokenRequest: SilentRequest = {
       scopes,
       account: this.getAccount()
     };
     try {
-      const silentRequest: SilentRequest = accessTokenRequest;
-      const response = await this._publicClientApplication.acquireTokenSilent(silentRequest);
+      var silentRequest: SilentRequest = accessTokenRequest;
+      var response = await this._publicClientApplication.acquireTokenSilent(silentRequest);
       return response.accessToken;
     } catch (e) {
       if (e instanceof InteractionRequiredAuthError) {
@@ -774,7 +774,7 @@ export class Msal2Provider extends IProvider {
           }
         } else {
           try {
-            const response = await this._publicClientApplication.acquireTokenPopup(accessTokenRequest);
+            var response = await this._publicClientApplication.acquireTokenPopup(accessTokenRequest);
             return response.accessToken;
           } catch (popUpErr) {
             console.error('🦒: problem with pop-up sign in', popUpErr);
