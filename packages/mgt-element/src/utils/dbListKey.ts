@@ -12,4 +12,4 @@
  *
  */
 
-export let dbListKey = 'mgt-db-list';
+export const dbListKey = 'mgt-db-list';
