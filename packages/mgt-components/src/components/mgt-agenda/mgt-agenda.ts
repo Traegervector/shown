@@ -47,7 +47,7 @@ import { registerComponent } from '@microsoft/mgt-element';
  * @cssprop --event-attendees-color - {Color} Event attendees color
  */
 
-export var registerMgtAgendaComponent = () => {
+export const registerMgtAgendaComponent = () => {
   registerFluentComponents(fluentCard);
   // register dependent components
   registerMgtPeopleComponent();
@@ -211,15 +211,15 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
     }
 
     // Prep data
-    var events = this.showMax && this.showMax > 0 ? this.events.slice(0, this.showMax) : this.events;
+    const events = this.showMax && this.showMax > 0 ? this.events.slice(0, this.showMax) : this.events;
 
     // Default template
-    var renderedTemplate = this.renderTemplate('default', { events });
+    const renderedTemplate = this.renderTemplate('default', { events });
     if (renderedTemplate) {
       return renderedTemplate;
     }
 
-    var agendaClasses = {
+    const agendaClasses = {
       agenda: true,
       grouped: this.groupByDay
     };
@@ -305,7 +305,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
     // Update narrow state
     this._isNarrow = this.offsetWidth < 600;
 
-    var eventClasses = {
+    const eventClasses = {
       narrow: this._isNarrow
     };
 
@@ -432,7 +432,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
    */
   protected renderGroups(events: MicrosoftGraph.Event[]): TemplateResult {
     // Render list, grouped by day
-    var grouped: Record<string, MicrosoftGraph.Event[]> = {};
+    const grouped: Record<string, MicrosoftGraph.Event[]> = {};
 
     events.forEach(event => {
       let dateString = event?.start?.dateTime;
@@ -440,7 +440,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
         dateString += 'Z';
       }
 
-      var header = this.getDateHeaderFromDateTimeString(dateString);
+      const header = this.getDateHeaderFromDateTimeString(dateString);
       grouped[header] = grouped[header] || [];
       grouped[header].push(event);
     });
@@ -493,7 +493,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
       return;
     }
 
-    var events = await this.loadEvents();
+    const events = await this.loadEvents();
     if (events?.length > 0) {
       this.events = events;
     }
@@ -524,22 +524,22 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
       endString += 'Z';
     }
 
-    var start = this.prettyPrintTimeFromDateTime(new Date(startString));
-    var end = this.prettyPrintTimeFromDateTime(new Date(endString));
+    const start = this.prettyPrintTimeFromDateTime(new Date(startString));
+    const end = this.prettyPrintTimeFromDateTime(new Date(endString));
 
     return `${start} - ${end}`;
   }
 
   private async loadEvents(): Promise<MicrosoftGraph.Event[]> {
-    var p = Providers.globalProvider;
+    const p = Providers.globalProvider;
     let events: MicrosoftGraph.Event[] = [];
 
     if (p?.state === ProviderState.SignedIn) {
-      var graph = p.graph.forComponent(this);
+      const graph = p.graph.forComponent(this);
 
       if (this.eventQuery) {
         try {
-          var tokens = this.eventQuery.split('|');
+          const tokens = this.eventQuery.split('|');
           let scope: string;
           let query: string;
           if (tokens.length > 1) {
@@ -548,7 +548,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
           } else {
             query = this.eventQuery;
           }
-          var iterator = await getEventsQueryPageIterator(graph, query, scope ? [scope] : []);
+          const iterator = await getEventsQueryPageIterator(graph, query, scope ? [scope] : []);
           if (iterator?.value) {
             events = iterator.value;
 
@@ -560,12 +560,12 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
           // eslint-disable-next-line no-empty
         } catch (e) {}
       } else {
-        var start = this.date ? new Date(this.date) : new Date();
-        var end = new Date(start.getTime());
+        const start = this.date ? new Date(this.date) : new Date();
+        const end = new Date(start.getTime());
         end.setDate(start.getDate() + this.days);
 
         try {
-          var iterator = await getEventsPageIterator(graph, start, end, this.groupId);
+          const iterator = await getEventsPageIterator(graph, start, end, this.groupId);
           if (iterator?.value) {
             events = iterator.value;
 
@@ -591,7 +591,7 @@ export class MgtAgenda extends MgtTemplatedTaskComponent {
   }
 
   private getDateHeaderFromDateTimeString(dateTimeString: string) {
-    var date = new Date(dateTimeString);
+    const date = new Date(dateTimeString);
     return date.toLocaleDateString(navigator.language, {
       dateStyle: 'full',
       timeZone: this.preferredTimezone
