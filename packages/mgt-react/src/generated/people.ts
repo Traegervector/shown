@@ -33,5 +33,5 @@ export type PeopleProps = {
 	updated?: (e: CustomEvent<undefined>) => void;
 }
 
-export const People = wrapMgt<PeopleProps>('people', registerMgtPeopleComponent);
+export let People = wrapMgt<PeopleProps>('people', registerMgtPeopleComponent);
 
