@@ -14,7 +14,7 @@ describe('mgt-file-upload - tests', () => {
   Providers.globalProvider = new MockProvider(true);
 
   it('should render', async () => {
-    let mgtFileUpload = await fixture(html`<mgt-file-upload></mgt-file-upload>`);
+    const mgtFileUpload = await fixture(html`<mgt-file-upload></mgt-file-upload>`);
 
     await expect(mgtFileUpload).shadowDom.to.equal(`
     <div
