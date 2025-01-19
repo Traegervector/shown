@@ -14,17 +14,17 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const file = () => html`
+export let file = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
 `;
 
-export const RTL = () => html`
+export let RTL = () => html`
   <body dir="rtl">
     <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
   </body>
 `;
 
-export const localization = () => html`
+export let localization = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2" view="threelines"></mgt-file>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -39,10 +39,10 @@ export const localization = () => html`
   </script>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
   <script>
-    const file = document.querySelector('mgt-file');
+    let file = document.querySelector('mgt-file');
     file.addEventListener('updated', e => {
       console.log('updated', e);
     });
