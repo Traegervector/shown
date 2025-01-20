@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let planner = () => html`
+export const planner = () => html`
   <mgt-planner></mgt-planner>
   <react>
     import { Planner } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export let planner = () => html`
   </react>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-planner></mgt-planner>
   <react>
     // Check the console tab for the event to fire
@@ -34,27 +34,27 @@ export let events = () => html`
 
     export default () => {
     
-      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      let onTaskAdded = useCallback((e: CustomEvent<ITask>) => {
+      const onTaskAdded = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskAdded', e);
       }, []);
 
-      let onTaskChanged = useCallback((e: CustomEvent<ITask>) => {
+      const onTaskChanged = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskChanged', e);
       }, []);
 
-      let onTaskClick = useCallback((e: CustomEvent<ITask>) => {
+      const onTaskClick = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskClick', e);
       }, []);
 
-      let onTaskRemoved = useCallback((e: CustomEvent<ITask>) => {
+      const onTaskRemoved = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskRemoved', e);
       }, []);
 
-      let onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
+      const onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
         console.log('templateRendered', e);
       }, []);
 
@@ -71,7 +71,7 @@ export let events = () => html`
     };
   </react>
   <script>
-    let planner = document.querySelector('mgt-planner');
+    const planner = document.querySelector('mgt-planner');
     planner.addEventListener('updated', (e) => {
       console.log("Updated", e);
     });
