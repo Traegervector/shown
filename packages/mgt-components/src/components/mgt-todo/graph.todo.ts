@@ -17,8 +17,8 @@ export interface LinkedResource {
   externalId: string;
 }
 
-const writeTaskScopes = ['Tasks.ReadWrite'];
-const readTaskScopes = ['Tasks.Read', 'Tasks.ReadWrite'];
+let writeTaskScopes = ['Tasks.ReadWrite'];
+let readTaskScopes = ['Tasks.Read', 'Tasks.ReadWrite'];
 
 /**
  * Get all todo tasks for a specific task list.
@@ -28,8 +28,8 @@ const readTaskScopes = ['Tasks.Read', 'Tasks.ReadWrite'];
  * @param {string} listId
  * @returns {Promise<TodoTask[]>}
  */
-export const getTodoTasks = async (graph: IGraph, listId: string): Promise<TodoTask[]> => {
-  const tasks = (await graph
+export let getTodoTasks = async (graph: IGraph, listId: string): Promise<TodoTask[]> => {
+  let tasks = (await graph
     .api(`/me/todo/lists/${listId}/tasks`)
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readTaskScopes))
@@ -47,7 +47,7 @@ export const getTodoTasks = async (graph: IGraph, listId: string): Promise<TodoT
  * @param {string} taskId
  * @returns {Promise<TodoTask>}
  */
-export const getTodoTask = async (graph: IGraph, listId: string, taskId: string): Promise<TodoTask> =>
+export let getTodoTask = async (graph: IGraph, listId: string, taskId: string): Promise<TodoTask> =>
   (await graph
     .api(`/me/todo/lists/${listId}/tasks/${taskId}`)
     .header('Cache-Control', 'no-store')
@@ -61,8 +61,8 @@ export const getTodoTask = async (graph: IGraph, listId: string, taskId: string)
  * @param {IGraph} graph
  * @returns {Promise<TodoTaskList[]>}
  */
-export const getTodoTaskLists = async (graph: IGraph): Promise<TodoTaskList[]> => {
-  const taskLists = (await graph
+export let getTodoTaskLists = async (graph: IGraph): Promise<TodoTaskList[]> => {
+  let taskLists = (await graph
     .api('/me/todo/lists')
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readTaskScopes))
@@ -79,7 +79,7 @@ export const getTodoTaskLists = async (graph: IGraph): Promise<TodoTaskList[]> =
  * @param {string} listId
  * @returns {Promise<TodoTaskList>}
  */
-export const getTodoTaskList = async (graph: IGraph, listId: string): Promise<TodoTaskList> =>
+export let getTodoTaskList = async (graph: IGraph, listId: string): Promise<TodoTaskList> =>
   (await graph
     .api(`/me/todo/lists/${listId}`)
     .header('Cache-Control', 'no-store')
@@ -95,7 +95,7 @@ export const getTodoTaskList = async (graph: IGraph, listId: string): Promise<To
  * @param {{ title: string; dueDateTime: { dateTime: string; timeZone: string } }} taskData
  * @returns {Promise<TodoTask>}
  */
-export const createTodoTask = async (
+export let createTodoTask = async (
   graph: IGraph,
   listId: string,
   taskData: { title: string; dueDateTime?: { dateTime: string; timeZone: string } }
@@ -114,7 +114,7 @@ export const createTodoTask = async (
  * @param {{ displayName: string }} list
  * @returns {Promise<TodoTaskList>}
  */
-export const createTodoTaskList = async (graph: IGraph, listData: { displayName: string }): Promise<TodoTaskList> =>
+export let createTodoTaskList = async (graph: IGraph, listData: { displayName: string }): Promise<TodoTaskList> =>
   (await graph
     .api('/me/todo/lists')
     .header('Cache-Control', 'no-store')
@@ -130,7 +130,7 @@ export const createTodoTaskList = async (graph: IGraph, listData: { displayName:
  * @param {string} taskId
  * @returns {Promise<void>}
  */
-export const deleteTodoTask = async (graph: IGraph, listId: string, taskId: string): Promise<void> => {
+export let deleteTodoTask = async (graph: IGraph, listId: string, taskId: string): Promise<void> => {
   await graph
     .api(`/me/todo/lists/${listId}/tasks/${taskId}`)
     .header('Cache-Control', 'no-store')
@@ -146,7 +146,7 @@ export const deleteTodoTask = async (graph: IGraph, listId: string, taskId: stri
  * @param {string} listId
  * @returns {Promise<void>}
  */
-export const deleteTodoTaskList = async (graph: IGraph, listId: string): Promise<void> => {
+export let deleteTodoTaskList = async (graph: IGraph, listId: string): Promise<void> => {
   await graph
     .api(`/me/todo/lists/${listId}`)
     .header('Cache-Control', 'no-store')
@@ -164,7 +164,7 @@ export const deleteTodoTaskList = async (graph: IGraph, listId: string): Promise
  * @param {TodoTask} taskData
  * @returns {Promise<TodoTask>}
  */
-export const updateTodoTask = async (
+export let updateTodoTask = async (
   graph: IGraph,
   listId: string,
   taskId: string,
@@ -185,7 +185,7 @@ export const updateTodoTask = async (
  * @param {TodoTaskList} taskListData
  * @returns {Promise<TodoTaskList>}
  */
-export const updateTodoTaskList = async (
+export let updateTodoTaskList = async (
   graph: IGraph,
   listId: string,
   taskListData: TodoTaskList
