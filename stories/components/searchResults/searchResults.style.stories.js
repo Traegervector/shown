@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let customCSSProperties = () => html`
+export const customCSSProperties = () => html`
   <style>
     .search-results {
       --answer-border-radius: 10px;
