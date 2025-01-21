@@ -92,7 +92,7 @@ export class TeamsHelper {
    * @memberof TeamsHelper
    */
   public static executeDeepLink(deeplink: string, onComplete?: (status: boolean, reason?: string) => void): void {
-    let teams: TeamsLib = this.microsoftTeamsLib;
+    const teams: TeamsLib = this.microsoftTeamsLib;
     teams.initialize();
     teams.executeDeepLink(deeplink, onComplete);
   }
