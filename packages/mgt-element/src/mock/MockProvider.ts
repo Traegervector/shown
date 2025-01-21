@@ -29,7 +29,7 @@ export class MockProvider extends IProvider {
   constructor(signedIn = false, signedInAccounts: IProviderAccount[] = []) {
     super();
     this._mockGraphPromise = MockGraph.create(this);
-    const enableMultipleLogin = Boolean(signedInAccounts.length);
+    let enableMultipleLogin = Boolean(signedInAccounts.length);
     this.isMultipleAccountSupported = enableMultipleLogin;
     this.isMultipleAccountDisabled = !enableMultipleLogin;
     this._accounts = signedInAccounts;
