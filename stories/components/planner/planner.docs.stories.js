@@ -21,6 +21,6 @@ export default {
   }
 };
 
-export const tasks = () => html`
+export let tasks = () => html`
   <mgt-planner></mgt-planner>
 `;
