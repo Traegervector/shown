@@ -13,7 +13,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let defaultTemplates = () => html`
+export const defaultTemplates = () => html`
   <mgt-file-list>
     <template data-type="default">
       <div class="root" data-for="file in files">
@@ -34,7 +34,7 @@ export let defaultTemplates = () => html`
   </mgt-file-list>
 `;
 
-export let fileTemplate = () => html`
+export const fileTemplate = () => html`
   <!-- Uncomment the CSS tab to see custom css on hover -->
   <mgt-file-list>
     <template data-type="file">
@@ -52,7 +52,7 @@ export let fileTemplate = () => html`
   </style>
 `;
 
-export let fileTemplateEvents = () => html`
+export const fileTemplateEvents = () => html`
   <!-- You will see the selected file in the JS console -->
   <mgt-file-list id="fileList">
     <template data-type="file">
