@@ -40,10 +40,10 @@ interface ImageValue {
  * @param value {*} the value to check
  * @returns {boolean} true if the value is a collection response
  */
-export var isCollectionResponse = (value: unknown): value is CollectionResponse<unknown> =>
+export const isCollectionResponse = (value: unknown): value is CollectionResponse<unknown> =>
   Array.isArray((value as CollectionResponse<unknown>)?.value);
 
-var responseTypes = ['json', 'image'] as var;
+const responseTypes = ['json', 'image'] as const;
 /**
  * Enumeration to define what types of query are available
  *
@@ -51,15 +51,15 @@ var responseTypes = ['json', 'image'] as var;
  * @enum {string}
  */
 export type ResponseType = (typeof responseTypes)[number];
-var isResponseType = (value: unknown): value is ResponseType =>
+const isResponseType = (value: unknown): value is ResponseType =>
   typeof value === 'string' && responseTypes.includes(value as ResponseType);
-var responseTypeConverter = (value: string, defaultValue: ResponseType = 'json'): ResponseType =>
+const responseTypeConverter = (value: string, defaultValue: ResponseType = 'json'): ResponseType =>
   isResponseType(value) ? value : defaultValue;
 
 /**
  * Defines the expiration time
  */
-var getResponseInvalidationTime = (currentInvalidationPeriod: number): number =>
+const getResponseInvalidationTime = (currentInvalidationPeriod: number): number =>
   currentInvalidationPeriod ||
   CacheService.config.response.invalidationPeriod ||
   CacheService.config.defaultInvalidationPeriod;
@@ -67,7 +67,7 @@ var getResponseInvalidationTime = (currentInvalidationPeriod: number): number =>
 /**
  * Whether the response store is enabled
  */
-var getIsResponseCacheEnabled = (): boolean =>
+const getIsResponseCacheEnabled = (): boolean =>
   CacheService.config.response.isEnabled && CacheService.config.isEnabled;
 
 /**
@@ -78,7 +78,7 @@ export interface DataChangedDetail {
   error?: object;
 }
 
-export var registerMgtGetComponent = () => registerComponent('get', MgtGet);
+export const registerMgtGetComponent = () => registerComponent('get', MgtGet);
 
 /**
  * Custom element for making Microsoft Graph get queries
@@ -264,7 +264,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
   }
 
   protected renderLoading = () => {
-    var loading = this.renderTemplate('loading', null);
+    const loading = this.renderTemplate('loading', null);
     return isCollectionResponse(this.response)
       ? this.renderValueContentWithDefaultTemplate(
           html`${this.response.value.map(v => this.renderTemplate('value', v, v.id))} ${loading} `
@@ -279,7 +279,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
    */
   protected renderContent = () => {
     if (this.hasTemplate('value') && isCollectionResponse(this.response)) {
-      var valueContent: TemplateResult = isCollectionResponse(this.response)
+      const valueContent: TemplateResult = isCollectionResponse(this.response)
         ? html`
           ${this.response.value.map(v => this.renderTemplate('value', v, v.id))}
         `
@@ -297,7 +297,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
 
   private renderValueContentWithDefaultTemplate(valueContent: TemplateResult) {
     if (this.hasTemplate('default')) {
-      var defaultContent = this.renderTemplate('default', this.response);
+      const defaultContent = this.renderTemplate('default', this.response);
 
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/dot-notation
       if ((this.templates['value']?.templateOrder ?? 999) > this.templates['default'].templateOrder) {
@@ -322,7 +322,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
    * @memberof MgtGet
    */
   protected async loadState() {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
 
     this.error = null;
 
@@ -333,12 +333,12 @@ export class MgtGet extends MgtTemplatedTaskComponent {
     if (this.resource) {
       try {
         let cache: CacheStore<CacheResponse>;
-        var key = `${this.version}${this.resource}`;
+        const key = `${this.version}${this.resource}`;
         let response: Entity | CollectionResponse<Entity> | ImageValue = null;
 
         if (this.shouldRetrieveCache()) {
           cache = CacheService.getCache<CacheResponse>(schemas.get, schemas.get.stores.responses);
-          var result: CacheResponse = getIsResponseCacheEnabled() ? await cache.getValue(key) : null;
+          const result: CacheResponse = getIsResponseCacheEnabled() ? await cache.getValue(key) : null;
           if (result && getResponseInvalidationTime(this.cacheInvalidationPeriod) > Date.now() - result.timeCached) {
             response = JSON.parse(result.response) as CollectionResponse<Entity>;
           }
@@ -357,7 +357,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
             isDeltaLink = new URL(uri, 'https://graph.microsoft.com').pathname.endsWith('delta');
           }
 
-          var graph: IGraph = provider.graph.forComponent(this);
+          const graph: IGraph = provider.graph.forComponent(this);
           let request: GraphRequest = graph.api(uri).version(this.version);
 
           if (this.scopes?.length) {
@@ -368,7 +368,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
             response = (await request.get()) as CollectionResponse<Entity> | Entity;
 
             if (isDeltaLink && isCollectionResponse(this.response) && isCollectionResponse(response)) {
-              var responseValues: Entity[] = response.value;
+              const responseValues: Entity[] = response.value;
               response.value = this.response.value.concat(responseValues);
             }
 
@@ -386,7 +386,7 @@ export class MgtGet extends MgtTemplatedTaskComponent {
                 page?.['@odata.nextLink']
               ) {
                 pageCount++;
-                var nextResource = (page['@odata.nextLink'] as string).split(this.version)[1];
+                const nextResource = (page['@odata.nextLink'] as string).split(this.version)[1];
                 page = (await graph.api(nextResource).version(this.version).get()) as CollectionResponse<Entity>;
                 if (page?.value?.length) {
                   page.value = response.value.concat(page.value);
@@ -405,13 +405,13 @@ export class MgtGet extends MgtTemplatedTaskComponent {
             let image: string;
             if (this.resource.indexOf('/photo/$value') > -1) {
               // Sanitizing the resource to ensure getPhotoForResource gets the right format
-              var sanitizedResource = this.resource.replace('/photo/$value', '');
-              var photoResponse = await getPhotoForResource(graph, sanitizedResource, this.scopes);
+              const sanitizedResource = this.resource.replace('/photo/$value', '');
+              const photoResponse = await getPhotoForResource(graph, sanitizedResource, this.scopes);
               if (photoResponse) {
                 image = photoResponse.photo;
               }
             } else if (this.resource.indexOf('/thumbnails/') > -1) {
-              var imageResponse = await getDocumentThumbnail(graph, this.resource, this.scopes);
+              const imageResponse = await getDocumentThumbnail(graph, this.resource, this.scopes);
               if (imageResponse) {
                 image = imageResponse.thumbnail;
               }
