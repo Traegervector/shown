@@ -14,11 +14,11 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let teamsChannelPicker = () => html`
+export const teamsChannelPicker = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
 `;
 
-export let getSelectedChannel = () => html`
+export const getSelectedChannel = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
 
   <button class="button">Get SelectedChannel</button>
@@ -27,8 +27,8 @@ export let getSelectedChannel = () => html`
 
   <script>
     document.querySelector('.button').addEventListener('click', _ => {
-      let picker = document.querySelector('mgt-teams-channel-picker');
-      let output = document.querySelector('.output');
+      const picker = document.querySelector('mgt-teams-channel-picker');
+      const output = document.querySelector('.output');
 
       if (picker.selectedItem) {
         output.innerHTML = '<b>channel:</b> ' + picker.selectedItem.channel.displayName;
@@ -40,19 +40,19 @@ export let getSelectedChannel = () => html`
   </script>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
 
   <div class="output">no channel selected</div>
 
   <script>
-    let picker = document.querySelector('mgt-teams-channel-picker');
+    const picker = document.querySelector('mgt-teams-channel-picker');
     picker.addEventListener('updated', e => {
       console.log('updated', e);
     });
     
     picker.addEventListener('selectionChanged', e => {
-      let output = document.querySelector('.output');
+      const output = document.querySelector('.output');
 
       if (e.detail) {
         output.innerHTML = '<b>channel:</b> ' + e.detail.channel.displayName;
@@ -64,15 +64,15 @@ export let events = () => html`
   </script>
 `;
 
-export let selectChannel = () => html`
+export const selectChannel = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
 
   <button class="button">Select Channel By Id</button>
 
   <script>
-    let button = document.querySelector('.button');
+    const button = document.querySelector('.button');
     button.addEventListener('click', async _ => {
-      let picker = document.querySelector('mgt-teams-channel-picker');
+      const picker = document.querySelector('mgt-teams-channel-picker');
       button.disabled = true;
       await picker.selectChannelById('19:d0bba23c2fc8413991125a43a54cc30e@thread.skype');
       button.disabled = false;
@@ -80,16 +80,16 @@ export let selectChannel = () => html`
   </script>
 `;
 
-export let clearSelectedItem = () => html`
+export const clearSelectedItem = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
   <button class="clear">Clear SelectedChannel</button>
 
   <div class="output"></div>
 
   <script>
-    let picker = document.querySelector('mgt-teams-channel-picker');
-    let output = document.querySelector('.output');
-    let clear = document.querySelector('.clear');
+    const picker = document.querySelector('mgt-teams-channel-picker');
+    const output = document.querySelector('.output');
+    const clear = document.querySelector('.clear');
 
     clear.addEventListener('click', _ => {
       picker.clearSelectedItem();
@@ -106,13 +106,13 @@ export let clearSelectedItem = () => html`
   </script>
 `;
 
-export let RTL = () => html`
+export const RTL = () => html`
   <body dir="rtl">
     <mgt-teams-channel-picker></mgt-teams-channel-picker>
   </body>
 `;
 
-export let Localization = () => html`
+export const Localization = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
