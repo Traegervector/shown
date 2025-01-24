@@ -12,7 +12,7 @@ import { extractEmailAddress } from '../utils/Utils';
 import { schemas } from './cacheStores';
 import { IDynamicPerson } from './types';
 
-var personTypes = ['any', 'person', 'group'] as var;
+const personTypes = ['any', 'person', 'group'] as const;
 /**
  * Person Type enum
  *
@@ -20,12 +20,12 @@ var personTypes = ['any', 'person', 'group'] as var;
  * @enum {string}
  */
 export type PersonType = (typeof personTypes)[number];
-export var isPersonType = (value: unknown): value is PersonType =>
+export const isPersonType = (value: unknown): value is PersonType =>
   typeof value === 'string' && personTypes.includes(value as PersonType);
-export var personTypeConverter = (value: string, defaultValue: PersonType = 'any'): PersonType =>
+export const personTypeConverter = (value: string, defaultValue: PersonType = 'any'): PersonType =>
   isPersonType(value) ? value : defaultValue;
 
-var userTypes = ['any', 'user', 'contact'] as var;
+const userTypes = ['any', 'user', 'contact'] as const;
 /**
  * User Type enum
  *
@@ -34,11 +34,11 @@ var userTypes = ['any', 'user', 'contact'] as var;
  */
 export type UserType = (typeof userTypes)[number];
 
-export var isUserType = (value: unknown): value is UserType => {
+export const isUserType = (value: unknown): value is UserType => {
   return typeof value === 'string' && userTypes.includes(value as UserType);
 };
 
-export var userTypeConverter = (value: string, defaultValue: UserType = 'any'): UserType =>
+export const userTypeConverter = (value: string, defaultValue: UserType = 'any'): UserType =>
   isUserType(value) ? value : defaultValue;
 
 /**
@@ -68,17 +68,17 @@ interface CachePeopleQuery extends CacheItem {
 /**
  * Defines the expiration time
  */
-var getPeopleInvalidationTime = (): number => {
+const getPeopleInvalidationTime = (): number => {
   return CacheService.config.people.invalidationPeriod || CacheService.config.defaultInvalidationPeriod;
 };
 
 /**
  * Whether the people store is enabled
  */
-var getIsPeopleCacheEnabled = (): boolean => CacheService.config.people.isEnabled && CacheService.config.isEnabled;
+const getIsPeopleCacheEnabled = (): boolean => CacheService.config.people.isEnabled && CacheService.config.isEnabled;
 
-var validPeopleQueryScopes = ['People.Read', 'People.Read.All'];
-var validContactQueryScopes = ['Contacts.Read', 'Contacts.ReadWrite'];
+const validPeopleQueryScopes = ['People.Read', 'People.Read.All'];
+const validContactQueryScopes = ['Contacts.Read', 'Contacts.ReadWrite'];
 
 /**
  * async promise, returns all Graph people who are most relevant contacts to the signed in user.
@@ -89,20 +89,20 @@ var validContactQueryScopes = ['Contacts.Read', 'Contacts.ReadWrite'];
  * @param {UserType} [personType='any'] - the type of person to search for
  * @returns {(Promise<Person[]>)}
  */
-export var findPeople = async (
+export const findPeople = async (
   graph: IGraph,
   query: string,
   top = 10,
   userType: UserType = 'any',
   filters = ''
 ): Promise<Person[]> => {
-  var cacheKey = `${query}:${top}:${userType}`;
+  const cacheKey = `${query}:${top}:${userType}`;
   let cache: CacheStore<CachePeopleQuery>;
   if (getIsPeopleCacheEnabled()) {
-    var people: CacheSchema = schemas.people;
-    var peopleQuery: string = schemas.people.stores.peopleQuery;
+    const people: CacheSchema = schemas.people;
+    const peopleQuery: string = schemas.people.stores.peopleQuery;
     cache = CacheService.getCache<CachePeopleQuery>(people, peopleQuery);
-    var result: CachePeopleQuery = getIsPeopleCacheEnabled() ? await cache.getValue(cacheKey) : null;
+    const result: CachePeopleQuery = getIsPeopleCacheEnabled() ? await cache.getValue(cacheKey) : null;
     if (result && getPeopleInvalidationTime() > Date.now() - result.timeCached) {
       return result.results.map(peopleStr => JSON.parse(peopleStr) as Person);
     }
@@ -139,7 +139,7 @@ export var findPeople = async (
     graphResult = (await graphRequest.get()) as CollectionResponse<Person>;
 
     if (getIsPeopleCacheEnabled() && graphResult) {
-      var item: CachePeopleQuery = { maxResults: top, results: null };
+      const item: CachePeopleQuery = { maxResults: top, results: null };
       item.results = graphResult.value.map(personStr => JSON.stringify(personStr));
       await cache.putValue(cacheKey, item);
     }
@@ -155,25 +155,25 @@ export var findPeople = async (
  * @returns {(Promise<Person[]>)}
  * @memberof Graph
  */
-export var getPeople = async (
+export const getPeople = async (
   graph: IGraph,
   userType: UserType = 'any',
   peopleFilters = '',
   top = 10
 ): Promise<Person[]> => {
   let cache: CacheStore<CachePeopleQuery>;
-  var cacheKey = `${peopleFilters ? peopleFilters : `*:${userType}`}:${top}`;
+  const cacheKey = `${peopleFilters ? peopleFilters : `*:${userType}`}:${top}`;
 
   if (getIsPeopleCacheEnabled()) {
     cache = CacheService.getCache<CachePeopleQuery>(schemas.people, schemas.people.stores.peopleQuery);
-    var cacheRes = await cache.getValue(cacheKey);
+    const cacheRes = await cache.getValue(cacheKey);
 
     if (cacheRes && getPeopleInvalidationTime() > Date.now() - cacheRes.timeCached) {
       return cacheRes.results.map(ppl => JSON.parse(ppl) as Person);
     }
   }
 
-  var uri = '/me/people';
+  const uri = '/me/people';
   let filter = "personType/class eq 'Person'";
   if (userType !== 'any') {
     if (userType === 'user') {
@@ -211,10 +211,10 @@ export var getPeople = async (
  *
  * @param {IDynamicperson} entity
  */
-export var getEmailFromGraphEntity = (entity: IDynamicPerson): string => {
-  var person = entity as Person;
-  var user = entity as User;
-  var contact = entity as Contact;
+export const getEmailFromGraphEntity = (entity: IDynamicPerson): string => {
+  const person = entity as Person;
+  const user = entity as User;
+  const contact = entity as Contact;
 
   if (user?.mail) {
     return extractEmailAddress(user.mail);
@@ -233,20 +233,20 @@ export var getEmailFromGraphEntity = (entity: IDynamicPerson): string => {
  * @returns {(Promise<Contact[]>)}
  * @memberof Graph
  */
-export var findContactsByEmail = async (graph: IGraph, email: string): Promise<Contact[]> => {
+export const findContactsByEmail = async (graph: IGraph, email: string): Promise<Contact[]> => {
   let cache: CacheStore<CachePerson>;
   if (getIsPeopleCacheEnabled()) {
     cache = CacheService.getCache<CachePerson>(schemas.people, schemas.people.stores.contacts);
-    var contact = await cache.getValue(email);
+    const contact = await cache.getValue(email);
 
     if (contact && getPeopleInvalidationTime() > Date.now() - contact.timeCached) {
       return JSON.parse(contact.person) as Contact[];
     }
   }
 
-  var encodedEmail = encodeURIComponent(email);
+  const encodedEmail = encodeURIComponent(email);
 
-  var result = (await graph
+  const result = (await graph
     .api('/me/contacts')
     .filter(`emailAddresses/any(a:a/address eq '${encodedEmail}')`)
     .middlewareOptions(prepScopes(validContactQueryScopes))
@@ -272,17 +272,17 @@ export var findContactsByEmail = async (graph: IGraph, email: string): Promise<C
  * @returns {(Promise<Person[]>)}
  * @memberof Graph
  */
-export var getPeopleFromResource = async (
+export const getPeopleFromResource = async (
   graph: IGraph,
   version: string,
   resource: string,
   scopes: string[]
 ): Promise<Person[]> => {
   let cache: CacheStore<CachePeopleQuery>;
-  var key = `${version}${resource}`;
+  const key = `${version}${resource}`;
   if (getIsPeopleCacheEnabled()) {
     cache = CacheService.getCache<CachePeopleQuery>(schemas.people, schemas.people.stores.peopleQuery);
-    var result: CachePeopleQuery = await cache.getValue(key);
+    const result: CachePeopleQuery = await cache.getValue(key);
     if (result && getPeopleInvalidationTime() > Date.now() - result.timeCached) {
       return result.results.map(peopleStr => JSON.parse(peopleStr) as Person);
     }
@@ -300,8 +300,8 @@ export var getPeopleFromResource = async (
     let page = response;
 
     while (page?.['@odata.nextLink']) {
-      var nextLink = page['@odata.nextLink'] as string;
-      var nextResource = nextLink.split(version)[1];
+      const nextLink = page['@odata.nextLink'] as string;
+      const nextResource = nextLink.split(version)[1];
       page = (await graph.api(nextResource).version(version).get()) as CollectionResponse<Person>;
       if (page?.value?.length) {
         page.value = response.value.concat(page.value);
@@ -311,7 +311,7 @@ export var getPeopleFromResource = async (
   }
 
   if (getIsPeopleCacheEnabled() && response) {
-    var item = { results: null };
+    const item = { results: null };
     if (Array.isArray(response.value)) {
       item.results = response.value.map(personStr => JSON.stringify(personStr));
     } else {
