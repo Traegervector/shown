@@ -23,5 +23,5 @@ export type TeamsChannelPickerProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let TeamsChannelPicker = wrapMgt<TeamsChannelPickerProps>('teams-channel-picker', registerMgtTeamsChannelPickerComponent);
+export const TeamsChannelPicker = wrapMgt<TeamsChannelPickerProps>('teams-channel-picker', registerMgtTeamsChannelPickerComponent);
 
