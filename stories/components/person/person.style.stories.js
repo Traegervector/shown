@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let customCSSProperties = () => html`
+export const customCSSProperties = () => html`
   <style>
     .person {
       --person-background-color: #616161;
@@ -60,18 +60,18 @@ export let customCSSProperties = () => html`
   </style>
 
   <script>
-    let online = {
+    const online = {
       activity: 'Available',
       availability: 'Available',
       id: null
     };
-    let dnd = {
+    const dnd = {
       activity: 'DoNotDisturb',
       availability: 'DoNotDisturb',
       id: null
     };
-    let onlinePerson = document.getElementById('online');
-    let dndPerson = document.getElementById('dnd');
+    const onlinePerson = document.getElementById('online');
+    const dndPerson = document.getElementById('dnd');
 
     onlinePerson.personPresence = online;
     dndPerson.personPresence = dnd;
@@ -84,7 +84,7 @@ export let customCSSProperties = () => html`
     show-presence></mgt-person>
 `;
 
-export let personDetailPart = () => html`
+export const personDetailPart = () => html`
   <style>
     mgt-person::part(detail-line) {
       overflow: hidden;
