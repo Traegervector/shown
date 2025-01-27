@@ -15,8 +15,8 @@ import { MgtPersonCardConfig } from './MgtPersonCardConfig';
  * @memberof MgtPersonCard
  */
 
-export const getMgtPersonCardScopes = (): string[] => {
-  const scopes: string[] = [];
+export let getMgtPersonCardScopes = (): string[] => {
+  let scopes: string[] = [];
 
   if (MgtPersonCardConfig.sections.files) {
     scopes.push('Sites.Read.All');
