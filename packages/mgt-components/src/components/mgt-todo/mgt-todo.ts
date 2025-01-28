@@ -34,7 +34,7 @@ import { getSvg, SvgIcon } from '../../utils/SvgHelper';
  */
 export type TodoFilter = (task: TodoTask) => boolean;
 
-export var registerMgtTodoComponent = () => {
+export const registerMgtTodoComponent = () => {
   registerFluentComponents(fluentCheckbox, fluentRadioGroup, fluentButton);
   registerMgtPickerComponent();
   registerComponent('todo', MgtTodo);
@@ -153,16 +153,16 @@ export class MgtTodo extends MgtTasksBase {
       tasks = tasks.filter(task => this.taskFilter(task));
     }
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-    var completedTasks = tasks.filter(task => task.status === 'completed');
+    const completedTasks = tasks.filter(task => task.status === 'completed');
 
-    var taskTemplates = repeat(
+    const taskTemplates = repeat(
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       tasks.filter(task => task.status !== 'completed'),
       task => task.id,
       task => this.renderTask(task)
     );
 
-    var completedTaskTemplates = repeat(
+    const completedTaskTemplates = repeat(
       completedTasks
         .sort((a, b) => {
           return a.lastModifiedDateTime < b.lastModifiedDateTime ? -1 : 1;
@@ -204,7 +204,7 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected renderNewTask = (): TemplateResult => {
-    var addIcon = this._newTaskName
+    const addIcon = this._newTaskName
       ? html`
         <fluent-checkbox
           class="task-add-icon"
@@ -216,7 +216,7 @@ export class MgtTodo extends MgtTasksBase {
         <span class="add-icon">${getSvg(SvgIcon.Add)}</span>
       `;
 
-    var cancelIcon = html`
+    const cancelIcon = html`
       <fluent-button
         aria-label=${this.strings.cancelAddingTask}
         class="task-cancel-icon" 
@@ -225,8 +225,8 @@ export class MgtTodo extends MgtTasksBase {
         ${getSvg(SvgIcon.Cancel)}
       </fluent-button>
     `;
-    var dateClass = { dark: this._isDarkMode, date: true };
-    var calendarTemplate = html`
+    const dateClass = { dark: this._isDarkMode, date: true };
+    const calendarTemplate = html`
       <fluent-text-field
         autocomplete="off"
         type="date"
@@ -239,7 +239,7 @@ export class MgtTodo extends MgtTasksBase {
       </fluent-text-field>
     `;
 
-    var newTaskDetails = this.readOnly
+    const newTaskDetails = this.readOnly
       ? nothing
       : html`
       <fluent-text-field
@@ -301,7 +301,7 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected renderTaskDetails = (task: TodoTask) => {
-    var context = { task, list: this.currentList };
+    const context = { task, list: this.currentList };
 
     if (this.hasTemplate('task')) {
       return this.renderTemplate('task', context, task.id);
@@ -309,7 +309,7 @@ export class MgtTodo extends MgtTasksBase {
 
     let taskDetailsTemplate = null;
 
-    var taskDeleteTemplate = html`
+    const taskDeleteTemplate = html`
       <fluent-button class="task-delete"
         @click="${() => this.removeTask(task.id)}"
         aria-label="${this.strings.deleteTaskOption}">
@@ -319,8 +319,8 @@ export class MgtTodo extends MgtTasksBase {
     if (this.hasTemplate('task-details')) {
       taskDetailsTemplate = this.renderTemplate('task-details', context, `task-details-${task.id}`);
     } else {
-      var dateClass = { dark: this._isDarkMode, date: true, 'task-due': true };
-      var calendarTemplate = html`
+      const dateClass = { dark: this._isDarkMode, date: true, 'task-due': true };
+      const calendarTemplate = html`
         <fluent-text-field
           autocomplete="off"
           type="date"
@@ -340,7 +340,7 @@ export class MgtTodo extends MgtTasksBase {
         >
         </fluent-text-field>
       `;
-      var changeTaskDetailsTemplate = html`
+      const changeTaskDetailsTemplate = html`
           <fluent-text-field 
             autocomplete="off"
             appearance="outline"
@@ -376,19 +376,19 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected renderTask = (task: TodoTask) => {
-    var isCompleted = task.status === 'completed';
+    const isCompleted = task.status === 'completed';
 
-    var taskClasses = classMap({
+    const taskClasses = classMap({
       complete: isCompleted,
       'read-only': this.readOnly,
       task: true
     });
 
-    var checkboxClasses = classMap({
+    const checkboxClasses = classMap({
       complete: isCompleted
     });
 
-    var taskCheckContent = html`${getSvg(SvgIcon.CheckMark)}`;
+    const taskCheckContent = html`${getSvg(SvgIcon.CheckMark)}`;
 
     return html`
       <div class=${taskClasses} @blur="${this.handleBlur}">
@@ -416,19 +416,19 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected loadState = async (): Promise<void> => {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (!provider || provider.state !== ProviderState.SignedIn) {
       return;
     }
 
     if (!this._graph) {
-      var graph = provider.graph.forComponent(this);
+      const graph = provider.graph.forComponent(this);
       this._graph = graph;
     }
 
     if (!this.currentList && !this.initialId) {
-      var lists = await getTodoTaskLists(this._graph);
-      var defaultList = lists?.find(l => l.wellknownListName === 'defaultList');
+      const lists = await getTodoTaskLists(this._graph);
+      const defaultList = lists?.find(l => l.wellknownListName === 'defaultList');
       if (defaultList) await this.loadTasks(defaultList);
     }
 
@@ -451,8 +451,8 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected async createNewTask(): Promise<void> {
-    var listId = this.currentList.id;
-    var taskData = {
+    const listId = this.currentList.id;
+    const taskData = {
       title: this._newTaskName
     };
 
@@ -464,7 +464,7 @@ export class MgtTodo extends MgtTasksBase {
       };
     }
 
-    var task = await createTodoTask(this._graph, listId, taskData);
+    const task = await createTodoTask(this._graph, listId, taskData);
     this._tasks.unshift(task);
   }
 
@@ -515,7 +515,7 @@ export class MgtTodo extends MgtTasksBase {
    * @memberof MgtTodo
    */
   protected async updateTaskItem(task: TodoTask): Promise<void> {
-    var listId = this.currentList.id;
+    const listId = this.currentList.id;
     let taskData: TodoTask = {};
 
     if (this._changedTaskName && this._changedTaskName !== task.title) {
@@ -543,8 +543,8 @@ export class MgtTodo extends MgtTasksBase {
     if (!Object.keys(taskData).length) {
       return;
     }
-    var updatedTask = await updateTodoTask(this._graph, listId, task.id, taskData);
-    var taskIndex = this._tasks.findIndex(t => t.id === updatedTask.id);
+    const updatedTask = await updateTodoTask(this._graph, listId, task.id, taskData);
+    const taskIndex = this._tasks.findIndex(t => t.id === updatedTask.id);
     this._tasks[taskIndex] = updatedTask;
   }
 
@@ -563,8 +563,8 @@ export class MgtTodo extends MgtTasksBase {
   };
 
   protected focusOnTaskInput = (): void => {
-    var taskInputWrapper = this.renderRoot.querySelector<HTMLInputElement>('#new-task-name-input');
-    var input = taskInputWrapper?.shadowRoot.querySelector<HTMLInputElement>('input');
+    const taskInputWrapper = this.renderRoot.querySelector<HTMLInputElement>('#new-task-name-input');
+    const input = taskInputWrapper?.shadowRoot.querySelector<HTMLInputElement>('input');
     if (input) {
       input.focus();
     }
@@ -594,10 +594,10 @@ export class MgtTodo extends MgtTasksBase {
     task.status = taskStatus;
 
     // Send update request
-    var listId = this.currentList.id;
+    const listId = this.currentList.id;
     task = await updateTodoTask(this._graph, listId, task.id, task);
 
-    var taskIndex = this._tasks.findIndex(t => t.id === task.id);
+    const taskIndex = this._tasks.findIndex(t => t.id === task.id);
     this._tasks[taskIndex] = task;
     await this._task.run();
   };
@@ -606,7 +606,7 @@ export class MgtTodo extends MgtTasksBase {
     this._tasks = this._tasks.filter(t => t.id !== taskId);
     this.requestUpdate();
 
-    var listId = this.currentList.id;
+    const listId = this.currentList.id;
     await deleteTodoTask(this._graph, listId, taskId);
 
     this._tasks = this._tasks.filter(t => t.id !== taskId);
@@ -668,9 +668,9 @@ export class MgtTodo extends MgtTasksBase {
   };
 
   private readonly handleBlur = () => {
-    var task = this._taskBeingUpdated;
-    var targets = this.renderRoot.querySelectorAll('fluent-text-field');
-    for (var target of targets) {
+    const task = this._taskBeingUpdated;
+    const targets = this.renderRoot.querySelectorAll('fluent-text-field');
+    for (const target of targets) {
       if (
         task &&
         ((target as HTMLInputElement).id === task.id || (target as HTMLInputElement).id === `${task.id}-taskDate-input`)
@@ -684,7 +684,7 @@ export class MgtTodo extends MgtTasksBase {
   };
 
   private readonly handleDateChange = (e: Event) => {
-    var value = (e.target as HTMLInputElement).value;
+    const value = (e.target as HTMLInputElement).value;
     if (value) {
       this._newTaskDueDate = new Date(value + 'T17:00');
     } else {
@@ -693,9 +693,9 @@ export class MgtTodo extends MgtTasksBase {
   };
 
   private readonly handleDateUpdate = (e: Event) => {
-    var task = this._taskBeingUpdated;
+    const task = this._taskBeingUpdated;
     if (task) {
-      var value = (e.target as HTMLInputElement).value;
+      const value = (e.target as HTMLInputElement).value;
       if (value) {
         this._newTaskDueDate = new Date(value + 'T17:00');
       } else {
