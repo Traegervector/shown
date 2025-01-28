@@ -34,5 +34,5 @@ export type TaxonomyPickerProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export const TaxonomyPicker = wrapMgt<TaxonomyPickerProps>('taxonomy-picker', registerMgtTaxonomyPickerComponent);
+export let TaxonomyPicker = wrapMgt<TaxonomyPickerProps>('taxonomy-picker', registerMgtTaxonomyPickerComponent);
 
