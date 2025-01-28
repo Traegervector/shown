@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export let People = () => html`
+export const People = () => html`
   <mgt-people show-max="5"></mgt-people>
 `;
