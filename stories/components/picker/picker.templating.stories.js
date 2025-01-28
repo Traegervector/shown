@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let LoadingTemplate = () => html`
+export const LoadingTemplate = () => html`
   <mgt-picker resource="me/todo/lists" scopes="tasks.read, tasks.readwrite" key-name="displayName">
     <div>Loading template</div>
     <template data-type="loading">
@@ -23,7 +23,7 @@ export let LoadingTemplate = () => html`
   </mgt-picker>
 `;
 
-export let noDataTemplate = () => html`
+export const noDataTemplate = () => html`
   <div>
     <div>No data template</div>
     <mgt-picker resource="me/todo/lists" scopes="tasks.read, tasks.readwrite" key-name="displayName">
@@ -34,7 +34,7 @@ export let noDataTemplate = () => html`
   </div>
   `;
 
-export let errorTemplate = () => html`
+export const errorTemplate = () => html`
   <div>
     <div>Error template</div>
     <mgt-picker resource="me/todo/lists" scopes="tasks.read, tasks.readwrite" key-name="displayName">
