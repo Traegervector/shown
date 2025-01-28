@@ -42,5 +42,5 @@ export type FileListProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export const FileList = wrapMgt<FileListProps>('file-list', registerMgtFileListComponent);
+export let FileList = wrapMgt<FileListProps>('file-list', registerMgtFileListComponent);
 
