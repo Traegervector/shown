@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const personCard = () => html`
+export let personCard = () => html`
   <mgt-person-card person-query="me"></mgt-person-card>
   <react>
     import { PersonCard } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const personCard = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Open dev console and click on an event -->
   <!-- See js tab for event subscription -->
 
@@ -36,11 +36,11 @@ export const events = () => html`
     import { PersonCard } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      const onExpanded = useCallback((e: CustomEvent<null>) => {
+      let onExpanded = useCallback((e: CustomEvent<null>) => {
         console.log("expanded");
       }, []);
 
@@ -54,7 +54,7 @@ export const events = () => html`
     };
   </react>
   <script>
-    const personCard = document.querySelector('mgt-person-card');
+    let personCard = document.querySelector('mgt-person-card');
     personCard.addEventListener('updated', (e) => {
       console.log("updated", e);
     });
