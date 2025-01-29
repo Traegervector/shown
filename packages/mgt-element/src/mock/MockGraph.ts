@@ -38,7 +38,7 @@ export class MockGraph extends Graph {
    * @memberof MockGraph
    */
   public static async create(provider: MockProvider): Promise<MockGraph> {
-    let middleware: Middleware[] = [
+    const middleware: Middleware[] = [
       new AuthenticationHandler(provider),
       new RetryHandler(new RetryHandlerOptions()),
       new TelemetryHandler(),
