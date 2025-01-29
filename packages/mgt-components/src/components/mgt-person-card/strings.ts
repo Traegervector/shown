@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   showMoreSectionButton: 'Show more',
   endOfCard: 'End of the card',
   quickMessage: 'Send a quick message',
