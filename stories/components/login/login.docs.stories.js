@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const Login = () => html`
+export let Login = () => html`
   <mgt-login></mgt-login>
 `;
