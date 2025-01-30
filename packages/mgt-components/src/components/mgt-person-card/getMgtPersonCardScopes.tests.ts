@@ -10,10 +10,10 @@ import { expect } from '@open-wc/testing';
 import { getMgtPersonCardScopes } from './getMgtPersonCardScopes';
 
 describe('getMgtPersonCardScopes() tests', () => {
-  const originalConfigMessaging = MgtPersonCardConfig.isSendMessageVisible;
-  const originalConfigContactApis = MgtPersonCardConfig.useContactApis;
-  const originalConfigOrgSection = { ...MgtPersonCardConfig.sections.organization };
-  const originalConfigSections = { ...MgtPersonCardConfig.sections };
+  let originalConfigMessaging = MgtPersonCardConfig.isSendMessageVisible;
+  let originalConfigContactApis = MgtPersonCardConfig.useContactApis;
+  let originalConfigOrgSection = { ...MgtPersonCardConfig.sections.organization };
+  let originalConfigSections = { ...MgtPersonCardConfig.sections };
   beforeEach(() => {
     MgtPersonCardConfig.sections = { ...originalConfigSections };
     MgtPersonCardConfig.sections.organization = { ...originalConfigOrgSection };
@@ -21,7 +21,7 @@ describe('getMgtPersonCardScopes() tests', () => {
     MgtPersonCardConfig.isSendMessageVisible = originalConfigMessaging;
   });
   it('should have a minimal permission set', () => {
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read.All',
       'Sites.Read.All',
@@ -36,7 +36,7 @@ describe('getMgtPersonCardScopes() tests', () => {
   it('should have not have Sites.Read.All if files is configured off', () => {
     MgtPersonCardConfig.sections.files = false;
 
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read.All',
       'Mail.Read',
@@ -50,13 +50,13 @@ describe('getMgtPersonCardScopes() tests', () => {
   it('should have not have Mail scopes if mail is configured off', () => {
     MgtPersonCardConfig.sections.mailMessages = false;
 
-    const expectedScopes = ['User.Read.All', 'People.Read.All', 'Sites.Read.All', 'Contacts.Read', 'Chat.ReadWrite'];
+    let expectedScopes = ['User.Read.All', 'People.Read.All', 'Sites.Read.All', 'Contacts.Read', 'Chat.ReadWrite'];
     expect(getMgtPersonCardScopes()).to.have.members(expectedScopes);
   });
 
   it('should have People.Read but not People.Read.All if showWorksWith is false', () => {
     MgtPersonCardConfig.sections.organization.showWorksWith = false;
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read',
       'Sites.Read.All',
@@ -72,7 +72,7 @@ describe('getMgtPersonCardScopes() tests', () => {
     MgtPersonCardConfig.sections.organization = undefined;
     MgtPersonCardConfig.sections.profile = false;
 
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read',
       'User.ReadBasic.All',
       'People.Read',
@@ -82,7 +82,7 @@ describe('getMgtPersonCardScopes() tests', () => {
       'Contacts.Read',
       'Chat.ReadWrite'
     ];
-    const actualScopes = getMgtPersonCardScopes();
+    let actualScopes = getMgtPersonCardScopes();
     expect(actualScopes).to.have.members(expectedScopes);
 
     expect(actualScopes).to.not.include('User.Read.All');
@@ -91,7 +91,7 @@ describe('getMgtPersonCardScopes() tests', () => {
   it('should have not have Chat.ReadWrite if isSendMessageVisible is false', () => {
     MgtPersonCardConfig.isSendMessageVisible = false;
 
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read.All',
       'Sites.Read.All',
@@ -99,7 +99,7 @@ describe('getMgtPersonCardScopes() tests', () => {
       'Mail.ReadBasic',
       'Contacts.Read'
     ];
-    const actualScopes = getMgtPersonCardScopes();
+    let actualScopes = getMgtPersonCardScopes();
     expect(actualScopes).to.have.members(expectedScopes);
 
     expect(actualScopes).to.not.include('Chat.ReadWrite');
@@ -108,7 +108,7 @@ describe('getMgtPersonCardScopes() tests', () => {
   it('should have not have Chat.ReadWrite if useContactApis is false', () => {
     MgtPersonCardConfig.useContactApis = false;
 
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read.All',
       'Sites.Read.All',
@@ -116,7 +116,7 @@ describe('getMgtPersonCardScopes() tests', () => {
       'Mail.ReadBasic',
       'Chat.ReadWrite'
     ];
-    const actualScopes = getMgtPersonCardScopes();
+    let actualScopes = getMgtPersonCardScopes();
     expect(actualScopes).to.have.members(expectedScopes);
 
     expect(actualScopes).to.not.include('Contacts.Read');
