@@ -13,7 +13,7 @@ describe('mgt-person - tests', () => {
   registerMgtPersonComponent();
   Providers.globalProvider = new MockProvider(true);
   it('should render', async () => {
-    const person = await fixture(html`<mgt-person person-query="me" view="twolines"></mgt-person>`);
+    let person = await fixture(html`<mgt-person person-query="me" view="twolines"></mgt-person>`);
     // @ts-expect-error TS2554 expects 3 arguments got 2 https://github.com/open-wc/open-wc/issues/2746
     await oneEvent(person, 'person-image-rendered');
     await expect(person).shadowDom.to.equal(
@@ -32,7 +32,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should pop up a flyout on click', async () => {
-    const person = await fixture(html`<mgt-person person-query="me" view="twolines" person-card="click"></mgt-person>`);
+    let person = await fixture(html`<mgt-person person-query="me" view="twolines" person-card="click"></mgt-person>`);
     // @ts-expect-error TS2554 expects 3 arguments got 2 https://github.com/open-wc/open-wc/issues/2746
     await oneEvent(person, 'person-image-rendered');
     await expect(person).shadowDom.to.equal(
@@ -72,7 +72,7 @@ describe('mgt-person - tests', () => {
     // this can be flaky due to the dynamic import and timing variance
     // @ts-expect-error TS2554 expects 3 arguments got 2 https://github.com/open-wc/open-wc/issues/2746
     await oneEvent(person, 'flyout-content-rendered');
-    const flyout = person.shadowRoot.querySelector('div[data-testid="flyout-slot"]');
+    let flyout = person.shadowRoot.querySelector('div[data-testid="flyout-slot"]');
     await expect(flyout).dom.to.be.equal(`
       <div slot="flyout" data-testid="flyout-slot">
         <mgt-person-card class="mgt-person-card" lock-tab-navigation="">
@@ -81,7 +81,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with initials when given name and surname are supplied', async () => {
-    const person = await fixture(
+    let person = await fixture(
       html`<mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -95,7 +95,7 @@ describe('mgt-person - tests', () => {
 
   it('should render with initials when given name and surname are null', async () => {
     Providers.globalProvider = new MockProvider(true);
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -107,7 +107,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with first initial when only given name is supplied', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -119,7 +119,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with first initial when only given name is populated and surname is an empty string', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -131,7 +131,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with last initial when only surname is supplied', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -142,7 +142,7 @@ describe('mgt-person - tests', () => {
     await expect(person.shadowRoot.querySelector('span.initials')).lightDom.to.equal('H');
   });
   it('should render with last initial when only surname is populated and given name is an empty string', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank Herbert',
         mail: 'herbert@dune.net',
@@ -154,7 +154,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with one initial when only displayName of one word is supplied', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank',
         mail: 'herbert@dune.net',
@@ -166,7 +166,7 @@ describe('mgt-person - tests', () => {
   });
 
   it('should render with two initial when only displayName of more than two words is supplied', async () => {
-    const person = await fixture(html`
+    let person = await fixture(html`
       <mgt-person person-details='${JSON.stringify({
         displayName: 'Frank van Herbert',
         mail: 'herbert@dune.net',
@@ -195,7 +195,7 @@ describe('mgt-person - localization', () => {
         }
       }
     };
-    const person = await fixture(html`<mgt-person person-query="me" view="twolines"></mgt-person>`);
+    let person = await fixture(html`<mgt-person person-query="me" view="twolines"></mgt-person>`);
     // @ts-expect-error TS2554 expects 3 arguments got 2 https://github.com/open-wc/open-wc/issues/2746
     await oneEvent(person, 'person-image-rendered');
     await expect(person).shadowDom.to.equal(
@@ -219,7 +219,7 @@ describe('mgt-person - localization', () => {
         }
       }
     };
-    const person = await fixture(
+    let person = await fixture(
       html`<mgt-person person-details='${JSON.stringify({
         mail: 'herbert@dune.net',
         personType: {}
