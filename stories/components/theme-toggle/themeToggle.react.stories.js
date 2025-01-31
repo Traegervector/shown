@@ -18,7 +18,7 @@ export default {
   ]
 };
 
-export const UserPreferenceDriven = () => html`
+export let UserPreferenceDriven = () => html`
   <mgt-theme-toggle></mgt-theme-toggle>
   <react>
     import { ThemeToggle } from '@microsoft/mgt-react';
@@ -36,7 +36,7 @@ export const UserPreferenceDriven = () => html`
 </style>
 `;
 
-export const SetMode = () => html`
+export let SetMode = () => html`
   <mgt-theme-toggle mode="light"></mgt-theme-toggle>
   <react>
     import { ThemeToggle } from '@microsoft/mgt-react';
@@ -52,7 +52,7 @@ export const SetMode = () => html`
   </style>
 `;
 
-export const Events = () => html`
+export let Events = () => html`
   <mgt-theme-toggle></mgt-theme-toggle>
   <react>
     // Check the console tab for the event to fire
@@ -60,11 +60,11 @@ export const Events = () => html`
     import { ThemeToggle } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e) => {
+      let onUpdated = useCallback((e) => {
         console.log('updated', e); 
       });
 
-      const onDarkModeChanged = useCallback((e: CustomEvent<boolean>) => {
+      let onDarkModeChanged = useCallback((e: CustomEvent<boolean>) => {
         console.log('darkModeChanged', e); 
       }
 
@@ -82,7 +82,7 @@ export const Events = () => html`
     }
   </style>
   <script>
-    const themeToggle = document.querySelector('mgt-theme-toggle');
+    let themeToggle = document.querySelector('mgt-theme-toggle');
     themeToggle.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
