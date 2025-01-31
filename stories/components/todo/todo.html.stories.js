@@ -14,26 +14,26 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const todos = () => html`
+export let todos = () => html`
   <mgt-todo></mgt-todo>
 `;
 
-export const tasksWithTargetId = () => html`
+export let tasksWithTargetId = () => html`
   <mgt-todo target-id="AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAESAAA="></mgt-todo>
 `;
 
-export const tasksWithInitialId = () => html`
+export let tasksWithInitialId = () => html`
   <mgt-todo initial-id="AAMkAGVmMDEzMTM4LTZmYWUtNDdkNC1hMDZiLTU1OGY5OTZhYmY4OAAuAAAAAAAiQ8W967B7TKBjgx9rVEURAQAiIsqMbYjsT5e-T7KzowPTAAAAAAESAAA="></mgt-todo>
 `;
 
-export const ReadOnly = () => html`
+export let ReadOnly = () => html`
   <mgt-todo read-only></mgt-todo>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-todo></mgt-todo>
   <script>
-    const todo = document.querySelector('mgt-todo');
+    let todo = document.querySelector('mgt-todo');
     todo.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
