@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   showMoreSubtitle: 'Show more items',
   filesSectionTitle: 'Files',
   sharedTextSubtitle: 'Shared'
