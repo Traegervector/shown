@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   failUploadFile: 'File upload failed',
   successUploadFile: 'File upload succeeded',
   cancelUploadFile: 'File cancel.',
