@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const customCSSProperties = () => html`
+export let customCSSProperties = () => html`
     <style>
       .file-list {
         /** mgt-file-upload custom styling */
