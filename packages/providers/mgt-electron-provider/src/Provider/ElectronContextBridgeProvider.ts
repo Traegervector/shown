@@ -86,7 +86,7 @@ export class ElectronContextBridgeProvider extends IProvider {
    * @memberof ElectronProvider
    */
   async getAccessToken(options?: AuthenticationProviderOptions): Promise<string> {
-    let token = await this.contextBridge.token(options);
+    const token = await this.contextBridge.token(options);
     return token;
   }
 
