@@ -16,7 +16,7 @@ export default {
   }
 };
 
-export let Editor = () => html`
+export const Editor = () => html`
   <!-- Add your own HTML code here -->
 
   <script>
