@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let searchResults = () => html`
+export const searchResults = () => html`
   <mgt-search-results
     entity-types="driveItem"
     fetch-thumbnail="true"
@@ -29,7 +29,7 @@ export let searchResults = () => html`
   </react>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-search-results
     entity-types="driveItem"
     fetch-thumbnail="true"
@@ -41,15 +41,15 @@ export let events = () => html`
     import { SearchResults } from '@microsoft/mgt-react';
 
     export default () => {
-      let onUpdated = useCallback((e) => {
+      const onUpdated = useCallback((e) => {
         console.log('updated', e); 
       });
 
-      let onDataChange = useCallback((e) => {
+      const onDataChange = useCallback((e) => {
         console.log('dataChange', e); 
       });
 
-      let onTemplateRendered = useCallback((e) => {
+      const onTemplateRendered = useCallback((e) => {
         console.log('templateRendered', e); 
       });
 
@@ -66,7 +66,7 @@ export let events = () => html`
     };
   </react>
   <script>
-    let searchResults = document.querySelector('mgt-search-results');
+    const searchResults = document.querySelector('mgt-search-results');
     searchResults.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
