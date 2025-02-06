@@ -21,6 +21,6 @@ export default {
   }
 };
 
-export let person = () => html`
+export const person = () => html`
   <mgt-person person-query="me" view="twolines"></mgt-person>
 `;
