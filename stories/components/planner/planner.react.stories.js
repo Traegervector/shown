@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const planner = () => html`
+export let planner = () => html`
   <mgt-planner></mgt-planner>
   <react>
     import { Planner } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const planner = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-planner></mgt-planner>
   <react>
     // Check the console tab for the event to fire
@@ -34,27 +34,27 @@ export const events = () => html`
 
     export default () => {
     
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      const onTaskAdded = useCallback((e: CustomEvent<ITask>) => {
+      let onTaskAdded = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskAdded', e);
       }, []);
 
-      const onTaskChanged = useCallback((e: CustomEvent<ITask>) => {
+      let onTaskChanged = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskChanged', e);
       }, []);
 
-      const onTaskClick = useCallback((e: CustomEvent<ITask>) => {
+      let onTaskClick = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskClick', e);
       }, []);
 
-      const onTaskRemoved = useCallback((e: CustomEvent<ITask>) => {
+      let onTaskRemoved = useCallback((e: CustomEvent<ITask>) => {
         console.log('taskRemoved', e);
       }, []);
 
-      const onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
+      let onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
         console.log('templateRendered', e);
       }, []);
 
@@ -71,7 +71,7 @@ export const events = () => html`
     };
   </react>
   <script>
-    const planner = document.querySelector('mgt-planner');
+    let planner = document.querySelector('mgt-planner');
     planner.addEventListener('updated', (e) => {
       console.log("Updated", e);
     });
