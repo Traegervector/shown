@@ -29,7 +29,7 @@ import { customElementHelper } from './components/customElementHelper';
 /**
  * The version of the Graph to use for making requests.
  */
-var GRAPH_VERSION = 'v1.0';
+const GRAPH_VERSION = 'v1.0';
 
 /**
  * The base Graph implementation.
@@ -90,7 +90,7 @@ export class Graph implements IGraph {
    * @memberof Graph
    */
   public forComponent(component: Element | string): Graph {
-    var graph = new Graph(this._client, this._version);
+    const graph = new Graph(this._client, this._version);
     graph.setComponent(component);
     return graph;
   }
@@ -147,8 +147,8 @@ export class Graph implements IGraph {
  * @returns {Graph}
  * @memberof Graph
  */
-export var createFromProvider = (provider: IProvider, version?: string, component?: Element): Graph => {
-  var middleware: Middleware[] = [
+export const createFromProvider = (provider: IProvider, version?: string, component?: Element): Graph => {
+  const middleware: Middleware[] = [
     new AuthenticationHandler(provider),
     new RetryHandler(new RetryHandlerOptions()),
     new TelemetryHandler(),
@@ -156,13 +156,13 @@ export var createFromProvider = (provider: IProvider, version?: string, componen
     new HTTPMessageHandler()
   ];
 
-  var baseURL = provider.baseURL ? provider.baseURL : MICROSOFT_GRAPH_DEFAULT_ENDPOINT;
-  var client = Client.initWithMiddleware({
+  const baseURL = provider.baseURL ? provider.baseURL : MICROSOFT_GRAPH_DEFAULT_ENDPOINT;
+  const client = Client.initWithMiddleware({
     middleware: chainMiddleware(...middleware),
     customHosts: provider.customHosts ? new Set(provider.customHosts) : null,
     baseUrl: baseURL
   });
 
-  var graph = new Graph(client, version);
+  const graph = new Graph(client, version);
   return component ? graph.forComponent(component) : graph;
 };
