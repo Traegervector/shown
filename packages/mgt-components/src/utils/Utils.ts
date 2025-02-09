@@ -7,11 +7,11 @@
 
 import { CacheService } from '@microsoft/mgt-element';
 
-export const getRelativeDisplayDate = (date: Date): string => {
-  const now = new Date();
+export var getRelativeDisplayDate = (date: Date): string => {
+  var now = new Date();
 
   // Today -> 5:23 PM
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  var today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   if (date >= today) {
     return date.toLocaleString('default', {
       hour: 'numeric',
@@ -20,7 +20,7 @@ export const getRelativeDisplayDate = (date: Date): string => {
   }
 
   // This week -> Sun 3:04 PM
-  const sunday = new Date(today);
+  var sunday = new Date(today);
   sunday.setDate(now.getDate() - now.getDay());
   if (date >= sunday) {
     return date.toLocaleString('default', {
@@ -31,7 +31,7 @@ export const getRelativeDisplayDate = (date: Date): string => {
   }
 
   // Last two week -> Sun 8/2
-  const lastTwoWeeks = new Date(sunday);
+  var lastTwoWeeks = new Date(sunday);
   lastTwoWeeks.setDate(sunday.getDate() - 7);
   if (date >= lastTwoWeeks) {
     return date.toLocaleString('default', {
@@ -56,10 +56,10 @@ export const getRelativeDisplayDate = (date: Date): string => {
  * @param {Date} date
  * @returns
  */
-export const getDateString = (date: Date) => {
-  const month = date.getMonth();
-  const day = date.getDate();
-  const year = date.getFullYear();
+export var getDateString = (date: Date) => {
+  var month = date.getMonth();
+  var day = date.getDate();
+  var year = date.getFullYear();
 
   return `${day} / ${month} / ${year}`;
 };
@@ -71,9 +71,9 @@ export const getDateString = (date: Date) => {
  * @param {Date} date
  * @returns
  */
-export const getShortDateString = (date: Date) => {
-  const month = date.getMonth();
-  const day = date.getDate();
+export var getShortDateString = (date: Date) => {
+  var month = date.getMonth();
+  var day = date.getDate();
 
   return `${getMonthString(month)} ${day}`;
 };
@@ -85,7 +85,7 @@ export const getShortDateString = (date: Date) => {
  * @param {number} month
  * @returns {string}
  */
-export const getMonthString = (month: number): string => {
+export var getMonthString = (month: number): string => {
   switch (month) {
     case 0:
       return 'January';
@@ -124,7 +124,7 @@ export const getMonthString = (month: number): string => {
  * @param {number} day
  * @returns {string}
  */
-export const getDayOfWeekString = (day: number): string => {
+export var getDayOfWeekString = (day: number): string => {
   switch (day) {
     case 0:
       return 'Sunday';
@@ -152,7 +152,7 @@ export const getDayOfWeekString = (day: number): string => {
  * @param {number} monthNum
  * @returns {number}
  */
-export const getDaysInMonth = (monthNum: number): number => {
+export var getDaysInMonth = (monthNum: number): number => {
   switch (monthNum) {
     case 1:
       return 28;
@@ -183,8 +183,8 @@ export const getDaysInMonth = (monthNum: number): number => {
  * @param {number} year
  * @returns
  */
-export const getDateFromMonthYear = (month: number, year: number) => {
-  const yearStr = `${year}`;
+export var getDateFromMonthYear = (month: number, year: number) => {
+  var yearStr = `${year}`;
 
   let monthStr = `${month}`;
   if (monthStr.length < 2) {
@@ -203,12 +203,12 @@ export const getDateFromMonthYear = (month: number, year: number) => {
  * @returns
  */
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const debounce = (func: Function, time: number) => {
+export var debounce = (func: Function, time: number) => {
   let timeout: number;
 
   return function () {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, prefer-rest-params
-    const functionCall = () => func.apply(this, arguments);
+    var functionCall = () => func.apply(this, arguments);
 
     window.clearTimeout(timeout);
     timeout = window.setTimeout(functionCall, time);
@@ -221,9 +221,9 @@ export const debounce = (func: Function, time: number) => {
  * @param {Blob} blob
  * @returns {Promise<string>}
  */
-export const blobToBase64 = (blob: Blob): Promise<string> => {
+export var blobToBase64 = (blob: Blob): Promise<string> => {
   return new Promise((resolve, reject) => {
-    const reader = new FileReader();
+    var reader = new FileReader();
     reader.onerror = reject;
     reader.onload = () => {
       resolve(reader.result as string);
@@ -238,7 +238,7 @@ export const blobToBase64 = (blob: Blob): Promise<string> => {
  * @param {string} emailString
  * @returns {string}
  */
-export const extractEmailAddress = (emailString: string): string => {
+export var extractEmailAddress = (emailString: string): string => {
   if (emailString.startsWith('[')) {
     return emailString.match(/([a-zA-Z0-9+._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gi).toString();
   } else return emailString;
@@ -250,8 +250,8 @@ export const extractEmailAddress = (emailString: string): string => {
  * @param {string} emailString
  * @returns {boolean}
  */
-export const isValidEmail = (emailString: string): boolean => {
-  const emailRx =
+export var isValidEmail = (emailString: string): boolean => {
+  var emailRx =
     /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
   return emailRx.test(emailString);
 };
@@ -263,12 +263,12 @@ export const isValidEmail = (emailString: string): boolean => {
  * @param decimals
  * @returns
  */
-export const formatBytes = (bytes: number, decimals = 2) => {
+export var formatBytes = (bytes: number, decimals = 2) => {
   if (bytes === 0) return '0 Bytes';
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  var k = 1024;
+  var dm = decimals < 0 ? 0 : decimals;
+  var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  var i = Math.floor(Math.log(bytes) / Math.log(k));
 
   return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
 };
@@ -279,7 +279,7 @@ export const formatBytes = (bytes: number, decimals = 2) => {
  * @param summary
  * @returns string
  */
-export const sanitizeSummary = (summary: string) => {
+export var sanitizeSummary = (summary: string) => {
   if (summary) {
     summary = summary?.replace(/<ddd\/>/gi, '...');
     summary = summary?.replace(/<c0>/gi, '<b>');
@@ -295,7 +295,7 @@ export const sanitizeSummary = (summary: string) => {
  * @param fileName
  * @returns
  */
-export const trimFileExtension = (fileName: string) => {
+export var trimFileExtension = (fileName: string) => {
   return fileName?.replace(/\.[^/.]+$/, '');
 };
 
@@ -305,9 +305,9 @@ export const trimFileExtension = (fileName: string) => {
  * @param webUrl
  * @returns
  */
-export const getNameFromUrl = (webUrl: string) => {
-  const url = new URL(webUrl);
-  const name = url.pathname.split('/').pop();
+export var getNameFromUrl = (webUrl: string) => {
+  var url = new URL(webUrl);
+  var name = url.pathname.split('/').pop();
   return name.replace(/-/g, ' ');
 };
 
@@ -317,7 +317,7 @@ export const getNameFromUrl = (webUrl: string) => {
  * @param currentInvalidationPeriod
  * @returns number
  */
-export const getResponseInvalidationTime = (currentInvalidationPeriod: number) => {
+export var getResponseInvalidationTime = (currentInvalidationPeriod: number) => {
   return (
     currentInvalidationPeriod ||
     CacheService.config.response.invalidationPeriod ||
@@ -330,6 +330,6 @@ export const getResponseInvalidationTime = (currentInvalidationPeriod: number) =
  *
  * @returns boolean
  */
-export const getIsResponseCacheEnabled = () => {
+export var getIsResponseCacheEnabled = () => {
   return CacheService.config.response.isEnabled && CacheService.config.isEnabled;
 };
