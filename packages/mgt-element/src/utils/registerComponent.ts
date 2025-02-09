@@ -7,13 +7,13 @@
 
 import { customElementHelper } from '../components/customElementHelper';
 
-export let buildComponentName = (tagBase: string) => `${customElementHelper.prefix}-${tagBase}`;
+export const buildComponentName = (tagBase: string) => `${customElementHelper.prefix}-${tagBase}`;
 
-export let registerComponent = (
+export const registerComponent = (
   tagBase: string,
   constructor: CustomElementConstructor,
   options?: ElementDefinitionOptions
 ) => {
-  let tagName = buildComponentName(tagBase);
+  const tagName = buildComponentName(tagBase);
   if (!customElements.get(tagName)) customElements.define(tagName, constructor, options);
 };
