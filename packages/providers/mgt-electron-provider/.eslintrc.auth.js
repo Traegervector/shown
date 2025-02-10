@@ -1,6 +1,6 @@
-let cfg = require('../../../.eslintrc.js');
+const cfg = require('../../../.eslintrc.js');
 
-let config = Object.assign(cfg, {
+const config = Object.assign(cfg, {
   parserOptions: {
     project: 'tsconfig.authenticator.json',
     sourceType: 'module'
