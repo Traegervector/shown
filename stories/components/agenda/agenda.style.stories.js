@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const customCSSProperties = () => html`
+export let customCSSProperties = () => html`
   <mgt-agenda class="agenda" group-by-day></mgt-agenda>
   <style>
     .agenda {
