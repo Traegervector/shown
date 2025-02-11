@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const Get = () => html`
+export let Get = () => html`
 <mgt-get resource="/me/messages" scopes="mail.read">
   <template>
     <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -23,8 +23,8 @@ export const Get = () => html`
   <react>
     import { Get, MgtTemplateProps } from '@microsoft/mgt-react';
 
-    export const Messages = (props: MgtTemplateProps) => {
-      const value = props.dataContext;
+    export let Messages = (props: MgtTemplateProps) => {
+      let value = props.dataContext;
       return (
         <pre>{ JSON.stringify(value, null, 2) }</pre>
       );
@@ -38,7 +38,7 @@ export const Get = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-get resource="/me/messages" scopes="mail.read">
     <template>
       <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -47,20 +47,20 @@ export const events = () => html`
   <react>
     import { Get, MgtTemplateProps } from '@microsoft/mgt-react';
 
-    export const Messages = (props: MgtTemplateProps) => {
-      const value = props.dataContext;
+    export let Messages = (props: MgtTemplateProps) => {
+      let value = props.dataContext;
       return (
         <pre>{ JSON.stringify(value, null, 2) }</pre>
       );
     };
 
-    const onUpdated = (e: CustomEvent<undefined>) => {
+    let onUpdated = (e: CustomEvent<undefined>) => {
       console.log('updated', e);
     };
-    const onTemplateRendered = (e: CustomEvent<undefined>) => {
+    let onTemplateRendered = (e: CustomEvent<undefined>) => {
       console.log('templateRendered', e);
     };
-    const onDataChange = (e: CustomEvent<undefined>) => {
+    let onDataChange = (e: CustomEvent<undefined>) => {
       console.log('dataChange', e);
     };
 
@@ -77,7 +77,7 @@ export const events = () => html`
   </react>
 
   <script>
-    const get = document.querySelector('mgt-get');
+    let get = document.querySelector('mgt-get');
     get.addEventListener('updated', e => {
       console.log('updated', e);
     });
