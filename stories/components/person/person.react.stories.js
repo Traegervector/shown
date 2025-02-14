@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const person = () => html`
+export let person = () => html`
   <mgt-person person-query="me"></mgt-person>
   <br>
   <mgt-person person-query="me" view="oneline"></mgt-person>
@@ -43,7 +43,7 @@ export const person = () => html`
   </react>
 `;
 
-export const personCard = () => html`
+export let personCard = () => html`
    <div class="example">
      <div style="margin-bottom:10px">Person card Hover</div>
      <mgt-person person-query="me" view="twolines" person-card="hover"></mgt-person>
@@ -71,7 +71,7 @@ export const personCard = () => html`
   </react>
  `;
 
-export const events = () => html`
+export let events = () => html`
   <div style="margin-bottom: 10px">Click on each line</div>
   <div class="example">
     <mgt-person person-query="me" view="fourlines"></mgt-person>
@@ -82,11 +82,11 @@ export const events = () => html`
     import { Person, IDynamicPerson } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('component updated', e);
       }, []);
 
-      const onLineClicked = useCallback((e: CustomEvent<IDynamicPerson>) => {
+      let onLineClicked = useCallback((e: CustomEvent<IDynamicPerson>) => {
         console.log(e.detail);
       }, []);
 
