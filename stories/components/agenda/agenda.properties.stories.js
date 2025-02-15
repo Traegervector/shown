@@ -14,26 +14,26 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let getByEventQuery = () => html`
+export const getByEventQuery = () => html`
   <mgt-agenda event-query="/me/calendarview?$orderby=start/dateTime&startdatetime=2023-07-12T00:00:00.000Z&enddatetime=2023-07-18T00:00:00.000Z"></mgt-agenda>
 `;
 
-export let groupByDay = () => html`
+export const groupByDay = () => html`
   <mgt-agenda group-by-day></mgt-agenda>
 `;
 
-export let showMax = () => html`
+export const showMax = () => html`
   <mgt-agenda show-max="4"></mgt-agenda>
 `;
 
-export let getByDate = () => html`
+export const getByDate = () => html`
   <mgt-agenda group-by-day date="May 7, 2019" days="3"></mgt-agenda>
 `;
 
-export let getEventsForNextWeek = () => html`
+export const getEventsForNextWeek = () => html`
   <mgt-agenda group-by-day days="7"></mgt-agenda>
 `;
 
-export let preferredTimezone = () => html`
+export const preferredTimezone = () => html`
   <mgt-agenda preferred-timezone="Europe/Paris"></mgt-agenda>
 `;
