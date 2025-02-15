@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const person = () => html`
+export let person = () => html`
   <mgt-person person-query="me"></mgt-person>
   <br>
   <mgt-person person-query="me" view="oneline"></mgt-person>
@@ -26,7 +26,7 @@ export const person = () => html`
   <mgt-person person-query="me" view="fourlines"></mgt-person>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Check JS tab to see event listeners -->
   <div style="margin-bottom: 10px">Click on each line</div>
   <div class="example">
@@ -56,34 +56,34 @@ export const events = () => html`
   <div class="output">no line clicked</div>
 
   <script>
-    const person = document.querySelector('mgt-person');
+    let person = document.querySelector('mgt-person');
     person.addEventListener('updated', e => {
         console.log('updated', e);
     });
 
     person.addEventListener('line1clicked', e => {
-        const output = document.querySelector('.output');
+        let output = document.querySelector('.output');
 
         if (e && e.detail && e.detail.displayName) {
             output.innerHTML = '<b>line1clicked:</b> ' + e.detail.displayName;
         }
     });
     person.addEventListener('line2clicked', e => {
-        const output = document.querySelector('.output');
+        let output = document.querySelector('.output');
 
         if (e && e.detail && e.detail.jobTitle) {
             output.innerHTML = '<b>line2clicked:</b> ' + e.detail.jobTitle;
         }
     });
     person.addEventListener('line3clicked', e => {
-        const output = document.querySelector('.output');
+        let output = document.querySelector('.output');
 
         if (e && e.detail && e.detail.department) {
             output.innerHTML = '<b>line3clicked:</b> ' + e.detail.department;
         }
     });
     person.addEventListener('line4clicked', e => {
-        const output = document.querySelector('.output');
+        let output = document.querySelector('.output');
 
         if (e && e.detail && e.detail.mail) {
             output.innerHTML = '<b>line4clicked:</b> ' + e.detail.mail;
@@ -98,7 +98,7 @@ export const events = () => html`
   </style>
 `;
 
-export const RTL = () => html`
+export let RTL = () => html`
   <body dir="rtl">
     <div class="example">
       <mgt-person person-query="me" view="oneline"></mgt-person>
@@ -134,7 +134,7 @@ export const RTL = () => html`
     </style>
 `;
 
-export const personVertical = () => html`
+export let personVertical = () => html`
 
 
 <mgt-person person-query="me" class="example" vertical-layout view="oneline" person-card="hover"></mgt-person>
@@ -156,15 +156,15 @@ fallback-details='{"mail":"MeganB@M365x214355.onmicrosoft.com"}'>
 </mgt-person>
 
 <script>
-            const online = {
+            let online = {
           activity: 'Available',
           availability: 'Available',
           id: null
       };
-      const onlinePerson = document.getElementById('online');
-      const onlinePerson2 = document.getElementById('online2');
-      const onlinePerson3 = document.getElementById('online3');
-      const onlinePerson4 = document.getElementById('online4');
+      let onlinePerson = document.getElementById('online');
+      let onlinePerson2 = document.getElementById('online2');
+      let onlinePerson3 = document.getElementById('online3');
+      let onlinePerson4 = document.getElementById('online4');
 
       onlinePerson.personPresence = online;
       onlinePerson2.personPresence = online;
