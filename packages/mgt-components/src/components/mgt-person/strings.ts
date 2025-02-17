@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-const activityMap = {
+let activityMap = {
   Available: 'Available',
   Away: 'Away',
   BeRightBack: 'Be right back',
@@ -23,7 +23,7 @@ const activityMap = {
   UrgentInterruptionsOnly: 'Urgent interruptions only'
 };
 
-export const strings = {
+export let strings = {
   ...activityMap,
   photoFor: 'Photo for',
   emailAddress: 'Email address'
