@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const Agenda = () => html`
+export let Agenda = () => html`
   <mgt-agenda></mgt-agenda>
   <react>
     import { Agenda } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const Agenda = () => html`
   </react>
 `;
 
-export const getByEventQuery = () => html`
+export let getByEventQuery = () => html`
   <mgt-agenda event-query="/me/calendarview?$orderby=start/dateTime&startdatetime=2023-07-12T00:00:00.000Z&enddatetime=2023-07-18T00:00:00.000Z"></mgt-agenda>
 <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -36,7 +36,7 @@ export default () => (
 </react>
 `;
 
-export const groupByDay = () => html`
+export let groupByDay = () => html`
   <mgt-agenda group-by-day></mgt-agenda>
 <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -47,7 +47,7 @@ export default () => (
 </react>
 `;
 
-export const showMax = () => html`
+export let showMax = () => html`
   <mgt-agenda show-max="4"></mgt-agenda>
   <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -58,7 +58,7 @@ export default () => (
 </react>
 `;
 
-export const getByDate = () => html`
+export let getByDate = () => html`
   <mgt-agenda group-by-day date="May 7, 2019" days="3"></mgt-agenda>
 <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -69,7 +69,7 @@ export default () => (
 </react>
 `;
 
-export const getEventsForNextWeek = () => html`
+export let getEventsForNextWeek = () => html`
   <mgt-agenda group-by-day days="7"></mgt-agenda>
 <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -80,7 +80,7 @@ export default () => (
 </react>
 `;
 
-export const preferredTimezone = () => html`
+export let preferredTimezone = () => html`
   <mgt-agenda preferred-timezone="Europe/Paris"></mgt-agenda>
 <react>
 import { Agenda } from '@microsoft/mgt-react';
@@ -91,17 +91,17 @@ export default () => (
 </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-agenda></mgt-agenda>
   <react>
     import { Agenda } from '@microsoft/mgt-react';
 
     export default () => (
-      const onUpdated = (e) => {
+      let onUpdated = (e) => {
         console.log('updated', e);
       };
 
-      const onEventClick = (e) => {
+      let onEventClick = (e) => {
         console.log(e.detail);
       };
 
