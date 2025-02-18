@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const picker = () => html`
+export let picker = () => html`
   <mgt-picker resource="me/todo/lists" scopes="tasks.read, tasks.readwrite" placeholder="Select a task list" key-name="displayName"></mgt-picker>
   <react>
     import { Picker } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const picker = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Inspect to view log -->
   <mgt-picker resource="me/messages" scopes="mail.read" placeholder="Select a message" key-name="subject" max-pages="2"></mgt-picker>
   <react>
@@ -34,11 +34,11 @@ export const events = () => html`
     import { Picker } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      const onSelectionChanged = useCallback((e: CustomEvent<any>) => {
+      let onSelectionChanged = useCallback((e: CustomEvent<any>) => {
         console.log('selectedItem', e.detail);
       }, []);
 
