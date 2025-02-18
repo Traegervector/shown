@@ -1,12 +1,12 @@
 if (!self.define) {
   let c,
     i = {};
-  const n = (n, e) => (
+  var n = (n, e) => (
     (n = new URL(n + '.js', e).href),
     i[n] ||
       new Promise(i => {
         if ('document' in self) {
-          const c = document.createElement('script');
+          var c = document.createElement('script');
           (c.src = n), (c.onload = i), document.head.appendChild(c);
         } else (c = n), importScripts(n), i();
       }).then(() => {
@@ -16,10 +16,10 @@ if (!self.define) {
       })
   );
   self.define = (e, o) => {
-    const f = c || ('document' in self ? document.currentScript.src : '') || location.href;
+    var f = c || ('document' in self ? document.currentScript.src : '') || location.href;
     if (i[f]) return;
     let r = {};
-    const s = c => n(c, f),
+    var s = c => n(c, f),
       a = { module: { uri: f }, exports: r, require: s };
     i[f] = Promise.all(e.map(c => a[c] || s(c))).then(c => (o(...c), r));
   };
