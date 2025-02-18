@@ -17,7 +17,7 @@ import { schemas } from '../../graph/cacheStores';
 import { CollectionResponse } from '@microsoft/mgt-element';
 import { DropdownItem } from './teams-channel-picker-types';
 
-const teamReadScopes = [
+var teamReadScopes = [
   'Team.ReadBasic.All',
   'TeamSettings.Read.All',
   'TeamSettings.ReadWrite.All',
@@ -25,9 +25,9 @@ const teamReadScopes = [
   'User.ReadWrite.All'
 ];
 
-const channelReadScopes = ['Channel.ReadBasic.All', 'ChannelSettings.Read.All', 'ChannelSettings.ReadWrite.All'];
+var channelReadScopes = ['Channel.ReadBasic.All', 'ChannelSettings.Read.All', 'ChannelSettings.ReadWrite.All'];
 
-const teamPhotoReadScopes = ['Team.ReadBasic.All', 'TeamSettings.Read.All', 'TeamSettings.ReadWrite.All'];
+var teamPhotoReadScopes = ['Team.ReadBasic.All', 'TeamSettings.Read.All', 'TeamSettings.ReadWrite.All'];
 
 /**
  * async promise, returns all Teams associated with the user logged in
@@ -35,9 +35,9 @@ const teamPhotoReadScopes = ['Team.ReadBasic.All', 'TeamSettings.Read.All', 'Tea
  * @returns {Promise<Team[]>}
  * @memberof Graph
  */
-export const getAllMyTeams = async (graph: IGraph): Promise<Team[]> => {
-  const scopes = teamReadScopes;
-  const teams = (await graph
+export var getAllMyTeams = async (graph: IGraph): Promise<Team[]> => {
+  var scopes = teamReadScopes;
+  var teams = (await graph
     .api('/me/joinedTeams')
     .select(['displayName', 'id', 'isArchived'])
     .middlewareOptions(prepScopes(scopes))
@@ -56,15 +56,15 @@ type CachePhotos = Record<string, CachePhoto>;
  * @param teamIds {string[]}
  * @returns {Promise<CachePhotos>}
  */
-export const getTeamsPhotosForPhotoIds = async (graph: IGraph, teamIds: string[]): Promise<CachePhotos> => {
+export var getTeamsPhotosForPhotoIds = async (graph: IGraph, teamIds: string[]): Promise<CachePhotos> => {
   let cache: CacheStore<CachePhoto>;
   let photos: CachePhotos = {};
 
   if (getIsPhotosCacheEnabled()) {
     cache = CacheService.getCache<CachePhoto>(schemas.photos, schemas.photos.stores.teams);
-    for (const id of teamIds) {
+    for (var id of teamIds) {
       try {
-        const photoDetail = await cache.getValue(id);
+        var photoDetail = await cache.getValue(id);
         if (photoDetail && getPhotoInvalidationTime() > Date.now() - photoDetail.timeCached) {
           photos[id] = photoDetail;
         }
@@ -79,9 +79,9 @@ export const getTeamsPhotosForPhotoIds = async (graph: IGraph, teamIds: string[]
 
   photos = {};
 
-  for (const id of teamIds) {
+  for (var id of teamIds) {
     try {
-      const photoDetail = await getPhotoForResource(graph, `/teams/${id}`, teamPhotoReadScopes);
+      var photoDetail = await getPhotoForResource(graph, `/teams/${id}`, teamPhotoReadScopes);
       if (getIsPhotosCacheEnabled() && photoDetail) {
         await cache.putValue(id, photoDetail);
       }
@@ -101,17 +101,17 @@ export const getTeamsPhotosForPhotoIds = async (graph: IGraph, teamIds: string[]
  * @param teams {Team[]} the teams to get channels for
  * @returns {Promise<DropdownItem[]>} a promise that resolves to an array of DropdownItems
  */
-export const getChannelsForTeams = async (graph: IGraph, teams: Team[]): Promise<DropdownItem[]> => {
-  const batch = graph.createBatch<CollectionResponse<Channel>>();
+export var getChannelsForTeams = async (graph: IGraph, teams: Team[]): Promise<DropdownItem[]> => {
+  var batch = graph.createBatch<CollectionResponse<Channel>>();
 
-  for (const team of teams) {
+  for (var team of teams) {
     batch.get(team.id, `teams/${team.id}/channels`, channelReadScopes);
   }
 
-  const responses = await batch.executeAll();
-  const result: DropdownItem[] = [];
-  for (const team of teams) {
-    const channelsForTeam = responses.get(team.id);
+  var responses = await batch.executeAll();
+  var result: DropdownItem[] = [];
+  for (var team of teams) {
+    var channelsForTeam = responses.get(team.id);
     // skip over any teams that don't have channels
     if (!channelsForTeam?.content?.value?.length) continue;
     result.push({
