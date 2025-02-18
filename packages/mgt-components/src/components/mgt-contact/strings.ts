@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   contactSectionTitle: 'Contact',
   emailTitle: 'Email',
   chatTitle: 'Teams',
