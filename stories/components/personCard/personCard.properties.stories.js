@@ -14,10 +14,10 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const setCardDetails = () => html`
+export let setCardDetails = () => html`
   <mgt-person-card class="my-person-card"></mgt-person-card>
   <script>
-    const personCard = document.querySelector('.my-person-card');
+    let personCard = document.querySelector('.my-person-card');
 
     personCard.personDetails = {
       displayName: 'Megan Bowen',
@@ -32,7 +32,7 @@ export const setCardDetails = () => html`
   </script>
 `;
 
-export const inheritDetails = () => html`
+export let inheritDetails = () => html`
   <style>
     .note {
       margin: 2em 0 0 1em;
@@ -50,11 +50,11 @@ export const inheritDetails = () => html`
   </div>
 `;
 
-export const setUserId = () => html`
+export let setUserId = () => html`
   <mgt-person-card user-id="2804bc07-1e1f-4938-9085-ce6d756a32d2"></mgt-person-card>
 `;
 
-export const personCardConfig = () => html`
+export let personCardConfig = () => html`
 <mgt-person-card person-query="me" show-presence></mgt-person-card>
 <script>
   import { MgtPersonCardConfig } from  '@microsoft/mgt-components';
