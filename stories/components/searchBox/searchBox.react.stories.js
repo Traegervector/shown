@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const searchBox = () => html`
+export let searchBox = () => html`
   <mgt-search-box></mgt-search-box>
   <react>
     import { SearchBox } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const searchBox = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Open dev console and change the search box value -->
   <!-- See js tab for event subscription -->
   <mgt-search-box></mgt-search-box>
@@ -35,11 +35,11 @@ export const events = () => html`
     import { SearchBox } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e) => {
+      let onUpdated = useCallback((e) => {
         console.log('updated', e); 
       });
 
-      const onSearchTermChanged = useCallback((e: CustomEvent<string>) => {
+      let onSearchTermChanged = useCallback((e: CustomEvent<string>) => {
         console.log(e.detail);
       }, []);
 
@@ -51,7 +51,7 @@ export const events = () => html`
     };
   </react>
   <script>
-    const searchBox = document.querySelector('mgt-search-box');
+    let searchBox = document.querySelector('mgt-search-box');
     searchBox.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
