@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const TaxonomyPicker = () => html`
+export let TaxonomyPicker = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052"></mgt-taxonomy-picker>
   <react>
     import { TaxonomyPicker } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const TaxonomyPicker = () => html`
   </react>
 `;
 
-export const Events = () => html`
+export let Events = () => html`
   <!-- Check the console tab for results -->
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052"></mgt-taxonomy-picker>
   <react>
@@ -34,10 +34,10 @@ export const Events = () => html`
     import { TaxonomyPicker } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e) => {
+      let onUpdated = useCallback((e) => {
         console.log('updated', e); 
       });
-      const onSelectionChanged = useCallback((e: CustomEvent<IDynamicPerson[]>) => {
+      let onSelectionChanged = useCallback((e: CustomEvent<IDynamicPerson[]>) => {
         console.log(e.detail);
       }, []);
 
