@@ -14,9 +14,9 @@ describe('EventDispatcher tests', () => {
     restore();
   });
   it('should add and remove event handlers', () => {
-    let dispatcher = new EventDispatcher();
-    let handler1 = fake();
-    let handler2 = fake();
+    const dispatcher = new EventDispatcher();
+    const handler1 = fake();
+    const handler2 = fake();
     dispatcher.add(handler1);
     dispatcher.add(handler2);
     dispatcher.fire('event');
@@ -31,8 +31,8 @@ describe('EventDispatcher tests', () => {
 
   it('should not throw when remove is called with an unregistered handler', () => {
     try {
-      let dispatcher = new EventDispatcher();
-      let handler1 = fake();
+      const dispatcher = new EventDispatcher();
+      const handler1 = fake();
       dispatcher.remove(handler1);
     } catch (e) {
       assert.fail('should not throw');
