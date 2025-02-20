@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let Login = () => html`
+export const Login = () => html`
   <mgt-login></mgt-login>
   <react>
     import { Login } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export let Login = () => html`
   </react>
 `;
 
-export let LoginView = () => html`
+export const LoginView = () => html`
   <mgt-login login-view="compact"></mgt-login>
   <react>
     import { Login } from '@microsoft/mgt-react';
@@ -36,7 +36,7 @@ export let LoginView = () => html`
   </react>
 `;
 
-export let ShowPresenceLogin = () => html`
+export const ShowPresenceLogin = () => html`
   <mgt-login show-presence login-view="full"></mgt-login>
   <react>
     import { Login } from '@microsoft/mgt-react';
@@ -47,7 +47,7 @@ export let ShowPresenceLogin = () => html`
   </react>
 `;
 
-export let Events = () => html`
+export const Events = () => html`
   <mgt-login></mgt-login>
   <react>
     // Check the console tab for the event to fire
@@ -55,23 +55,23 @@ export let Events = () => html`
     import { Login } from '@microsoft/mgt-react';
 
     export default () => {
-      let onLoginInitiated = useCallback((e: CustomEvent<undefined>) => {
+      const onLoginInitiated = useCallback((e: CustomEvent<undefined>) => {
         console.log("Login Initiated");
       }, []);
 
-      let onLoginCompleted = useCallback((e: CustomEvent<undefined>) => {
+      const onLoginCompleted = useCallback((e: CustomEvent<undefined>) => {
         console.log("Login Completed");
       }, []);
 
-      let onLogoutInitiated = useCallback((e: CustomEvent<undefined>) => {
+      const onLogoutInitiated = useCallback((e: CustomEvent<undefined>) => {
         console.log("Logout Initiated");
       }, []);
 
-      let onLogoutCompleted = useCallback((e: CustomEvent<undefined>) => {
+      const onLogoutCompleted = useCallback((e: CustomEvent<undefined>) => {
         console.log("Logout Completed");
       }, []);
 
-      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
@@ -87,7 +87,7 @@ export let Events = () => html`
     };
   </react>
   <script>
-    let login = document.querySelector('mgt-login');
+    const login = document.querySelector('mgt-login');
     login.addEventListener('loginInitiated', (e) => {
       console.log("Login Initiated");
     })
