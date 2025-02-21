@@ -26,7 +26,7 @@ import {
   registerMgtTodoComponent
 } from './components/components';
 
-export const registerMgtComponents = () => {
+export let registerMgtComponents = () => {
   // this should match the set of components listed for export in packages/mgt-react/scripts/generate.js
   // all "internal" components should be registered from their parent components
   registerMgtPersonComponent();
