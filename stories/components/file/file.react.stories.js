@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const file = () => html`
+export let file = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
   <react>
     import { File } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const file = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
  
   <react>
@@ -33,7 +33,7 @@ export const events = () => html`
     import { File } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e) => {
+      let onUpdated = useCallback((e) => {
         console.log('updated', e);
       }, []);
 
@@ -47,7 +47,7 @@ export const events = () => html`
   </react>
 
   <script>
-    const file = document.querySelector('mgt-file');
+    let file = document.querySelector('mgt-file');
     file.addEventListener('updated', e => {
       console.log('updated', e);
     });
