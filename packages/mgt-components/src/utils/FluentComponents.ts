@@ -10,7 +10,7 @@ import { provideFluentDesignSystem } from '@fluentui/web-components';
 /**
  * Provides a design system to the fluent components
  */
-let designSystem = provideFluentDesignSystem();
+const designSystem = provideFluentDesignSystem();
 
 /**
  * Registers fluent components to the design system
@@ -18,12 +18,12 @@ let designSystem = provideFluentDesignSystem();
  * @param fluentComponents array of fluent components to register
  * @returns
  */
-export let registerFluentComponents = (...fluentComponents: (() => unknown)[]) => {
+export const registerFluentComponents = (...fluentComponents: (() => unknown)[]) => {
   if (!fluentComponents?.length) {
     return;
   }
 
-  for (let component of fluentComponents) {
+  for (const component of fluentComponents) {
     designSystem.register(component());
   }
 };
