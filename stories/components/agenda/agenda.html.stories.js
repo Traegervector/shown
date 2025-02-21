@@ -14,17 +14,17 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let agenda = () => html`
+export const agenda = () => html`
   <mgt-agenda></mgt-agenda>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <!-- Open dev console and click on an event -->
   <!-- See js tab for event subscription -->
 
   <mgt-agenda></mgt-agenda>
   <script>
-    let agenda = document.querySelector('mgt-agenda');
+    const agenda = document.querySelector('mgt-agenda');
     agenda.addEventListener('updated', e => {
       console.log('updated', e);
     });
@@ -35,7 +35,7 @@ export let events = () => html`
   </script>
 `;
 
-export let RTL = () => html`
+export const RTL = () => html`
   <body dir="rtl">
    <mgt-agenda></mgt-agenda>
   </body>
