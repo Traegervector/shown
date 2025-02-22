@@ -79,9 +79,9 @@ export const AgendaEventTemplate = () => html`
   <script>
     document.querySelector('mgt-agenda').templateContext = {
       dayFromDateTime: dateTimeString => {
-        var date = new Date(dateTimeString);
+        let date = new Date(dateTimeString);
         date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-        var monthNames = [
+        let monthNames = [
           'January',
           'February',
           'March',
@@ -96,9 +96,9 @@ export const AgendaEventTemplate = () => html`
           'December'
         ];
 
-        var monthIndex = date.getMonth();
-        var day = date.getDate();
-        var year = date.getFullYear();
+        let monthIndex = date.getMonth();
+        let day = date.getDate();
+        let year = date.getFullYear();
 
         return monthNames[monthIndex] + ' ' + day + ' ' + year;
       },
@@ -108,14 +108,14 @@ export const AgendaEventTemplate = () => html`
           return 'ALL DAY';
         }
 
-        var prettyPrintTimeFromDateTime = date => {
+        let prettyPrintTimeFromDateTime = date => {
           date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-          var hours = date.getHours();
-          var minutes = date.getMinutes();
-          var minutesStr = minutes < 10 ? '0' + minutes : minutes;
-          var timeString = hours + ':' + minutesStr;
+          let hours = date.getHours();
+          let minutes = date.getMinutes();
+          let minutesStr = minutes < 10 ? '0' + minutes : minutes;
+          let timeString = hours + ':' + minutesStr;
           if (timeFormat === '12') {
-            var ampm = hours >= 12 ? 'PM' : 'AM';
+            let ampm = hours >= 12 ? 'PM' : 'AM';
             hours = hours % 12;
             hours = hours ? hours : 12;
 
@@ -125,8 +125,8 @@ export const AgendaEventTemplate = () => html`
           return timeString;
         };
 
-        var start = prettyPrintTimeFromDateTime(new Date(event.start.dateTime));
-        var end = prettyPrintTimeFromDateTime(new Date(event.end.dateTime));
+        let start = prettyPrintTimeFromDateTime(new Date(event.start.dateTime));
+        let end = prettyPrintTimeFromDateTime(new Date(event.end.dateTime));
 
         return start + ' - ' + end;
       }
@@ -269,7 +269,7 @@ export const GroupedEmail = () => html`
   <script>
     document.querySelector('mgt-get').templateContext = {
       groupMail: messages => {
-        var groupBy = (list, keyGetter) => {
+        let groupBy = (list, keyGetter) => {
           const map = new Map();
           list.forEach(item => {
             const key = keyGetter(item);
@@ -283,7 +283,7 @@ export const GroupedEmail = () => html`
           return map;
         };
 
-        var grouped = groupBy(messages, m => m.sender.emailAddress.address);
+        let grouped = groupBy(messages, m => m.sender.emailAddress.address);
         return [...grouped];
       }
     };
@@ -338,8 +338,8 @@ const messagesGet = document.getElementById('messagesGet');
 
 channelPicker.addEventListener('selectionChanged', e => {
   if (e.detail?.channel?.id && e.detail?.team?.id) {
-    var channelId = e.detail.channel.id;
-    var teamId = e.detail.team.id;
+    let channelId = e.detail.channel.id;
+    let teamId = e.detail.team.id;
     messagesGet.resource = \`teams/\${teamId}/channels/\${channelId}/messages/delta\`;
   }
 });
@@ -401,24 +401,24 @@ export const TemplateRenderedEvent = () => html`
 <script type="module">
   import { Providers } from '@microsoft/mgt-element';
 
-var mgtPerson = document.querySelector('mgt-person');
+let mgtPerson = document.querySelector('mgt-person');
 
 mgtPerson.addEventListener('templateRendered', async (e) => {
 
   // this template is rendered on demand when the user first views the person card
-  var personCard = e.detail.element.querySelector('mgt-person-card');
+  let personCard = e.detail.element.querySelector('mgt-person-card');
   if (personCard) {
     // make the network call before the template is rendered
     // so the data is available when it is viewed
-    var client = Providers.globalProvider.graph.client;
-    var extensions = await client
+    let client = Providers.globalProvider.graph.client;
+    let extensions = await client
       .api('me')
       .select('id')
       .expand("extensions($filter=id eq 'com.contoso.roamingSettings')")
       .get();
 
     if (extensions.extensions.length) {
-      var contosoExtension = extensions.extensions[0];
+      let contosoExtension = extensions.extensions[0];
 
       personCard.addEventListener('templateRendered', e => {
         // this will be called when the user expands the person card the first time
