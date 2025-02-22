@@ -47,5 +47,5 @@ export type PeoplePickerProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let PeoplePicker = wrapMgt<PeoplePickerProps>('people-picker', registerMgtPeoplePickerComponent);
+export const PeoplePicker = wrapMgt<PeoplePickerProps>('people-picker', registerMgtPeoplePickerComponent);
 
