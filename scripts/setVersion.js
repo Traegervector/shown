@@ -1,22 +1,22 @@
-var child_process = require('child_process');
-var path = require('path');
-var fs = require('fs');
-var project = require('../package.json');
+let child_process = require('child_process');
+let path = require('path');
+let fs = require('fs');
+let project = require('../package.json');
 
 const ignoreDirs = ['node_modules', 'samples', 'assets'];
 
 const getFiles = (filter, startPath = 'packages') => {
-  var results = [];
+  let results = [];
 
   if (!fs.existsSync(startPath)) {
     console.log('no dir ', startPath);
     return;
   }
 
-  var files = fs.readdirSync(startPath);
-  for (var i = 0; i < files.length; i++) {
-    var filename = path.join(startPath, files[i]);
-    var stat = fs.lstatSync(filename);
+  let files = fs.readdirSync(startPath);
+  for (let i = 0; i < files.length; i++) {
+    let filename = path.join(startPath, files[i]);
+    let stat = fs.lstatSync(filename);
     if (stat.isDirectory() && ignoreDirs.indexOf(path.basename(filename)) < 0) {
       results = [...results, ...getFiles(filter, filename)]; //recurse
     } else if (filename.indexOf(filter) >= 0) {
@@ -28,18 +28,18 @@ const getFiles = (filter, startPath = 'packages') => {
 };
 
 const updateMgtDependencyVersion = (packages, version) => {
-  for (var package of packages) {
+  for (let package of packages) {
     console.log(`updating package ${package} with version ${version}`);
     const data = fs.readFileSync(package, 'utf8');
 
-    var result = data.replace(/"(@microsoft\/mgt.*)": "(\*)"/g, `"$1": "${version}"`);
+    let result = data.replace(/"(@microsoft\/mgt.*)": "(\*)"/g, `"$1": "${version}"`);
     result = result.replace(/"version": "(.*)"/g, `"version": "${version}"`);
 
     fs.writeFileSync(package, result, 'utf8');
   }
 };
 
-var version = project.version;
+let version = project.version;
 
 if (process.argv.length > 2) {
   switch (process.argv[2]) {
