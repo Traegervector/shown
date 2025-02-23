@@ -14,11 +14,11 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let planner = () => html`
+export const planner = () => html`
   <mgt-planner></mgt-planner>
 `;
 
-export let plannerWithGroupId = () => html`
+export const plannerWithGroupId = () => html`
   <mgt-planner group-id="45327068-6785-4073-8553-a750d6c16a45"></mgt-planner>
   <!--
     NOTE: the default sandbox tenant doesn't have the required Tasks.ReadWrite and
@@ -26,10 +26,10 @@ export let plannerWithGroupId = () => html`
   -->
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-planner></mgt-planner>
   <script>
-    let planner = document.querySelector('mgt-planner');
+    const planner = document.querySelector('mgt-planner');
     planner.addEventListener('updated', (e) => {
       console.log("Updated", e);
     });
