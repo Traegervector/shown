@@ -32,5 +32,5 @@ export type GetProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let Get = wrapMgt<GetProps>('get', registerMgtGetComponent);
+export const Get = wrapMgt<GetProps>('get', registerMgtGetComponent);
 
