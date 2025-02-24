@@ -45,5 +45,5 @@ export type PersonProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export const Person = wrapMgt<PersonProps>('person', registerMgtPersonComponent);
+export let Person = wrapMgt<PersonProps>('person', registerMgtPersonComponent);
 
