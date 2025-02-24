@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   SkillsAndExperienceSectionTitle: 'Skills & Experience',
   AboutCompactSectionTitle: 'About',
   SkillsSubSectionTitle: 'Skills',
