@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const peoplePicker = () => html`
+export let peoplePicker = () => html`
    <mgt-people-picker></mgt-people-picker>
  `;
