@@ -8,7 +8,7 @@
 /**
  * All schemas and stores for caching component calls
  */
-export let schemas = {
+export const schemas = {
   presence: {
     name: 'presence',
     stores: {
