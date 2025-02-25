@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const teamsChannelPicker = () => html`
+export let teamsChannelPicker = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
 `;
