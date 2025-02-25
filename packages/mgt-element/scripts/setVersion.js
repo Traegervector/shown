@@ -1,5 +1,5 @@
-const path = require('path');
-const fs = require('fs-extra');
+let path = require('path');
+let fs = require('fs-extra');
 
 licenseStr = `/**
  * -------------------------------------------------------------------------------------------
@@ -13,11 +13,11 @@ versionFile = `${licenseStr}
 // THIS FILE IS AUTO GENERATED
 // ANY CHANGES WILL BE LOST DURING BUILD
 
-export const PACKAGE_VERSION = '[VERSION]';
+export let PACKAGE_VERSION = '[VERSION]';
 `;
 
 function setVersion() {
-  const pkg = require('../../../package.json'); // use the root package.json to get the version
+  let pkg = require('../../../package.json'); // use the root package.json to get the version
   fs.writeFileSync('./src/utils/version.ts', versionFile.replace('[VERSION]', pkg.version));
 }
 
