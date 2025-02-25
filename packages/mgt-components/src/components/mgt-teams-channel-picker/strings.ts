@@ -12,7 +12,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   inputPlaceholderText: 'Select a channel',
   noResultsFound: "We didn't find any matches.",
   loadingMessage: 'Loading...',
