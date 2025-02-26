@@ -17,12 +17,12 @@ export default {
   }
 };
 
-export let LoginToShowAgenda = () => html`
+export const LoginToShowAgenda = () => html`
   <mgt-login></mgt-login>
   <mgt-agenda></mgt-agenda>
 `;
 
-export let LoginToShowAgendaReact = () => html`
+export const LoginToShowAgendaReact = () => html`
   <mgt-login></mgt-login>
   <mgt-agenda></mgt-agenda>
   <react>
