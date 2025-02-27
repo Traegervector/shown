@@ -22,5 +22,5 @@ export type SearchBoxProps = {
 	searchTermChanged?: (e: CustomEvent<string>) => void;
 }
 
-export const SearchBox = wrapMgt<SearchBoxProps>('search-box', registerMgtSearchBoxComponent);
+export let SearchBox = wrapMgt<SearchBoxProps>('search-box', registerMgtSearchBoxComponent);
 
