@@ -14,11 +14,11 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const searchBox = () => html`
+export let searchBox = () => html`
   <mgt-search-box></mgt-search-box>
 `;
 
-export const localization = () => html`
+export let localization = () => html`
   <mgt-search-box></mgt-search-box>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -33,13 +33,13 @@ export const localization = () => html`
   </script>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Open dev console and change the search box value -->
   <!-- See js tab for event subscription -->
 
   <mgt-search-box></mgt-search-box>
   <script>
-    const searchBox = document.querySelector('mgt-search-box');
+    let searchBox = document.querySelector('mgt-search-box');
     searchBox.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
