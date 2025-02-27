@@ -76,7 +76,7 @@ export abstract class IProvider implements AuthenticationProvider {
    * @returns {string[]} if any matches in requiredScopeSet exist then an empty array is returns, otherwise an array containing the first element in the requiredScopeSet is returned
    */
   public needsAdditionalScopes(requiredScopeSet: string[]): string[] {
-    const reqScopes: string[] = [];
+    let reqScopes: string[] = [];
     if (requiredScopeSet.length && !this.hasAtLeastOneApprovedScope(requiredScopeSet)) {
       reqScopes.push(requiredScopeSet[0].trim());
     }
