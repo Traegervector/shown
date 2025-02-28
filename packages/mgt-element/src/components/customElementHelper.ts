@@ -82,5 +82,5 @@ class CustomElementHelper {
  *
  * @type CustomElementHelper
  */
-let customElementHelper = new CustomElementHelper();
+const customElementHelper = new CustomElementHelper();
 export { customElementHelper };
