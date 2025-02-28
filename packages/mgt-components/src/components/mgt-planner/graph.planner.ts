@@ -10,8 +10,8 @@ import { PlannerAssignments, PlannerBucket, PlannerPlan, PlannerTask } from '@mi
 import { CollectionResponse } from '@microsoft/mgt-element';
 import { ITask } from './task-sources';
 
-var writePlannerDataScopes = ['Tasks.ReadWrite', 'Group.ReadWrite.All'];
-var readPlannerDataScopes = ['Tasks.Read', 'Group.Read.All', 'Tasks.ReadWrite', 'Group.ReadWrite.All'];
+const writePlannerDataScopes = ['Tasks.ReadWrite', 'Group.ReadWrite.All'];
+const readPlannerDataScopes = ['Tasks.Read', 'Group.Read.All', 'Tasks.ReadWrite', 'Group.ReadWrite.All'];
 
 /**
  * async promise, allows developer to create new Planner task
@@ -21,7 +21,7 @@ var readPlannerDataScopes = ['Tasks.Read', 'Group.Read.All', 'Tasks.ReadWrite', 
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var addPlannerTask = async (graph: IGraph, newTask: PlannerTask): Promise<PlannerTask> => {
+export const addPlannerTask = async (graph: IGraph, newTask: PlannerTask): Promise<PlannerTask> => {
   return (await graph
     .api('/planner/tasks')
     .header('Cache-Control', 'no-store')
@@ -38,12 +38,12 @@ export var addPlannerTask = async (graph: IGraph, newTask: PlannerTask): Promise
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var assignPeopleToPlannerTask = async (
+export const assignPeopleToPlannerTask = async (
   graph: IGraph,
   task: ITask,
   people: PlannerAssignments
 ): Promise<void> => {
-  var details: PlannerTask = { assignments: people, appliedCategories: { category4: true } };
+  const details: PlannerTask = { assignments: people, appliedCategories: { category4: true } };
   await setPlannerTaskDetails(graph, task, details);
 };
 
@@ -55,7 +55,7 @@ export var assignPeopleToPlannerTask = async (
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var removePlannerTask = async (graph: IGraph, task: ITask): Promise<void> => {
+export const removePlannerTask = async (graph: IGraph, task: ITask): Promise<void> => {
   await graph
     .api(`/planner/tasks/${task.id}`)
     .header('Cache-Control', 'no-store')
@@ -72,7 +72,7 @@ export var removePlannerTask = async (graph: IGraph, task: ITask): Promise<void>
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var setPlannerTaskComplete = async (graph: IGraph, task: ITask): Promise<void> => {
+export const setPlannerTaskComplete = async (graph: IGraph, task: ITask): Promise<void> => {
   await setPlannerTaskDetails(graph, task, { percentComplete: 100 });
 };
 
@@ -84,7 +84,7 @@ export var setPlannerTaskComplete = async (graph: IGraph, task: ITask): Promise<
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var setPlannerTaskIncomplete = async (graph: IGraph, task: ITask): Promise<void> => {
+export const setPlannerTaskIncomplete = async (graph: IGraph, task: ITask): Promise<void> => {
   await setPlannerTaskDetails(graph, task, { percentComplete: 0 });
 };
 
@@ -97,7 +97,7 @@ export var setPlannerTaskIncomplete = async (graph: IGraph, task: ITask): Promis
  * @returns {Promise<any>}
  * @memberof Graph
  */
-export var setPlannerTaskDetails = async (graph: IGraph, task: ITask, details: PlannerTask): Promise<PlannerTask> => {
+export const setPlannerTaskDetails = async (graph: IGraph, task: ITask, details: PlannerTask): Promise<PlannerTask> => {
   let response: PlannerTask;
   try {
     response = (await graph
@@ -121,9 +121,9 @@ export var setPlannerTaskDetails = async (graph: IGraph, task: ITask, details: P
  * @returns {(Promise<PlannerPlan[]>)}
  * @memberof Graph
  */
-export var getPlansForGroup = async (graph: IGraph, groupId: string): Promise<PlannerPlan[]> => {
-  var uri = `/groups/${groupId}/planner/plans`;
-  var plans = (await graph
+export const getPlansForGroup = async (graph: IGraph, groupId: string): Promise<PlannerPlan[]> => {
+  const uri = `/groups/${groupId}/planner/plans`;
+  const plans = (await graph
     .api(uri)
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readPlannerDataScopes))
@@ -139,7 +139,7 @@ export var getPlansForGroup = async (graph: IGraph, groupId: string): Promise<Pl
  * @returns {(Promise<PlannerPlan>)}
  * @memberof Graph
  */
-export var getSinglePlannerPlan = async (graph: IGraph, planId: string): Promise<PlannerPlan> =>
+export const getSinglePlannerPlan = async (graph: IGraph, planId: string): Promise<PlannerPlan> =>
   (await graph
     .api(`/planner/plans/${planId}`)
     .header('Cache-Control', 'no-store')
@@ -154,8 +154,8 @@ export var getSinglePlannerPlan = async (graph: IGraph, planId: string): Promise
  * @returns {(Promise<PlannerBucket[]>)}
  * @memberof Graph
  */
-export var getBucketsForPlannerPlan = async (graph: IGraph, planId: string): Promise<PlannerBucket[]> => {
-  var buckets = (await graph
+export const getBucketsForPlannerPlan = async (graph: IGraph, planId: string): Promise<PlannerBucket[]> => {
+  const buckets = (await graph
     .api(`/planner/plans/${planId}/buckets`)
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readPlannerDataScopes))
@@ -171,8 +171,8 @@ export var getBucketsForPlannerPlan = async (graph: IGraph, planId: string): Pro
  * @returns {(Promise<PlannerPlan[]>)}
  * @memberof Graph
  */
-export var getAllMyPlannerPlans = async (graph: IGraph): Promise<PlannerPlan[]> => {
-  var plans = (await graph
+export const getAllMyPlannerPlans = async (graph: IGraph): Promise<PlannerPlan[]> => {
+  const plans = (await graph
     .api('/me/planner/plans')
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readPlannerDataScopes))
@@ -189,8 +189,8 @@ export var getAllMyPlannerPlans = async (graph: IGraph): Promise<PlannerPlan[]> 
  * @returns {(Promise<PlannerTask[][]>)}
  * @memberof Graph
  */
-export var getTasksForPlannerBucket = async (graph: IGraph, bucketId: string): Promise<PlannerTask[]> => {
-  var tasks = (await graph
+export const getTasksForPlannerBucket = async (graph: IGraph, bucketId: string): Promise<PlannerTask[]> => {
+  const tasks = (await graph
     .api(`/planner/buckets/${bucketId}/tasks`)
     .header('Cache-Control', 'no-store')
     .middlewareOptions(prepScopes(readPlannerDataScopes))
