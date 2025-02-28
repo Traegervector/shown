@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   modified: 'modified on',
   back: 'Back',
   next: 'Next',
