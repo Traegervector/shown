@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const TaxonomyPicker = () => html`
+export let TaxonomyPicker = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052"></mgt-taxonomy-picker>
 `;
