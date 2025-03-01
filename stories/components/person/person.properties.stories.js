@@ -14,11 +14,11 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let userId = () => html`
+export const userId = () => html`
    <mgt-person user-id="2804bc07-1e1f-4938-9085-ce6d756a32d2" view="twolines"></mgt-person>
  `;
 
-export let personCard = () => html`
+export const personCard = () => html`
    <div class="example">
      <div style="margin-bottom:10px">Person card Hover</div>
      <mgt-person person-query="me" view="twolines" person-card="hover"></mgt-person>
@@ -29,10 +29,10 @@ export let personCard = () => html`
    </div>
  `;
 
-export let setPersonDetails = () => html`
+export const setPersonDetails = () => html`
    <mgt-person class="my-person" view="twolines" line2-property="title" person-card="hover" fetch-image> </mgt-person>
    <script>
-     let person = document.querySelector('.my-person');
+     const person = document.querySelector('.my-person');
 
              person.personDetails = {
                displayName: 'Megan Bowen',
@@ -44,37 +44,37 @@ export let setPersonDetails = () => html`
    </script>
  `;
 
-export let changePersonQuery = () => html`
+export const changePersonQuery = () => html`
   <mgt-person class="my-person" person-query="me" view="threelines"></mgt-person>
 
   <button class="button">Change person-query </button>
   <script>
-    let person = document.querySelector('.my-person');
-    let button = document.querySelector('.button');
+    const person = document.querySelector('.my-person');
+    const button = document.querySelector('.button');
     button.addEventListener('click', () => {
       person.personQuery = 'Isaiah';
     });
   </script>
   `;
 
-export let changeUserId = () => html`
+export const changeUserId = () => html`
   <mgt-person class="my-person" person-query="me" view="threelines"></mgt-person>
 
   <button class="button">Change user-id </button>
   <script>
-    let person = document.querySelector('.my-person');
-    let button = document.querySelector('.button');
+    const person = document.querySelector('.my-person');
+    const button = document.querySelector('.button');
     button.addEventListener('click', () => {
       person.userId = '2804bc07-1e1f-4938-9085-ce6d756a32d2';
     });
   </script>
   `;
 
-export let personImage = () => html`
+export const personImage = () => html`
   <mgt-person person-query="me" view="fourlines" fetch-image person-image="https://images.pexels.com/photos/1542085/pexels-photo-1542085.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"></mgt-person>
   `;
 
-export let personFallbackDetails = () => html`
+export const personFallbackDetails = () => html`
    <div class="example">
    <mgt-person person-query="mbowen" view="twolines" show-presence fallback-details='{"displayName":"Megan Bowen"}'></mgt-person>
  </div>
@@ -105,11 +105,11 @@ export let personFallbackDetails = () => html`
    </style>
  `;
 
-export let personPhotoOnly = () => html`
+export const personPhotoOnly = () => html`
    <mgt-person person-query="me"></mgt-person>
  `;
 
-export let personView = () => html`
+export const personView = () => html`
    <div class="example">
      <mgt-person person-query="me" view="image"></mgt-person>
    </div>
@@ -142,15 +142,15 @@ export let personView = () => html`
    </div>
 
    <script>
-             let online = {
+             const online = {
            activity: 'Available',
            availability: 'Available',
            id: null
        };
-       let onlinePerson = document.getElementById('online');
-       let onlinePerson2 = document.getElementById('online2');
-       let onlinePerson3 = document.getElementById('online3');
-       let onlinePerson4 = document.getElementById('online4');
+       const onlinePerson = document.getElementById('online');
+       const onlinePerson2 = document.getElementById('online2');
+       const onlinePerson3 = document.getElementById('online3');
+       const onlinePerson4 = document.getElementById('online4');
 
        onlinePerson.personPresence = online;
        onlinePerson2.personPresence = online;
@@ -165,19 +165,19 @@ export let personView = () => html`
    </style>
  `;
 
-export let personLineProperties = () => html`
+export const personLineProperties = () => html`
    <mgt-person person-query="me" view="threelines" show-presence line1-property="givenName" line2-property="jobTitle"
      line3-property="presenceAvailability"></mgt-person>
  `;
 
-export let personPresence = () => html`
+export const personPresence = () => html`
  <script>
- let online = {
+ const online = {
      activity: 'Available',
      availability: 'Available',
      id: null
  };
- let onlinePerson = document.getElementById('online');
+ const onlinePerson = document.getElementById('online');
  onlinePerson.personPresence = online;
  </script>
  <style>
@@ -201,70 +201,70 @@ export let personPresence = () => html`
      ></mgt-person>
  `;
 
-export let personPresenceDisplayAll = () => html`
+export const personPresenceDisplayAll = () => html`
    <script>
-     let online = {
+     const online = {
        activity: 'Available',
        availability: 'Available',
        id: null
      };
-     let onlineOof = {
+     const onlineOof = {
        activity: 'OutOfOffice',
        availability: 'Available',
        id: null
      };
-     let busy = {
+     const busy = {
        activity: 'Busy',
        availability: 'Busy',
        id: null
      };
-     let busyOof = {
+     const busyOof = {
        activity: 'OutOfOffice',
        availability: 'Busy',
        id: null
      };
-     let dnd = {
+     const dnd = {
        activity: 'DoNotDisturb',
        availability: 'DoNotDisturb',
        id: null
      };
-     let dndOof = {
+     const dndOof = {
        activity: 'OutOfOffice',
        availability: 'DoNotDisturb',
        id: null
      };
-     let away = {
+     const away = {
        activity: 'Away',
        availability: 'Away',
        id: null
      };
-     let oof = {
+     const oof = {
        activity: 'OutOfOffice',
        availability: 'Offline',
        id: null
      };
-     let offline = {
+     const offline = {
        activity: 'Offline',
        availability: 'Offline',
        id: null
      };
 
-     let onlinePerson = document.getElementById('online');
-     let onlineOofPerson = document.getElementById('onlineOof');
-     let busyPerson = document.getElementById('busy');
-     let busyOofPerson = document.getElementById('busyOof');
-     let dndPerson = document.getElementById('dnd');
-     let dndOofPerson = document.getElementById('dndOof');
-     let awayPerson = document.getElementById('away');
-     let oofPerson = document.getElementById('oof');
-     let onlinePersonSmall = document.getElementById('online-small');
-     let onlineOofPersonSmall = document.getElementById('onlineOof-small');
-     let busyPersonSmall = document.getElementById('busy-small');
-     let busyOofPersonSmall = document.getElementById('busyOof-small');
-     let dndPersonSmall = document.getElementById('dnd-small');
-     let dndOofPersonSmall = document.getElementById('dndOof-small');
-     let awayPersonSmall = document.getElementById('away-small');
-     let oofPersonSmall = document.getElementById('oof-small');
+     const onlinePerson = document.getElementById('online');
+     const onlineOofPerson = document.getElementById('onlineOof');
+     const busyPerson = document.getElementById('busy');
+     const busyOofPerson = document.getElementById('busyOof');
+     const dndPerson = document.getElementById('dnd');
+     const dndOofPerson = document.getElementById('dndOof');
+     const awayPerson = document.getElementById('away');
+     const oofPerson = document.getElementById('oof');
+     const onlinePersonSmall = document.getElementById('online-small');
+     const onlineOofPersonSmall = document.getElementById('onlineOof-small');
+     const busyPersonSmall = document.getElementById('busy-small');
+     const busyOofPersonSmall = document.getElementById('busyOof-small');
+     const dndPersonSmall = document.getElementById('dnd-small');
+     const dndOofPersonSmall = document.getElementById('dndOof-small');
+     const awayPersonSmall = document.getElementById('away-small');
+     const oofPersonSmall = document.getElementById('oof-small');
 
      onlinePerson.personPresence = online;
      onlineOofPerson.personPresence = onlineOof;
@@ -329,21 +329,21 @@ export let personPresenceDisplayAll = () => html`
    <mgt-person id="online-small" person-query="me" view="threelines" show-presence avatar-size="small"></mgt-person>
  `;
 
-export let personQuery = () => html`
+export const personQuery = () => html`
    <mgt-person person-query="me"></mgt-person>
  `;
 
-export let personAvatarType = () => html`
+export const personAvatarType = () => html`
    <mgt-person person-query="me" avatar-type="photo"></mgt-person>
    <br>
    <mgt-person person-query="me" avatar-type="initials"></mgt-person>
  `;
 
-export let personDisableImageFetch = () => html`
+export const personDisableImageFetch = () => html`
    <mgt-person person-query="me" disable-image-fetch></mgt-person>
  `;
 
-export let moreExamples = () => html`
+export const moreExamples = () => html`
    <style>
      .example {
        margin-bottom: 20px;
@@ -455,7 +455,7 @@ export let moreExamples = () => html`
 
 `;
 
-export let personDetailExamples = () => html`
+export const personDetailExamples = () => html`
 <mgt-person person-details='{"displayName":"Frank Herbert","mail":"herbert@dune.net","givenName":null,"surname":null,"personType":{}}' view="oneline"></mgt-person>
 <br>
 <mgt-person person-details='{"displayName":"Frank van Herbert","mail":"herbert@dune.net","givenName":null,"surname":null,"personType":{}}' view="oneline"></mgt-person>
