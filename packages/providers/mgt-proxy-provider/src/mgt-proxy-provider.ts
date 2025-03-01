@@ -9,7 +9,7 @@ import { property } from 'lit/decorators.js';
 import { Providers, MgtBaseProvider, registerComponent } from '@microsoft/mgt-element';
 import { ProxyProvider } from './ProxyProvider';
 
-export let registerMgtProxyProvider = () => {
+export const registerMgtProxyProvider = () => {
   registerComponent('proxy-provider', MgtProxyProvider);
 };
 
