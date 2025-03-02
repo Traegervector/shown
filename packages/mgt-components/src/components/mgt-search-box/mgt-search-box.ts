@@ -15,7 +15,7 @@ import { styles } from './mgt-search-box-css';
 import { debounce } from '../../utils/Utils';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export const registerMgtSearchBoxComponent = () => {
+export let registerMgtSearchBoxComponent = () => {
   registerFluentComponents(fluentSearch);
   registerComponent('search-box', MgtSearchBox);
 };
