@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const Agenda = () => html`
+export let Agenda = () => html`
   <mgt-agenda></mgt-agenda>
 `;
