@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const teamsChannelPicker = () => html`
+export let teamsChannelPicker = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
   <react>
     import { TeamsChannelPicker } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export const teamsChannelPicker = () => html`
   </react>
 `;
 
-export const Events = () => html`
+export let Events = () => html`
   <mgt-teams-channel-picker></mgt-teams-channel-picker>
   <react>
     // Check the console tab for the event to fire
@@ -33,11 +33,11 @@ export const Events = () => html`
     import { TeamsChannelPicker, SelectedChannel } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       });
 
-      const onSelectionChanged = useCallback((e: CustomEvent<SelectedChannel | null>) => {
+      let onSelectionChanged = useCallback((e: CustomEvent<SelectedChannel | null>) => {
         console.log(e.detail);
       }, []);
 
@@ -50,7 +50,7 @@ export const Events = () => html`
     };
   </react>
   <script>
-    const picker = document.querySelector('mgt-teams-channel-picker');
+    let picker = document.querySelector('mgt-teams-channel-picker');
     picker.addEventListener('selectionChanged', e => {
       console.log(e.detail);
     });
