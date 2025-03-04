@@ -14,10 +14,10 @@ import { GraphEndpoint, MICROSOFT_GRAPH_ENDPOINTS } from '../IGraph';
  * @returns GraphEndpoint
  */
 
-export let validateBaseURL = (url: string): GraphEndpoint => {
+export const validateBaseURL = (url: string): GraphEndpoint => {
   try {
-    let urlObj = new URL(url);
-    let originAsEndpoint = urlObj.origin as GraphEndpoint;
+    const urlObj = new URL(url);
+    const originAsEndpoint = urlObj.origin as GraphEndpoint;
     if (MICROSOFT_GRAPH_ENDPOINTS.has(originAsEndpoint)) {
       return originAsEndpoint;
     }
