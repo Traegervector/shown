@@ -52,9 +52,9 @@ export class GraphPageIterator<T> {
    * @memberof GraphPageIterator
    */
   public static async create<T>(graph: IGraph, request: GraphRequest, version?: string): Promise<GraphPageIterator<T>> {
-    let response = (await request.get()) as CollectionResponse<T>;
+    const response = (await request.get()) as CollectionResponse<T>;
     if (response?.value) {
-      let iterator = new GraphPageIterator<T>();
+      const iterator = new GraphPageIterator<T>();
       iterator._graph = graph;
       iterator._value = response.value;
       iterator._nextLink = response['@odata.nextLink'] as string;
@@ -78,7 +78,7 @@ export class GraphPageIterator<T> {
    * @memberof GraphPageIterator
    */
   public static createFromValue<T>(graph: IGraph, value: T[], nextLink: string = null): GraphPageIterator<T> {
-    let iterator = new GraphPageIterator<T>();
+    const iterator = new GraphPageIterator<T>();
 
     // create iterator from values
     iterator._graph = graph;
@@ -112,8 +112,8 @@ export class GraphPageIterator<T> {
    */
   public async next(): Promise<T[]> {
     if (this._nextLink) {
-      let nextResource = this._nextLink.split(this._version)[1];
-      let response = (await this._graph.api(nextResource).version(this._version).get()) as CollectionResponse<T>;
+      const nextResource = this._nextLink.split(this._version)[1];
+      const response = (await this._graph.api(nextResource).version(this._version).get()) as CollectionResponse<T>;
       if (response?.value?.length) {
         this._value = this._value.concat(response.value);
         this._nextLink = response['@odata.nextLink'] as string;
