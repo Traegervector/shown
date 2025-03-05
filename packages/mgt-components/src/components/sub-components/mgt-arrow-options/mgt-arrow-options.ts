@@ -22,7 +22,7 @@ import { registerComponent } from '@microsoft/mgt-element';
   - benotter
  */
 
-export const registerMgtArrowOptionsComponent = () => {
+export let registerMgtArrowOptionsComponent = () => {
   registerFluentComponents(fluentMenu, fluentMenuItem, fluentButton);
   registerComponent('arrow-options', MgtArrowOptions);
 };
@@ -100,7 +100,7 @@ export class MgtArrowOptions extends MgtBaseTaskComponent {
    * @memberof MgtArrowOptions
    */
   public onHeaderClick = (e: MouseEvent) => {
-    const keys = Object.keys(this.options);
+    let keys = Object.keys(this.options);
     if (keys.length > 1) {
       e.preventDefault();
       e.stopPropagation();
@@ -123,15 +123,15 @@ export class MgtArrowOptions extends MgtBaseTaskComponent {
       // by the time I set the first element's focus, the classes are not
       // updated and that has no effect. You can't set focus on elements
       // that have no display.
-      const fluentMenuEl: HTMLElement = this.renderRoot.querySelector('fluent-menu');
+      let fluentMenuEl: HTMLElement = this.renderRoot.querySelector('fluent-menu');
       if (fluentMenuEl) {
         fluentMenuEl.classList.remove('closed');
         fluentMenuEl.classList.add('open');
       }
 
-      const header: HTMLButtonElement = e.target as HTMLButtonElement;
+      let header: HTMLButtonElement = e.target as HTMLButtonElement;
       if (header) {
-        const firstMenuItem: HTMLElement = this.renderRoot.querySelector("fluent-menu-item[tabindex='0']");
+        let firstMenuItem: HTMLElement = this.renderRoot.querySelector("fluent-menu-item[tabindex='0']");
         if (firstMenuItem) {
           header.blur();
           firstMenuItem.focus();
@@ -161,17 +161,17 @@ export class MgtArrowOptions extends MgtBaseTaskComponent {
   };
 
   private getMenuOptions() {
-    const keys = Object.keys(this.options);
+    let keys = Object.keys(this.options);
 
     return keys.map((opt: string) => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      const clickFn = (e: MouseEvent) => {
+      let clickFn = (e: MouseEvent) => {
         this.open = false;
         this.options[opt](e);
       };
 
-      const keyDownFn = (e: KeyboardEvent) => {
-        const header: HTMLButtonElement = this.renderRoot.querySelector<HTMLButtonElement>('.header');
+      let keyDownFn = (e: KeyboardEvent) => {
+        let header: HTMLButtonElement = this.renderRoot.querySelector<HTMLButtonElement>('.header');
         if (e.key === 'Enter') {
           this.open = false;
           this.options[opt](e);
