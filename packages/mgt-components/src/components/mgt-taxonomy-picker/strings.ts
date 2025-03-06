@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   termsetIdRequired: 'The termsetId property or termset-id attribute is required',
   noTermsFound: 'No terms found',
   comboboxPlaceholder: 'Select a term',
