@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export let strings = {
+export const strings = {
   modifiedSubtitle: 'Modified',
   sizeSubtitle: 'Size'
 };
