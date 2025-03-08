@@ -15,7 +15,7 @@ import * as React from 'react';
  * @param {P} props
  * @return {*}  {React.FunctionComponentElement<React.SuspenseProps>}
  */
-export const lazyLoadComponent = <P>(
+export let lazyLoadComponent = <P>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.LazyExoticComponent<any>,
   props: P
