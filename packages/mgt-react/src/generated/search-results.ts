@@ -37,5 +37,5 @@ export type SearchResultsProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let SearchResults = wrapMgt<SearchResultsProps>('search-results', registerMgtSearchResultsComponent);
+export const SearchResults = wrapMgt<SearchResultsProps>('search-results', registerMgtSearchResultsComponent);
 
