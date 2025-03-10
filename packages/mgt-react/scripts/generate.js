@@ -1,10 +1,10 @@
-const fs = require('fs-extra');
+var fs = require('fs-extra');
 
 let wc = JSON.parse(fs.readFileSync(`${__dirname}/../temp/custom-elements.json`));
 
-const primitives = new Set(['string', 'boolean', 'number', 'any', 'void', 'null', 'undefined']);
+var primitives = new Set(['string', 'boolean', 'number', 'any', 'void', 'null', 'undefined']);
 
-const gaTags = new Set([
+var gaTags = new Set([
   'person',
   'person-card',
   'agenda',
@@ -24,9 +24,9 @@ const gaTags = new Set([
   'search-results',
   'spinner'
 ]);
-const barrelFileName = 'react';
+var barrelFileName = 'react';
 
-const licenseStr = `/**
+var licenseStr = `/**
  * -------------------------------------------------------------------------------------------
  * Copyright (c) Microsoft Corporation.  All Rights Reserved.  Licensed under the MIT License.
  * See License in the project root for license information.
@@ -35,23 +35,23 @@ const licenseStr = `/**
 
 `;
 
-const generateTags = (tags, fileName) => {
-  const mgtComponentImports = new Set();
-  const mgtElementImports = new Set();
+var generateTags = (tags, fileName) => {
+  var mgtComponentImports = new Set();
+  var mgtElementImports = new Set();
   let output = '';
 
-  const wrappers = [];
+  var wrappers = [];
 
-  const customTags = [];
-  for (const module of wc.modules) {
-    for (const d of module.declarations) {
+  var customTags = [];
+  for (var module of wc.modules) {
+    for (var d of module.declarations) {
       if (d.customElement && d.tagName && tags.has(d.tagName)) {
         customTags.push(d);
       }
     }
   }
 
-  const removeGenericTypeDecoration = type => {
+  var removeGenericTypeDecoration = type => {
     if (type.endsWith('[]')) {
       return type.substring(0, type.length - 2);
     } else if (type.startsWith('Array<')) {
@@ -62,7 +62,7 @@ const generateTags = (tags, fileName) => {
     return type;
   };
 
-  const addTypeToImports = type => {
+  var addTypeToImports = type => {
     if (type === '*') {
       return;
     }
@@ -82,16 +82,16 @@ const generateTags = (tags, fileName) => {
     }
   };
 
-  const registrationFunctions = new Set();
+  var registrationFunctions = new Set();
 
-  const generateRegisterFunctionName = type => `register${type}Component`;
+  var generateRegisterFunctionName = type => `register${type}Component`;
 
-  const addComponentRegistrationImport = type => {
+  var addComponentRegistrationImport = type => {
     registrationFunctions.add(generateRegisterFunctionName(type));
   };
 
-  for (const tag of customTags.sort((a, b) => (a.tagName > b.tagName ? 1 : -1))) {
-    const className = tag.tagName
+  for (var tag of customTags.sort((a, b) => (a.tagName > b.tagName ? 1 : -1))) {
+    var className = tag.tagName
       .split('-')
       .map(t => t[0].toUpperCase() + t.substring(1))
       .join('');
@@ -105,10 +105,10 @@ const generateTags = (tags, fileName) => {
 
     addComponentRegistrationImport(tag.name);
 
-    const props = {};
+    var props = {};
 
     for (let i = 0; i < tag.members.length; ++i) {
-      const prop = tag.members[i];
+      var prop = tag.members[i];
       let type = prop.type?.text;
 
       if (type && prop.kind === 'field' && prop.privacy === 'public' && !prop.static && !prop.readonly) {
@@ -117,8 +117,8 @@ const generateTags = (tags, fileName) => {
         }
 
         if (type.includes('|')) {
-          const types = type.split('|');
-          for (const t of types) {
+          var types = type.split('|');
+          for (var t of types) {
             tag.members.push({
               kind: 'field',
               privacy: 'public',
@@ -134,7 +134,7 @@ const generateTags = (tags, fileName) => {
 
     let propsType = '';
 
-    for (const prop in props) {
+    for (var prop in props) {
       let type = props[prop];
       if (type.startsWith('MgtElement.')) {
         type = type.split('.')[1];
@@ -143,7 +143,7 @@ const generateTags = (tags, fileName) => {
     }
 
     if (tag.events) {
-      for (const event of tag.events) {
+      for (var event of tag.events) {
         if (event.type && event.type.text) {
           // remove MgtElement. prefix as this it only used to ensure it's imported from the correct package
           propsType += `\t${event.name}?: (e: ${event.type.text.replace(
@@ -164,14 +164,14 @@ const generateTags = (tags, fileName) => {
     }
   }
 
-  for (const wrapper of wrappers) {
-    output += `\nexport const ${wrapper.className} = wrapMgt<${wrapper.propsType}>('${
+  for (var wrapper of wrappers) {
+    output += `\nexport var ${wrapper.className} = wrapMgt<${wrapper.propsType}>('${
       wrapper.tag
     }', ${generateRegisterFunctionName(wrapper.componentClass)});\n`;
   }
 
-  const componentTypeImports = Array.from(mgtComponentImports).join(',');
-  const initialLine = componentTypeImports
+  var componentTypeImports = Array.from(mgtComponentImports).join(',');
+  var initialLine = componentTypeImports
     ? `import { ${componentTypeImports} } from '@microsoft/mgt-components';
 `
     : '';
