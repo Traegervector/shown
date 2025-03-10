@@ -63,7 +63,7 @@ interface MgtPersonCardStateHistory {
   personImage: string;
 }
 
-export const registerMgtPersonCardComponent = () => {
+export var registerMgtPersonCardComponent = () => {
   registerFluentComponents(fluentCard, fluentTabs, fluentTab, fluentTabPanel, fluentButton, fluentTextField);
   // register self first to avoid infinite loop due to circular ref between person and person card and organization
   registerComponent('person-card', MgtPersonCard);
@@ -414,11 +414,11 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return;
     }
 
-    const historyState = this._history.pop();
+    var historyState = this._history.pop();
     this._currentSection = null;
 
     // resets to first tab being selected
-    const firstTab: HTMLElement = this.renderRoot.querySelector('fluent-tab');
+    var firstTab: HTMLElement = this.renderRoot.querySelector('fluent-tab');
     if (firstTab) {
       firstTab.click();
     }
@@ -441,7 +441,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return;
     }
 
-    const historyState = this._history[0];
+    var historyState = this._history[0];
     this._history = [];
 
     this._cardState = historyState.state;
@@ -463,8 +463,8 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return this.renderNoData();
     }
 
-    const person = this.internalPersonDetails;
-    const image = this.getImage();
+    var person = this.internalPersonDetails;
+    var image = this.getImage();
 
     // Check for a default template.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/dot-notation
@@ -479,7 +479,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
 
     ariaLabel = this.strings.closeCardLabel;
 
-    const closeCardTemplate = this.isExpanded
+    var closeCardTemplate = this.isExpanded
       ? html`
            <div class="close-card-container">
              <fluent-button 
@@ -494,7 +494,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       : null;
 
     ariaLabel = this.strings.goBackLabel;
-    const navigationTemplate = this._history?.length
+    var navigationTemplate = this._history?.length
       ? html`
             <div class="nav">
               <fluent-button 
@@ -514,15 +514,15 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       personImage: image
     });
     if (!personDetailsTemplate) {
-      const personTemplate = this.renderPerson();
-      const contactIconsTemplate = this.renderContactIcons(person);
+      var personTemplate = this.renderPerson();
+      var contactIconsTemplate = this.renderContactIcons(person);
 
       personDetailsTemplate = html`
          ${personTemplate} ${contactIconsTemplate}
        `;
     }
 
-    const expandedDetailsTemplate = this.isExpanded ? this.renderExpandedDetails() : this.renderExpandedDetailsButton();
+    var expandedDetailsTemplate = this.isExpanded ? this.renderExpandedDetails() : this.renderExpandedDetailsButton();
     this._windowHeight =
       window.innerHeight && document.documentElement.clientHeight
         ? Math.min(window.innerHeight, document.documentElement.clientHeight)
@@ -532,7 +532,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       this._smallView = true;
       this.fireCustomEvent('smallView', null, true);
     }
-    const tabLocker = this.lockTabNavigation
+    var tabLocker = this.lockTabNavigation
       ? html`<div @keydown=${this.handleEndOfCard} aria-label=${this.strings.endOfCard} tabindex="0" id="end-of-container"></div>`
       : html``;
     return html`
@@ -550,10 +550,10 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
 
   private readonly handleEndOfCard = (e: KeyboardEvent) => {
     if (e && e.code === 'Tab') {
-      const endOfCardEl = this.renderRoot.querySelector<HTMLElement>('#end-of-container');
+      var endOfCardEl = this.renderRoot.querySelector<HTMLElement>('#end-of-container');
       if (endOfCardEl) {
         endOfCardEl.blur();
-        const imageCardEl = this.renderRoot.querySelector<HTMLElement>('mgt-person');
+        var imageCardEl = this.renderRoot.querySelector<HTMLElement>('mgt-person');
         if (imageCardEl) {
           imageCardEl.focus();
         }
@@ -632,7 +632,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    */
   protected renderContactIcons(person?: IDynamicPerson): TemplateResult {
     person = person || this.internalPersonDetails;
-    const userPerson = person as User;
+    var userPerson = person as User;
 
     let ariaLabel: string;
 
@@ -732,12 +732,12 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
     }
     // load sections when details are expanded
     // when not singed in
-    const provider = Providers.globalProvider;
+    var provider = Providers.globalProvider;
     if (provider.state === ProviderState.SignedOut) {
       this.loadSections();
     }
 
-    const sectionNavTemplate = this.renderSectionNavigation();
+    var sectionNavTemplate = this.renderSectionNavigation();
 
     return html`
       <div class="section-nav">
@@ -764,11 +764,11 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return;
     }
 
-    const currentSectionIndex = this._currentSection ? this.sections.indexOf(this._currentSection) : -1;
+    var currentSectionIndex = this._currentSection ? this.sections.indexOf(this._currentSection) : -1;
 
-    const additionalSectionTemplates = this.sections.map((section, i) => {
-      const name = section.tagName.toLowerCase();
-      const classes = classMap({
+    var additionalSectionTemplates = this.sections.map((section, i) => {
+      var name = section.tagName.toLowerCase();
+      var classes = classMap({
         active: i === currentSectionIndex,
         'section-nav__icon': true
       });
@@ -786,7 +786,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       `;
     });
 
-    const additionalPanelTemplates = this.sections.map(section => {
+    var additionalPanelTemplates = this.sections.map(section => {
       return html`
         <fluent-tab-panel slot="tabpanel">
           <div class="inserted">
@@ -797,7 +797,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       `;
     });
 
-    const overviewClasses = classMap({
+    var overviewClasses = classMap({
       active: currentSectionIndex === -1,
       'section-nav__icon': true,
       overviewTab: true
@@ -834,7 +834,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected renderOverviewSection(): TemplateResult {
-    const compactTemplates = this.sections.map(
+    var compactTemplates = this.sections.map(
       (section: BasePersonCardSection) => html`
         <div class="section">
           <div class="section__header">
@@ -852,7 +852,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       `
     );
 
-    const additionalDetails = this.renderTemplate('additional-details', {
+    var additionalDetails = this.renderTemplate('additional-details', {
       person: this.internalPersonDetails,
       personImage: this.getImage(),
       state: this._cardState
@@ -912,9 +912,9 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected renderMessagingSection() {
-    const person = this.personDetails as User;
-    const user = this._me.userPrincipalName;
-    const chatInput = this._chatInput;
+    var person = this.personDetails as User;
+    var user = this._me.userPrincipalName;
+    var chatInput = this._chatInput;
     if (person?.userPrincipalName === user) {
       return;
     } else {
@@ -963,7 +963,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
         parent = parent.parentElement;
       }
 
-      const parentPerson: IDynamicPerson =
+      var parentPerson: IDynamicPerson =
         // eslint-disable-next-line @typescript-eslint/dot-notation
         (parent as MgtPerson).personDetails || (parent as MgtPerson)['personDetailsInternal'];
 
@@ -973,14 +973,14 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       }
     }
 
-    const provider = Providers.globalProvider;
+    var provider = Providers.globalProvider;
 
     // check if user is signed in
     if (!provider || provider.state !== ProviderState.SignedIn) {
       return;
     }
 
-    const graph = provider.graph.forComponent(this);
+    var graph = provider.graph.forComponent(this);
     this._graph = graph;
 
     this._isStateLoading = true;
@@ -991,24 +991,24 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
 
     // check if personDetail already populated
     if (this.personDetails) {
-      const user = this.personDetails;
-      const userId = (user as Person).userPrincipalName || user.id;
+      var user = this.personDetails;
+      var userId = (user as Person).userPrincipalName || user.id;
 
       // if we have an id but no email, we should get data from the graph
       // in some graph calls, the user object does not contain the email
       if (userId && !getEmailFromGraphEntity(user)) {
-        const person = await getUserWithPhoto(graph, userId);
+        var person = await getUserWithPhoto(graph, userId);
         this.personDetails = person;
         this.personImage = this.getImage();
       }
     } else if (this.userId || this.personQuery === 'me') {
       // Use userId or 'me' query to get the person and image
-      const person = await getUserWithPhoto(graph, this.userId);
+      var person = await getUserWithPhoto(graph, this.userId);
       this.personDetails = person;
       this.personImage = this.getImage();
     } else if (this.personQuery) {
       // Use the personQuery to find our person.
-      const people = await findPeople(graph, this.personQuery, 1);
+      var people = await findPeople(graph, this.personQuery, 1);
 
       if (people?.length) {
         this.personDetails = people[0];
@@ -1022,7 +1022,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
     }
 
     // populate presence
-    const defaultPresence = {
+    var defaultPresence = {
       activity: 'Offline',
       availability: 'Offline',
       id: null
@@ -1040,7 +1040,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       }
     }
 
-    const personId = this.personDetails?.id || (this.personDetails as Person)?.userPrincipalName;
+    var personId = this.personDetails?.id || (this.personDetails as Person)?.userPrincipalName;
 
     // populate state
     if (personId) {
@@ -1060,17 +1060,17 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected sendQuickMessage = async (): Promise<void> => {
-    const message = this._chatInput.trim();
+    var message = this._chatInput.trim();
     if (!message?.length) {
       return;
     }
-    const person = this.personDetails as User;
-    const user = this._me.userPrincipalName;
+    var person = this.personDetails as User;
+    var user = this._me.userPrincipalName;
     this.isSendingMessage = true;
 
-    const chat = await createChat(this._graph, person.userPrincipalName, user);
+    var chat = await createChat(this._graph, person.userPrincipalName, user);
 
-    const messageData = {
+    var messageData = {
       body: {
         content: message
       }
@@ -1087,9 +1087,9 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected emailUser = () => {
-    const user = this.internalPersonDetails;
+    var user = this.internalPersonDetails;
     if (user) {
-      const email = getEmailFromGraphEntity(user);
+      var email = getEmailFromGraphEntity(user);
       if (email) {
         window.open('mailto:' + email, '_blank', 'noreferrer');
       }
@@ -1097,8 +1097,8 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
   };
 
   private get hasPhone(): boolean {
-    const user = this.internalPersonDetails as User;
-    const person = this.internalPersonDetails as Person;
+    var user = this.internalPersonDetails as User;
+    var person = this.internalPersonDetails as Person;
     return Boolean(user?.businessPhones?.length) || Boolean(person?.phones?.length);
   }
 
@@ -1109,17 +1109,17 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected callUser = () => {
-    const user = this.internalPersonDetails as User;
-    const person = this.internalPersonDetails as Person;
+    var user = this.internalPersonDetails as User;
+    var person = this.internalPersonDetails as Person;
 
     if (user?.businessPhones?.length) {
-      const phone = user.businessPhones[0];
+      var phone = user.businessPhones[0];
       if (phone) {
         window.open('tel:' + phone, '_blank', 'noreferrer');
       }
     } else if (person?.phones?.length) {
-      const businessPhones = this.getPersonBusinessPhones(person);
-      const phone = businessPhones[0];
+      var businessPhones = this.getPersonBusinessPhones(person);
+      var phone = businessPhones[0];
       if (phone) {
         window.open('tel:' + phone, '_blank', 'noreferrer');
       }
@@ -1133,16 +1133,16 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected chatUser = (message: string = null) => {
-    const user = this.personDetails as User;
+    var user = this.personDetails as User;
     if (user?.userPrincipalName) {
-      const users: string = user.userPrincipalName;
+      var users: string = user.userPrincipalName;
 
       let url = `https://teams.microsoft.com/l/chat/0/0?users=${users}`;
       if (message?.length) {
         url += `&message=${message}`;
       }
 
-      const openWindow = () => window.open(url, '_blank', 'noreferrer');
+      var openWindow = () => window.open(url, '_blank', 'noreferrer');
 
       if (TeamsHelper.isAvailable) {
         TeamsHelper.executeDeepLink(url, (status: boolean) => {
@@ -1163,13 +1163,13 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected videoCallUser = () => {
-    const user = this.personDetails as User;
+    var user = this.personDetails as User;
     if (user?.userPrincipalName || user?.mail) {
-      const users: string = user.userPrincipalName || user.mail;
+      var users: string = user.userPrincipalName || user.mail;
 
-      const url = `https://teams.microsoft.com/l/call/0/0?users=${users}&withVideo=true`;
+      var url = `https://teams.microsoft.com/l/call/0/0?users=${users}&withVideo=true`;
 
-      const openWindow = () => window.open(url, '_blank');
+      var openWindow = () => window.open(url, '_blank');
 
       if (TeamsHelper.isAvailable) {
         TeamsHelper.executeDeepLink(url, (status: boolean) => {
@@ -1190,7 +1190,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
    * @memberof MgtPersonCard
    */
   protected showExpandedDetails = () => {
-    const root = this.renderRoot.querySelector('.root');
+    var root = this.renderRoot.querySelector('.root');
     if (root?.animate) {
       // play back
       root.animate(
@@ -1223,7 +1223,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return;
     }
 
-    const contactSections = new MgtContact(this.internalPersonDetails as User);
+    var contactSections = new MgtContact(this.internalPersonDetails as User);
     if (contactSections.hasData) {
       this.sections.push(contactSections);
     }
@@ -1232,7 +1232,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return;
     }
 
-    const { person, directReports, messages, files, profile } = this._cardState;
+    var { person, directReports, messages, files, profile } = this._cardState;
 
     if (MgtPersonCardConfig.sections.organization && (person?.manager || directReports?.length)) {
       this.sections.push(new MgtOrganization(this._cardState, this._me));
@@ -1247,7 +1247,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
     }
 
     if (MgtPersonCardConfig.sections.profile && profile) {
-      const profileSection = new MgtProfile(profile);
+      var profileSection = new MgtProfile(profile);
       if (profileSection.hasData) {
         this.sections.push(profileSection);
       }
@@ -1259,7 +1259,7 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
       return this.personImage;
     }
 
-    const person = this.internalPersonDetails;
+    var person = this.internalPersonDetails;
     return person?.personImage ? person.personImage : null;
   }
 
@@ -1269,9 +1269,9 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
   }
 
   private getPersonBusinessPhones(person: Person): string[] {
-    const phones = person.phones;
-    const businessPhones: string[] = [];
-    for (const p of phones) {
+    var phones = person.phones;
+    var businessPhones: string[] = [];
+    for (var p of phones) {
       if (p.type === 'business') {
         businessPhones.push(p.number);
       }
@@ -1281,12 +1281,12 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
 
   private updateCurrentSection(section: CardSection) {
     if (section) {
-      const sectionName = section.tagName.toLowerCase();
-      const tabs: HTMLElement = this.renderRoot.querySelector(`#${sectionName}-Tab`);
+      var sectionName = section.tagName.toLowerCase();
+      var tabs: HTMLElement = this.renderRoot.querySelector(`#${sectionName}-Tab`);
       tabs.click();
     }
-    const panels = this.renderRoot.querySelectorAll('fluent-tab-panel');
-    for (const target of panels) {
+    var panels = this.renderRoot.querySelectorAll('fluent-tab-panel');
+    for (var target of panels) {
       target.scrollTop = 0;
     }
     this._currentSection = section;
@@ -1294,8 +1294,8 @@ export class MgtPersonCard extends MgtTemplatedTaskComponent implements IHistory
   }
 
   private handleSectionScroll(e: WheelEvent) {
-    const panels = this.renderRoot.querySelectorAll('fluent-tab-panel');
-    for (const target of panels) {
+    var panels = this.renderRoot.querySelectorAll('fluent-tab-panel');
+    for (var target of panels) {
       if (target) {
         if (
           !(e.deltaY < 0 && target.scrollTop === 0) &&
