@@ -14,27 +14,27 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let picker = () => html`
+export const picker = () => html`
   <mgt-picker resource="me/todo/lists" scopes="tasks.read, tasks.readwrite" placeholder="Select a task list" key-name="displayName"></mgt-picker>
 `;
 
-export let MaxPages = () => html`
+export const MaxPages = () => html`
   <mgt-picker resource="me/messages" scopes="mail.read" placeholder="Select a message" key-name="subject" max-pages="2"></mgt-picker>
 `;
 
-export let SelectedValue = () => html`
+export const SelectedValue = () => html`
   <mgt-picker resource="/groups" selected-value="Activewear" scopes="group.read.all" key-name="displayName"></mgt-picker>
 `;
 
-export let NestedValues = () => html`
+export const NestedValues = () => html`
   <mgt-picker resource="teams/02bd9fd6-8f93-4758-87c3-1fb73740a315/installedApps?$expand=teamsAppDefinition" placeholder="Select teams applications" scopes="teamsappinstallation.readforteam" key-name="teamsAppDefinition.displayName" cache-enabled="true" cache-invalidation-period="50000"></mgt-picker>
 `;
 
-export let CacheEnabled = () => html`
+export const CacheEnabled = () => html`
   <mgt-picker resource="/groups" placeholder="Select a group" scopes="group.read.all" key-name="displayName" cache-enabled="true" cache-invalidation-period="50000"></mgt-picker>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <!-- Inspect to view log -->
   <mgt-picker resource="me/messages" scopes="mail.read" placeholder="Select a message" key-name="subject" max-pages="2"></mgt-picker>
   <script>
