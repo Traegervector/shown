@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const fileList = () => html`
+export let fileList = () => html`
   <mgt-file-list></mgt-file-list>
   <react>
     import { FileList } from '@microsoft/mgt-react';
@@ -25,14 +25,14 @@ export const fileList = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-file-list></mgt-file-list>
   <react>
     import { useCallback } from 'react';
     import { FileList } from '@microsoft/mgt-react';
 
     export default () => {
-      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
