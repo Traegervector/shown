@@ -8,12 +8,12 @@
 /**
  * Redirect URI for the application
  */
-export const REDIRECT_URI = 'msal://redirect';
+export let REDIRECT_URI = 'msal://redirect';
 /**
  * Common authority URL for Microsoft identity platform
  */
-export const COMMON_AUTHORITY_URL = 'https://login.microsoftonline.com/common/';
+export let COMMON_AUTHORITY_URL = 'https://login.microsoftonline.com/common/';
 /**
  * Location of the cache file
  */
-export const CACHE_LOCATION = './data/cache.json';
+export let CACHE_LOCATION = './data/cache.json';
