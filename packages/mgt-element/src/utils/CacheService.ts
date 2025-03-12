@@ -135,7 +135,7 @@ export class CacheService {
    * @memberof CacheService
    */
   public static getCache<T extends CacheItem>(schema: CacheSchema, storeName: string): CacheStore<T> {
-    var key = `${schema.name}/${storeName}`;
+    const key = `${schema.name}/${storeName}`;
 
     if (!this.isInitialized) {
       this.init();
@@ -155,15 +155,15 @@ export class CacheService {
    * @memberof CacheService
    */
   public static clearCacheById(id: string): Promise<unknown> {
-    var work: Promise<void>[] = [];
-    var oldDbArray: string[] = JSON.parse(localStorage.getItem(dbListKey)) as string[];
+    const work: Promise<void>[] = [];
+    const oldDbArray: string[] = JSON.parse(localStorage.getItem(dbListKey)) as string[];
     if (oldDbArray) {
-      var newDbArray: string[] = [];
+      const newDbArray: string[] = [];
       oldDbArray.forEach(x => {
         if (x.includes(id)) {
           work.push(
             new Promise<void>((resolve, reject) => {
-              var delReq = indexedDB.deleteDatabase(x);
+              const delReq = indexedDB.deleteDatabase(x);
               delReq.onsuccess = () => resolve();
               delReq.onerror = () => {
                 console.error(`🦒: ${delReq.error.name} occurred deleting cache: ${x}`, delReq.error.message);
@@ -253,7 +253,7 @@ export class CacheService {
     // eslint-disable-next-line @typescript-eslint/no-misused-promises
     Providers.onProviderUpdated(async () => {
       if (previousState === ProviderState.SignedIn && Providers.globalProvider.state === ProviderState.SignedOut) {
-        var id = await Providers.getCacheId();
+        const id = await Providers.getCacheId();
         if (id !== null) {
           await this.clearCacheById(id);
         }
