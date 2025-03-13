@@ -195,14 +195,14 @@ export abstract class BasePersonCardSection extends MgtTemplatedTaskComponent im
     while (parent) {
       parent = parent.parentNode;
 
-      var shadowRoot = parent as ShadowRoot;
+      const shadowRoot = parent as ShadowRoot;
       if (shadowRoot?.host?.tagName === `${customElementHelper.prefix}-PERSON-CARD`.toUpperCase()) {
         parent = shadowRoot.host;
         break;
       }
     }
 
-    var personCard = parent as MgtPersonCard;
+    const personCard = parent as MgtPersonCard;
     personCard.navigate(person);
   }
 }
