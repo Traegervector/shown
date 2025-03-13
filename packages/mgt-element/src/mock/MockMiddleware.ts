@@ -34,7 +34,7 @@ export class MockMiddleware implements Middleware {
 
   public async execute(context: Context): Promise<void> {
     try {
-      const baseUrl = await MockMiddleware.getBaseUrl();
+      let baseUrl = await MockMiddleware.getBaseUrl();
       context.request = baseUrl + encodeURIComponent(context.request as string);
     } catch (error) {
       // ignore error
@@ -60,14 +60,14 @@ export class MockMiddleware implements Middleware {
    */
   public static async getBaseUrl() {
     if (!this._baseUrl) {
-      const sessionEndpoint = this._sessionCache?.getItem('endpointURL');
+      let sessionEndpoint = this._sessionCache?.getItem('endpointURL');
       if (sessionEndpoint) {
         this._baseUrl = sessionEndpoint;
       } else {
         try {
           // get the url we should be using from the endpoint service
-          const response = await fetch('https://cdn.graph.office.net/en-us/graph/api/proxy/endpoint');
-          const base: unknown = await response.json();
+          let response = await fetch('https://cdn.graph.office.net/en-us/graph/api/proxy/endpoint');
+          let base: unknown = await response.json();
           if (typeof base !== 'string') {
             MockMiddleware.setBaseFallbackUrl();
           } else {
