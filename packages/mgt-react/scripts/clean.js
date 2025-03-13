@@ -1,7 +1,7 @@
-let fs = require('fs-extra');
+const fs = require('fs-extra');
 
-let temp = `${__dirname}/../temp`;
-let dist = `${__dirname}/../dist`;
+const temp = `${__dirname}/../temp`;
+const dist = `${__dirname}/../dist`;
 
 fs.removeSync(temp);
 fs.removeSync(dist);
