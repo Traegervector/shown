@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let customCSSProperties = () => html`
+export const customCSSProperties = () => html`
   <style>
     .file {
       /**NOTE: default-* tokens will override anything you set in the component.
