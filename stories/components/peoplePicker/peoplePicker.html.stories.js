@@ -14,17 +14,17 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export var peoplePicker = () => html`
+export const peoplePicker = () => html`
    <mgt-people-picker></mgt-people-picker>
  `;
 
-export var RTL = () => html`
+export const RTL = () => html`
    <body dir="rtl">
      <mgt-people-picker></mgt-people-picker>
    </body>
  `;
 
-export var events = () => html`
+export const events = () => html`
    <mgt-people-picker></mgt-people-picker>
    <!-- Check the console tab for results -->
    <script>
@@ -37,7 +37,7 @@ export var events = () => html`
    </script>
  `;
 
-export var getEntityType = () => html`
+export const getEntityType = () => html`
   <mgt-people-picker
     type="person">
   </mgt-people-picker>
@@ -49,9 +49,9 @@ export var getEntityType = () => html`
   <script type="module">
   import { isUser, isContact, isGroup } from '@microsoft/mgt-components';
   let entityType;
-  var output = document.querySelector('.entity-type');
-  var handleSelection = (e) => {
-    var selected = e.detail[0];
+  const output = document.querySelector('.entity-type');
+  const handleSelection = (e) => {
+    const selected = e.detail[0];
     if (isGroup(selected)) {
         entityType = 'group'
     } else if (isUser(selected)) {
@@ -66,7 +66,7 @@ export var getEntityType = () => html`
   </script>
 `;
 
-export var selectGroupsById = () => html`
+export const selectGroupsById = () => html`
    <mgt-people-picker></mgt-people-picker>
    <!-- Check the js tab for example -->
    <script>
@@ -74,7 +74,7 @@ export var selectGroupsById = () => html`
    </script>
  `;
 
-export var selectUsersById = () => html`
+export const selectUsersById = () => html`
    <mgt-people-picker></mgt-people-picker>
    <!-- Check the js tab for example -->
    <script>
@@ -82,7 +82,7 @@ export var selectUsersById = () => html`
    </script>
  `;
 
-export var localization = () => html`
+export const localization = () => html`
    <mgt-people-picker></mgt-people-picker>
    <script>
    import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -102,7 +102,7 @@ export var localization = () => html`
    </script>
  `;
 
-export var copyOrCutToPaste = () => html`
+export const copyOrCutToPaste = () => html`
    <mgt-people-picker
     default-selected-user-ids="e8a02cc7-df4d-4778-956d-784cc9506e5a,eeMcKFN0P0aANVSXFM_xFQ==,48d31887-5fad-4d73-a9f5-3c356e68a038,e3d0513b-449e-4198-ba6f-bd97ae7cae85">
   </mgt-people-picker>
@@ -110,7 +110,7 @@ export var copyOrCutToPaste = () => html`
    <mgt-people-picker></mgt-people-picker>
  `;
 
-export var pasteListOfUserIds = () => html`
+export const pasteListOfUserIds = () => html`
 <mgt-people-picker></mgt-people-picker>
 <!-- You can paste emails or user IDs that are delimited with a comma(",") or semi-colon(";") -->
 <!-- 48d31887-5fad-4d73-a9f5-3c356e68a038,24fcbca3-c3e2-48bf-9ffc-c7f81b81483d -->
