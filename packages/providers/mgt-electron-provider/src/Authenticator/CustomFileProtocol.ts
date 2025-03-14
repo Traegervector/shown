@@ -26,7 +26,7 @@ export class CustomFileProtocolListener extends AuthCodeListener {
    */
   public start(): void {
     protocol.registerFileProtocol(this.host, (req, callback) => {
-      let requestUrl = url.parse(req.url, true);
+      const requestUrl = url.parse(req.url, true);
       callback(path.normalize(`${__dirname}/${requestUrl.path}`));
     });
   }
