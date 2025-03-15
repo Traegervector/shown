@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export let strings = {
+export const strings = {
   reportsToSectionTitle: 'Reports to',
   directReportsSectionTitle: 'Direct reports',
   organizationSectionTitle: 'Organization',
