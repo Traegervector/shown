@@ -14,12 +14,12 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let Hooks = () => html`
+export const Hooks = () => html`
   <p>This demonstrates how to use the <code>useIsSignedIn</code> hook in React.</p>
   <mgt-person-card person-query="me"></mgt-person-card>
   <react>
     import { PersonCard, useIsSignedIn } from '@microsoft/mgt-react';
-    let [isSignedIn] = useIsSignedIn();
+    const [isSignedIn] = useIsSignedIn();
 
     export default () => (
       isSignedIn ? <PersonCard personQuery="me"></PersonCard> : null
