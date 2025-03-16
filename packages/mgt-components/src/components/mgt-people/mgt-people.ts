@@ -43,7 +43,7 @@ import { MgtPerson, registerMgtPersonComponent } from '../mgt-person/mgt-person'
  * @cssprop --people-person-avatar-size - {Length} the size of the avatar. Default is 24px.
  */
 
-export var registerMgtPeopleComponent = () => {
+export const registerMgtPeopleComponent = () => {
   registerMgtPersonComponent();
   registerComponent('people', MgtPeople);
 };
@@ -262,7 +262,7 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
   }
 
   private checkPeopleListAndFireEvent(): void {
-    var peopleList = this.shadowRoot?.querySelector('.people-list');
+    const peopleList = this.shadowRoot?.querySelector('.people-list');
 
     if (peopleList?.childElementCount > 0) {
       this.fireCustomEvent('people-rendered');
@@ -289,7 +289,7 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
    * @memberof MgtPeople
    */
   protected renderPeople(): TemplateResult {
-    var maxPeople = this.people.slice(0, this.showMax).filter(pple => pple);
+    const maxPeople = this.people.slice(0, this.showMax).filter(pple => pple);
     return html`
       <ul
         tabindex="0"
@@ -318,7 +318,7 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
    * @memberof MgtPeople
    */
   protected renderOverflow(): TemplateResult {
-    var extra = this.people.length - this.showMax;
+    const extra = this.people.length - this.showMax;
     return (
       this.renderTemplate('overflow', {
         extra,
@@ -337,13 +337,13 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
    * @param event is a KeyboardEvent.
    */
   protected handleKeyDown = (event: KeyboardEvent) => {
-    var peopleContainer: HTMLElement = this.shadowRoot.querySelector('.people-list');
+    const peopleContainer: HTMLElement = this.shadowRoot.querySelector('.people-list');
     let person: HTMLElement;
-    var peopleElements: HTMLCollection = peopleContainer?.children;
-    var keyName = event.key;
+    const peopleElements: HTMLCollection = peopleContainer?.children;
+    const keyName = event.key;
     // Default all tabindex values in li nodes to -1
-    for (var element of peopleElements) {
-      var el: HTMLElement = element as HTMLElement;
+    for (const element of peopleElements) {
+      const el: HTMLElement = element as HTMLElement;
       el.removeAttribute('tabindex');
       person = el?.querySelector('mgt-person');
       person = person?.shadowRoot.querySelector('.person-root');
@@ -369,8 +369,8 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
       this._arrowKeyLocation = (this._arrowKeyLocation - 1 + childElementCount) % childElementCount;
     } else if (['Enter', 'space', ' '].includes(keyName)) {
       if (this.personCardInteraction !== 'none') {
-        var personEl = peopleElements[this._arrowKeyLocation] as HTMLElement;
-        var mgtPerson = personEl.querySelector<MgtPerson>('mgt-person');
+        const personEl = peopleElements[this._arrowKeyLocation] as HTMLElement;
+        const mgtPerson = personEl.querySelector<MgtPerson>('mgt-person');
         if (mgtPerson) {
           mgtPerson.showPersonCard();
         }
@@ -403,7 +403,7 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
     if (this.showPresence && this._peoplePresence) {
       personPresence = this._peoplePresence[person.id];
     }
-    var avatarSize = 'small';
+    const avatarSize = 'small';
     return (
       this.renderTemplate('person', { person }, person.id) ||
       // set image to @ to flag the mgt-person component to
@@ -442,10 +442,10 @@ export class MgtPeople extends MgtTemplatedTaskComponent {
    */
   protected async loadState() {
     if (!this.people) {
-      var provider = Providers.globalProvider;
+      const provider = Providers.globalProvider;
 
       if (provider && provider.state === ProviderState.SignedIn) {
-        var graph = provider.graph.forComponent(this);
+        const graph = provider.graph.forComponent(this);
 
         // populate people
         if (this.groupId) {
