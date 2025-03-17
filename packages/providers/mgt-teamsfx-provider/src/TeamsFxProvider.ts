@@ -75,14 +75,14 @@ export class TeamsFxProvider extends IProvider {
    * import {TeamsFxProvider} from '@microsoft/mgt-teamsfx-provider';
    * import {TeamsUserCredential, TeamsUserCredentialAuthConfig} from "@microsoft/teamsfx";
    *
-   * let authConfig: TeamsUserCredentialAuthConfig = {
+   * const authConfig: TeamsUserCredentialAuthConfig = {
    *     clientId: process.env.REACT_APP_CLIENT_ID,
    *     initiateLoginEndpoint: process.env.REACT_APP_START_LOGIN_PAGE_URL,
    * };
-   * let scope = ["User.Read"];
+   * const scope = ["User.Read"];
    *
-   * let credential = new TeamsUserCredential(authConfig);
-   * let provider = new TeamsFxProvider(credential, scope);
+   * const credential = new TeamsUserCredential(authConfig);
+   * const provider = new TeamsFxProvider(credential, scope);
    * Providers.globalProvider = provider;
    * ```
    *
@@ -104,7 +104,7 @@ export class TeamsFxProvider extends IProvider {
 
     this.validateScopesType(scopes);
 
-    let scopesArr = this.getScopesArray(scopes);
+    const scopesArr = this.getScopesArray(scopes);
 
     if (!scopesArr || scopesArr.length === 0) {
       this.scopes = ['.default'];
@@ -125,13 +125,13 @@ export class TeamsFxProvider extends IProvider {
    */
   public async getAccessToken(): Promise<string> {
     try {
-      let accessToken = await this._credential.getToken(this.scopes);
+      const accessToken = await this._credential.getToken(this.scopes);
       this._accessToken = accessToken ? accessToken.token : '';
       if (!this._accessToken) {
         throw new Error('Access token is null');
       }
     } catch (error: unknown) {
-      let err = error as object;
+      const err = error as object;
       // eslint-disable-next-line no-console
       console.error(`🦒: Cannot get access token due to error: ${err.toString()}`);
       this.setState(ProviderState.SignedOut);
@@ -147,7 +147,7 @@ export class TeamsFxProvider extends IProvider {
    * @memberof TeamsFxProvider
    */
   public async login(): Promise<void> {
-    let token: string = await this.getAccessToken();
+    const token: string = await this.getAccessToken();
 
     if (!token) {
       await this._credential.login(this.scopes);
@@ -177,7 +177,7 @@ export class TeamsFxProvider extends IProvider {
   }
 
   private getScopesArray(scopes: string | string[]): string[] {
-    let scopesArray: string[] = typeof scopes === 'string' ? scopes.split(' ') : scopes;
+    const scopesArray: string[] = typeof scopes === 'string' ? scopes.split(' ') : scopes;
     return scopesArray.filter(x => x !== null && x !== '');
   }
 }
