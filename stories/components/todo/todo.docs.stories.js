@@ -21,6 +21,6 @@ export default {
   }
 };
 
-export let todos = () => html`
+export const todos = () => html`
   <mgt-todo></mgt-todo>
 `;
