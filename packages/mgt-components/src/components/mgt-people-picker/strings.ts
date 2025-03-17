@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   inputPlaceholderText: 'Search for a name',
   maxSelectionsPlaceHolder: 'Max contacts added',
   maxSelectionsAriaLabel: 'Maximum contact selections reached',
