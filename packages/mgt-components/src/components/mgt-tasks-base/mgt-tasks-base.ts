@@ -117,14 +117,14 @@ export abstract class MgtTasksBase extends MgtTemplatedTaskComponent {
    * Invoked by render when the task is in a completed state
    */
   protected renderContent = () => {
-    let provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (!provider || provider.state !== ProviderState.SignedIn) {
       return html``;
     }
 
-    let picker = this.renderPicker();
-    let newTaskTemplate = this.renderNewTask();
-    let tasksTemplate = this.renderTasks();
+    const picker = this.renderPicker();
+    const newTaskTemplate = this.renderNewTask();
+    const tasksTemplate = this.renderTasks();
 
     return html`
       ${picker}
