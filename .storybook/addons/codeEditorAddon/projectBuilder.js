@@ -2,11 +2,11 @@ import sdk from '@stackblitz/sdk';
 import { beautifyContent } from '../../utils/beautifyContent';
 import { getCleanVersionInfo } from '../../versionInfo';
 
-const TEMPLATE_PATH = [window.location.protocol, '//', window.location.host, window.location.pathname]
+var TEMPLATE_PATH = [window.location.protocol, '//', window.location.host, window.location.pathname]
   .join('')
   .replace('iframe.html', '');
-const REACT_TEMPLATE_PATH = TEMPLATE_PATH + 'stackblitz/react/';
-const REACT_TEMPLATE_FILES = [
+var REACT_TEMPLATE_PATH = TEMPLATE_PATH + 'stackblitz/react/';
+var REACT_TEMPLATE_FILES = [
   { name: 'package.json', type: 'json' },
   { name: 'index.html', type: 'html' },
   { name: 'tsconfig.json', type: 'json' },
@@ -16,8 +16,8 @@ const REACT_TEMPLATE_FILES = [
   { name: 'src/main.css', type: 'css' },
   { name: 'src/main.tsx', type: 'js' }
 ];
-const HTML_TEMPLATE_PATH = TEMPLATE_PATH + 'stackblitz/html/';
-const HTML_TEMPLATE_FILES = [
+var HTML_TEMPLATE_PATH = TEMPLATE_PATH + 'stackblitz/html/';
+var HTML_TEMPLATE_FILES = [
   { name: 'index.html', type: 'html' },
   { name: 'main.css', type: 'css' },
   { name: 'app.js', type: 'js' },
@@ -26,16 +26,16 @@ const HTML_TEMPLATE_FILES = [
   { name: 'style.css', type: 'css' }
 ];
 
-export const generateProject = async (title, files) => {
+export var generateProject = async (title, files) => {
   files.react && files.react !== '\n' ? await openReactProject(title, files) : await openHtmlProject(title, files);
 };
 
 let openReactProject = async (title, files) => {
-  const snippets = [
+  var snippets = [
     { name: 'src/App.tsx', type: 'js', content: files.react },
     { name: 'src/App.css', type: 'css', content: files.css }
   ];
-  const stackblitzFiles = await buildFiles(REACT_TEMPLATE_PATH, REACT_TEMPLATE_FILES, snippets);
+  var stackblitzFiles = await buildFiles(REACT_TEMPLATE_PATH, REACT_TEMPLATE_FILES, snippets);
   sdk.openProject(
     {
       files: stackblitzFiles,
@@ -50,12 +50,12 @@ let openReactProject = async (title, files) => {
 };
 
 let openHtmlProject = async (title, files) => {
-  const snippets = [
+  var snippets = [
     { name: 'index.html', type: 'html', content: files.html },
     { name: 'style.css', type: 'css', content: files.css },
     { name: 'main.js', type: 'js', content: files.js }
   ];
-  const stackblitzFiles = await buildFiles(HTML_TEMPLATE_PATH, HTML_TEMPLATE_FILES, snippets);
+  var stackblitzFiles = await buildFiles(HTML_TEMPLATE_PATH, HTML_TEMPLATE_FILES, snippets);
   sdk.openProject(
     {
       files: stackblitzFiles,
@@ -70,7 +70,7 @@ let openHtmlProject = async (title, files) => {
 };
 
 let buildFiles = async (templatePath, files, snippets) => {
-  const stackblitzFiles = {};
+  var stackblitzFiles = {};
   await Promise.all(
     files.map(async file => {
       let fileContent = await loadFile(templatePath + file.name);
