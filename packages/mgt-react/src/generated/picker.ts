@@ -32,5 +32,5 @@ export type PickerProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let Picker = wrapMgt<PickerProps>('picker', registerMgtPickerComponent);
+export const Picker = wrapMgt<PickerProps>('picker', registerMgtPickerComponent);
 
