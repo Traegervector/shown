@@ -12,7 +12,7 @@ import { Graph } from './Graph';
 /**
  * The version of the Graph to use for making requests.
  */
-let GRAPH_VERSION = 'beta';
+const GRAPH_VERSION = 'beta';
 
 /**
  * BetaGraph
@@ -31,7 +31,7 @@ export class BetaGraph extends Graph {
    * @memberof BetaGraph
    */
   public static fromGraph(graph: IGraph): BetaGraph {
-    let betaGraph = new BetaGraph(graph.client);
+    const betaGraph = new BetaGraph(graph.client);
     betaGraph.setComponent(graph.componentName);
     return betaGraph;
   }
@@ -49,7 +49,7 @@ export class BetaGraph extends Graph {
    * @memberof BetaGraph
    */
   public forComponent(component: Element | string): BetaGraph {
-    let graph = new BetaGraph(this.client);
+    const graph = new BetaGraph(this.client);
     this.setComponent(component);
     return graph;
   }
