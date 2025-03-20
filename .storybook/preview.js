@@ -14,7 +14,7 @@ import { versionInfo } from './versionInfo';
 import { defaultDocsPage } from './story-elements/defaultDocsPage';
 import './preview.css';
 
-const setCustomElementsManifestWithOptions = (customElements, options) => {
+var setCustomElementsManifestWithOptions = (customElements, options) => {
   let { privateFields = true } = options;
   if (!privateFields) {
     customElements?.modules?.forEach(module => {
@@ -34,7 +34,7 @@ const setCustomElementsManifestWithOptions = (customElements, options) => {
 
 setCustomElementsManifestWithOptions(customElements, { privateFields: false });
 
-export const parameters = {
+export var parameters = {
   previewTabs: {
     'storybook/docs/panel': {
       hidden: true
@@ -58,11 +58,11 @@ export const parameters = {
   }
 };
 
-const req = require.context('../stories', true, /\.(js|mdx)$/);
+var req = require.context('../stories', true, /\.(js|mdx)$/);
 // configure(req, module);
 if (module.hot) {
   module.hot.accept(req.id, () => {
-    const currentLocationHref = window.location.href;
+    var currentLocationHref = window.location.href;
     window.history.pushState(null, null, currentLocationHref);
     window.location.reload();
   });
