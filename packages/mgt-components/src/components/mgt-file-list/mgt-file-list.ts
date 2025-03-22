@@ -51,7 +51,7 @@ import { CardSection } from '../BasePersonCardSection';
 import { getRelativeDisplayDate } from '../../utils/Utils';
 import { getFileTypeIconUri } from '../../styles/fluent-icons';
 
-export const registerMgtFileListComponent = () => {
+export var registerMgtFileListComponent = () => {
   registerFluentComponents(fluentProgressRing);
 
   registerMgtFileComponent();
@@ -59,7 +59,7 @@ export const registerMgtFileListComponent = () => {
   registerComponent('file-list', MgtFileList);
 };
 
-const isSharedInsight = (sharedInsightFile: SharedInsight): sharedInsightFile is SharedInsight => {
+var isSharedInsight = (sharedInsightFile: SharedInsight): sharedInsightFile is SharedInsight => {
   return 'lastShared' in sharedInsightFile;
 };
 
@@ -467,7 +467,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @memberof MgtFileList
    */
   public renderCompactView(): TemplateResult {
-    const files = this.files.slice(0, 3);
+    var files = this.files.slice(0, 3);
 
     return this.renderFiles(files);
   }
@@ -560,7 +560,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @memberof mgtFileList
    */
   protected renderFile(file: DriveItem | SharedInsight): TemplateResult {
-    const view = this.itemView;
+    var view = this.itemView;
     // if file is type SharedInsight, render Shared Insight File
     if (isSharedInsight(file)) {
       return this.renderSharedInsightFile(file);
@@ -582,7 +582,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @memberof MgtFileList
    */
   protected renderSharedInsightFile(file: SharedInsight): TemplateResult {
-    const lastModifiedTemplate = file.lastShared
+    var lastModifiedTemplate = file.lastShared
       ? html`
           <div class="shared_insight_file__last-modified">
             ${this.strings.sharedTextSubtitle} ${getRelativeDisplayDate(new Date(file.lastShared.sharedDateTime))}
@@ -638,7 +638,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @returns
    */
   protected renderFileUpload(): TemplateResult {
-    const fileUploadConfig: MgtFileUploadConfig = {
+    var fileUploadConfig: MgtFileUploadConfig = {
       graph: Providers.globalProvider.graph.forComponent(this),
       driveId: this.driveId,
       excludedFileExtensions: this.excludedFileExtensions,
@@ -669,7 +669,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @param event
    */
   private readonly onFileListKeyDown = (event: KeyboardEvent): void => {
-    const target = event.target as HTMLElement;
+    var target = event.target as HTMLElement;
     let fileList: HTMLElement;
     if (!target.classList) {
       fileList = this.renderRoot.querySelector('.file-list-children');
@@ -700,7 +700,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
     if (event.code === 'Enter' || event.code === 'Space') {
       focusedItem = fileList.children[this._focusedItemIndex] as HTMLElement;
 
-      const file = focusedItem.children[0] as MgtFile;
+      var file = focusedItem.children[0] as MgtFile;
       event.preventDefault();
       this.fireCustomEvent('itemClick', file.fileDetails);
       this.handleFileClick(file.fileDetails);
@@ -721,7 +721,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @memberof MgtFileList
    */
   protected async loadState() {
-    const provider = Providers.globalProvider;
+    var provider = Providers.globalProvider;
     if (!provider || provider.state === ProviderState.Loading) {
       return;
     }
@@ -730,11 +730,11 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
       this.files = null;
       return;
     }
-    const graph = provider.graph.forComponent(this);
+    var graph = provider.graph.forComponent(this);
     let files: DriveItem[];
     let pageIterator: GraphPageIterator<DriveItem>;
 
-    const getFromMyDrive = !this.driveId && !this.siteId && !this.groupId && !this.userId;
+    var getFromMyDrive = !this.driveId && !this.siteId && !this.groupId && !this.userId;
 
     // combinations of these attributes must be provided in order for the component to know which endpoint to call to request files
     // not supplying enough for these combinations will get a null file result
@@ -809,7 +809,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
         if (this.pageIterator?.value) {
           // Since we're fetching all results, we max out the page size
           // instead of using the user-specified page size.
-          const maxPageSizeFileIterator = await getFilesIterator(graph, 1000);
+          var maxPageSizeFileIterator = await getFilesIterator(graph, 1000);
           while (maxPageSizeFileIterator.hasNext) {
             await fetchNextAndCacheForFilesPageIterator(maxPageSizeFileIterator);
           }
@@ -819,7 +819,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
           this._preloadedFiles = [];
         }
         filteredByFileExtension = files.filter(file => {
-          for (const e of this.fileExtensions) {
+          for (var e of this.fileExtensions) {
             if (e === this.getFileExtension(file.name)) {
               return file;
             }
@@ -838,14 +838,14 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
         this.files = files;
       }
     }
-    for (const file of this.files) {
+    for (var file of this.files) {
       if (file?.folder?.childCount > 0) {
         // expand the file with children
-        const driveId = file?.parentReference?.driveId;
-        const itemId = file?.id;
-        const iterator = await getDriveFilesByIdIterator(graph, driveId, itemId, 5);
+        var driveId = file?.parentReference?.driveId;
+        var itemId = file?.id;
+        var iterator = await getDriveFilesByIdIterator(graph, driveId, itemId, 5);
         if (iterator) {
-          const children = [...iterator.value];
+          var children = [...iterator.value];
           file.children = children;
         }
       }
@@ -864,14 +864,14 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
 
     // handle accessibility updates when item clicked
     if (event) {
-      const fileList = this.renderRoot.querySelector('.file-list');
+      var fileList = this.renderRoot.querySelector('.file-list');
 
       // get index of the focused item
-      const nodes = Array.from(fileList.children);
-      const li = (event.target as HTMLElement).closest('li');
-      const index = nodes.indexOf(li);
+      var nodes = Array.from(fileList.children);
+      var li = (event.target as HTMLElement).closest('li');
+      var index = nodes.indexOf(li);
       this._focusedItemIndex = index;
-      const clickedItem = fileList.children[this._focusedItemIndex] as HTMLElement;
+      var clickedItem = fileList.children[this._focusedItemIndex] as HTMLElement;
       this.updateItemBackgroundColor(fileList, clickedItem, 'selected');
     }
   }
@@ -892,7 +892,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
     } else {
       if (this.pageIterator.hasNext) {
         this._isLoadingMore = true;
-        const root = this.renderRoot.querySelector('#file-list-wrapper');
+        var root = this.renderRoot.querySelector('#file-list-wrapper');
         if (root?.animate) {
           // play back
           root.animate(
@@ -930,7 +930,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
   };
 
   private readonly handleFileClick = (file: DriveItem) => {
-    const hasChildFolders = file?.folder?.childCount > 0 && file?.children;
+    var hasChildFolders = file?.folder?.childCount > 0 && file?.children;
     // the item has child folders, on click should get the child folders and render them
     if (hasChildFolders) {
       this.showChildren(file.id);
@@ -943,17 +943,17 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
   };
 
   private readonly showChildren = (fileId: string) => {
-    const itemDOM = this.renderRoot.querySelector(`#file-list-item-${fileId}`);
+    var itemDOM = this.renderRoot.querySelector(`#file-list-item-${fileId}`);
     this.renderChildren(fileId, itemDOM);
   };
 
   private readonly renderChildren = (itemId: string, itemDOM: Element) => {
-    const fileListName = customElementHelper.isDisambiguated
+    var fileListName = customElementHelper.isDisambiguated
       ? `${customElementHelper.prefix}-file-list`
       : 'mgt-file-list';
-    const childrenContainer = this.renderRoot.querySelector(`#file-list-children-${itemId}`);
+    var childrenContainer = this.renderRoot.querySelector(`#file-list-children-${itemId}`);
     if (!childrenContainer) {
-      const fl = document.createElement(fileListName);
+      var fl = document.createElement(fileListName);
       fl.setAttribute('item-id', itemId);
       fl.setAttribute('id', `file-list-children-${itemId}`);
       fl.setAttribute('class', 'file-list-children-show');
@@ -975,8 +975,8 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    * @returns {string} file extension
    */
   private getFileExtension(name: string) {
-    const re = /(?:\.([^.]+))?$/;
-    const fileExtension = re.exec(name)[1] || '';
+    var re = /(?:\.([^.]+))?$/;
+    var fileExtension = re.exec(name)[1] || '';
 
     return fileExtension;
   }
@@ -990,7 +990,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
    */
   private updateItemBackgroundColor(fileList: Element, focusedItem: HTMLElement, className: string) {
     // reset background color and remove tabindex
-    for (const node of fileList.children) {
+    for (var node of fileList.children) {
       node.classList.remove(className);
       node.removeAttribute('tabindex');
     }
@@ -1004,7 +1004,7 @@ export class MgtFileList extends MgtTemplatedTaskComponent implements CardSectio
     }
 
     // remove selected classes
-    for (const node of fileList.children) {
+    for (var node of fileList.children) {
       node.classList.remove('selected');
     }
   }
