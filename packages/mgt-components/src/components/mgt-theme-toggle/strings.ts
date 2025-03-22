@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export let strings = {
+export const strings = {
   label: 'Color mode:',
   on: 'Dark',
   off: 'Light'
