@@ -20,7 +20,7 @@ import { strings } from './strings';
 import { registerComponent } from '@microsoft/mgt-element';
 import { property } from 'lit/decorators.js';
 
-export const registerMgtProfileComponent = () => registerComponent('profile', MgtProfile);
+export var registerMgtProfileComponent = () => registerComponent('profile', MgtProfile);
 
 /**
  * The user profile subsection of the person card
@@ -79,7 +79,7 @@ export class MgtProfile extends BasePersonCardSection {
       return false;
     }
 
-    const { languages, skills, positions, educationalActivities } = this.profile;
+    var { languages, skills, positions, educationalActivities } = this.profile;
 
     return (
       [
@@ -189,7 +189,7 @@ export class MgtProfile extends BasePersonCardSection {
    * @memberof MgtProfile
    */
   protected renderSubSections() {
-    const subSections = [
+    var subSections = [
       this.renderSkills(),
       this.renderBirthday(),
       this.renderLanguages(),
@@ -210,13 +210,13 @@ export class MgtProfile extends BasePersonCardSection {
    * @memberof MgtProfile
    */
   protected renderLanguages(): TemplateResult {
-    const { languages } = this._profile;
+    var { languages } = this._profile;
     if (!languages?.length) {
       return null;
     }
 
-    const languageItems: TemplateResult[] = [];
-    for (const language of languages) {
+    var languageItems: TemplateResult[] = [];
+    for (var language of languages) {
       let proficiency = null;
       if (language.proficiency?.length) {
         proficiency = html`
@@ -234,7 +234,7 @@ export class MgtProfile extends BasePersonCardSection {
        `);
     }
 
-    const languageTitle = languageItems.length ? this.strings.LanguagesSubSectionTitle : '';
+    var languageTitle = languageItems.length ? this.strings.LanguagesSubSectionTitle : '';
 
     return html`
        <section>
@@ -256,14 +256,14 @@ export class MgtProfile extends BasePersonCardSection {
    * @memberof MgtProfile
    */
   protected renderSkills(): TemplateResult {
-    const { skills } = this._profile;
+    var { skills } = this._profile;
 
     if (!skills?.length) {
       return null;
     }
 
-    const skillItems: TemplateResult[] = [];
-    for (const skill of skills) {
+    var skillItems: TemplateResult[] = [];
+    for (var skill of skills) {
       skillItems.push(html`
          <div class="token-list__item skill" tabindex="0">
            ${skill.displayName}
@@ -271,7 +271,7 @@ export class MgtProfile extends BasePersonCardSection {
        `);
     }
 
-    const skillsTitle = skillItems.length ? this.strings.SkillsSubSectionTitle : '';
+    var skillsTitle = skillItems.length ? this.strings.SkillsSubSectionTitle : '';
 
     return html`
        <section>
@@ -293,14 +293,14 @@ export class MgtProfile extends BasePersonCardSection {
    * @memberof MgtProfile
    */
   protected renderWorkExperience(): TemplateResult {
-    const { positions } = this._profile;
+    var { positions } = this._profile;
 
     if (!positions?.length) {
       return null;
     }
 
-    const positionItems: TemplateResult[] = [];
-    for (const position of this._profile.positions) {
+    var positionItems: TemplateResult[] = [];
+    for (var position of this._profile.positions) {
       if (position.detail.description || position.detail.jobTitle !== '') {
         positionItems.push(html`
            <div class="data-list__item work-position">
@@ -322,7 +322,7 @@ export class MgtProfile extends BasePersonCardSection {
          `);
       }
     }
-    const workExperienceTitle = positionItems.length ? this.strings.WorkExperienceSubSectionTitle : '';
+    var workExperienceTitle = positionItems.length ? this.strings.WorkExperienceSubSectionTitle : '';
 
     return html`
        <section>
@@ -344,14 +344,14 @@ export class MgtProfile extends BasePersonCardSection {
    * @memberof MgtProfile
    */
   protected renderEducation(): TemplateResult {
-    const { educationalActivities } = this._profile;
+    var { educationalActivities } = this._profile;
 
     if (!educationalActivities?.length) {
       return null;
     }
 
-    const positionItems: TemplateResult[] = [];
-    for (const educationalActivity of educationalActivities) {
+    var positionItems: TemplateResult[] = [];
+    for (var educationalActivity of educationalActivities) {
       positionItems.push(html`
          <div class="data-list__item educational-activity">
            <div class="data-list__item__header">
@@ -372,7 +372,7 @@ export class MgtProfile extends BasePersonCardSection {
        `);
     }
 
-    const educationTitle = positionItems.length ? this.strings.EducationSubSectionTitle : '';
+    var educationTitle = positionItems.length ? this.strings.EducationSubSectionTitle : '';
 
     return html`
        <section>
@@ -398,8 +398,8 @@ export class MgtProfile extends BasePersonCardSection {
       return null;
     }
 
-    const interestItems: TemplateResult[] = [];
-    for (const interest of this._professionalInterests) {
+    var interestItems: TemplateResult[] = [];
+    for (var interest of this._professionalInterests) {
       interestItems.push(html`
          <div class="token-list__item interest interest--professional" tabindex="0">
            ${interest.displayName}
@@ -407,7 +407,7 @@ export class MgtProfile extends BasePersonCardSection {
        `);
     }
 
-    const professionalInterests = interestItems.length ? this.strings.professionalInterestsSubSectionTitle : '';
+    var professionalInterests = interestItems.length ? this.strings.professionalInterestsSubSectionTitle : '';
 
     return html`
        <section>
@@ -433,8 +433,8 @@ export class MgtProfile extends BasePersonCardSection {
       return null;
     }
 
-    const interestItems: TemplateResult[] = [];
-    for (const interest of this._personalInterests) {
+    var interestItems: TemplateResult[] = [];
+    for (var interest of this._personalInterests) {
       interestItems.push(html`
          <div class="token-list__item interest interest--personal" tabindex="0">
            ${interest.displayName}
@@ -442,7 +442,7 @@ export class MgtProfile extends BasePersonCardSection {
        `);
     }
 
-    const personalInterests = interestItems.length ? this.strings.personalInterestsSubSectionTitle : '';
+    var personalInterests = interestItems.length ? this.strings.personalInterestsSubSectionTitle : '';
 
     return html`
        <section>
@@ -510,13 +510,13 @@ export class MgtProfile extends BasePersonCardSection {
       return nothing;
     }
 
-    const start = new Date(event.startMonthYear).getFullYear();
+    var start = new Date(event.startMonthYear).getFullYear();
     // if the start year is 0 or 1 - it's probably an error or a strange "undefined"-value
     if (start === 0 || start === 1) {
       return nothing;
     }
 
-    const end = event.endMonthYear ? new Date(event.endMonthYear).getFullYear() : this.strings.currentYearSubtitle;
+    var end = event.endMonthYear ? new Date(event.endMonthYear).getFullYear() : this.strings.currentYearSubtitle;
     return `${start} — ${end}`;
   }
 
@@ -533,7 +533,7 @@ export class MgtProfile extends BasePersonCardSection {
   private initPostRenderOperations(): void {
     setTimeout(() => {
       try {
-        const sections = this.shadowRoot.querySelectorAll('section');
+        var sections = this.shadowRoot.querySelectorAll('section');
         sections.forEach(section => {
           // Perform post render operations per section
           this.handleTokenOverflow(section);
@@ -545,21 +545,21 @@ export class MgtProfile extends BasePersonCardSection {
   }
 
   private handleTokenOverflow(section: HTMLElement): void {
-    const tokenLists = section.querySelectorAll('.token-list');
+    var tokenLists = section.querySelectorAll('.token-list');
     if (!tokenLists?.length) {
       return;
     }
 
-    for (const tokenList of Array.from(tokenLists)) {
-      const items = tokenList.querySelectorAll('.token-list__item');
+    for (var tokenList of Array.from(tokenLists)) {
+      var items = tokenList.querySelectorAll('.token-list__item');
       if (!items?.length) {
         continue;
       }
 
       let overflowItems: Element[] = null;
       let itemRect = items[0].getBoundingClientRect();
-      const tokenListRect = tokenList.getBoundingClientRect();
-      const maxtop = itemRect.height * 2 + tokenListRect.top;
+      var tokenListRect = tokenList.getBoundingClientRect();
+      var maxtop = itemRect.height * 2 + tokenListRect.top;
 
       // Use (items.length - 1) to prevent [+1 more] from appearing.
       for (let i = 0; i < items.length - 1; i++) {
@@ -573,14 +573,14 @@ export class MgtProfile extends BasePersonCardSection {
       if (overflowItems) {
         overflowItems.forEach(i => i.classList.add('overflow'));
 
-        const overflowToken = document.createElement('div');
+        var overflowToken = document.createElement('div');
         overflowToken.classList.add('token-list__item');
         overflowToken.classList.add('token-list__item--show-overflow');
         overflowToken.tabIndex = 0;
         overflowToken.innerText = `+ ${overflowItems.length} more`;
 
         // On click or enter(accessibility), remove [+n more] token and reveal the hidden overflow tokens.
-        const revealOverflow = () => {
+        var revealOverflow = () => {
           overflowToken.remove();
           overflowItems.forEach(i => i.classList.remove('overflow'));
         };
