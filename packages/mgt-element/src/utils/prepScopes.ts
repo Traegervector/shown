@@ -17,9 +17,9 @@ import { Providers } from '../providers/Providers';
  * @returns
  */
 
-export const prepScopes = (scopes: string[], provider = Providers.globalProvider) => {
-  const additionalScopes = provider.needsAdditionalScopes(scopes);
-  const authProviderOptions = {
+export let prepScopes = (scopes: string[], provider = Providers.globalProvider) => {
+  let additionalScopes = provider.needsAdditionalScopes(scopes);
+  let authProviderOptions = {
     scopes: additionalScopes
   };
 
