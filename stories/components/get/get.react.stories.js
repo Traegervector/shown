@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let Get = () => html`
+export const Get = () => html`
 <mgt-get resource="/me/messages" scopes="mail.read">
   <template>
     <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -23,8 +23,8 @@ export let Get = () => html`
   <react>
     import { Get, MgtTemplateProps } from '@microsoft/mgt-react';
 
-    export let Messages = (props: MgtTemplateProps) => {
-      let value = props.dataContext;
+    export const Messages = (props: MgtTemplateProps) => {
+      const value = props.dataContext;
       return (
         <pre>{ JSON.stringify(value, null, 2) }</pre>
       );
@@ -38,7 +38,7 @@ export let Get = () => html`
   </react>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-get resource="/me/messages" scopes="mail.read">
     <template>
       <pre>{{ JSON.stringify(value, null, 2) }}</pre>
@@ -47,20 +47,20 @@ export let events = () => html`
   <react>
     import { Get, MgtTemplateProps } from '@microsoft/mgt-react';
 
-    export let Messages = (props: MgtTemplateProps) => {
-      let value = props.dataContext;
+    export const Messages = (props: MgtTemplateProps) => {
+      const value = props.dataContext;
       return (
         <pre>{ JSON.stringify(value, null, 2) }</pre>
       );
     };
 
-    let onUpdated = (e: CustomEvent<undefined>) => {
+    const onUpdated = (e: CustomEvent<undefined>) => {
       console.log('updated', e);
     };
-    let onTemplateRendered = (e: CustomEvent<undefined>) => {
+    const onTemplateRendered = (e: CustomEvent<undefined>) => {
       console.log('templateRendered', e);
     };
-    let onDataChange = (e: CustomEvent<undefined>) => {
+    const onDataChange = (e: CustomEvent<undefined>) => {
       console.log('dataChange', e);
     };
 
@@ -77,7 +77,7 @@ export let events = () => html`
   </react>
 
   <script>
-    let get = document.querySelector('mgt-get');
+    const get = document.querySelector('mgt-get');
     get.addEventListener('updated', e => {
       console.log('updated', e);
     });
