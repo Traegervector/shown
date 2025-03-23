@@ -278,8 +278,8 @@ export class ElectronAuthenticator {
    * @memberof ElectronAuthenticator
    */
   protected setRequestObjects(scopes?: string[]): void {
-    const requestScopes = scopes ? scopes : [];
-    const redirectUri = REDIRECT_URI;
+    var requestScopes = scopes ? scopes : [];
+    var redirectUri = REDIRECT_URI;
 
     this.authCodeUrlParams = {
       scopes: requestScopes,
@@ -316,7 +316,7 @@ export class ElectronAuthenticator {
     });
 
     ipcMain.handle('login', async () => {
-      const account = await this.login();
+      var account = await this.login();
       if (account) {
         this.mainWindow.webContents.send('mgtAuthState', AuthState.LOGGED_IN);
       } else {
@@ -324,7 +324,7 @@ export class ElectronAuthenticator {
       }
     });
     ipcMain.handle('token', async (_e, options: AuthenticationProviderOptions) => {
-      const token = await this.getAccessToken(options);
+      var token = await this.getAccessToken(options);
       return token;
     });
 
@@ -344,10 +344,10 @@ export class ElectronAuthenticator {
    */
   protected async getAccessToken(options?: AuthenticationProviderOptions): Promise<string | undefined> {
     let authResponse: AuthenticationResult | null = null;
-    const scopes = options?.scopes?.length ? options.scopes : this.authCodeUrlParams.scopes;
-    const account = this.account || (await this.getAccount());
+    var scopes = options?.scopes?.length ? options.scopes : this.authCodeUrlParams.scopes;
+    var account = this.account || (await this.getAccount());
     if (account) {
-      const request = {
+      var request = {
         account,
         scopes,
         forceRefresh: false
@@ -391,7 +391,7 @@ export class ElectronAuthenticator {
    * @memberof ElectronAuthenticator
    */
   protected async login() {
-    const authResponse = await this.getTokenInteractive(promptType.SELECT_ACCOUNT);
+    var authResponse = await this.getTokenInteractive(promptType.SELECT_ACCOUNT);
     return this.setAccountFromResponse(authResponse);
   }
 
@@ -437,16 +437,16 @@ export class ElectronAuthenticator {
    * @memberof ElectronAuthenticator
    */
   protected async getTokenInteractive(prompt_type: promptType, scopes?: string[]): Promise<AuthenticationResult> {
-    const requestScopes = scopes ? scopes : this.authCodeUrlParams.scopes;
-    const authCodeUrlParams = {
+    var requestScopes = scopes ? scopes : this.authCodeUrlParams.scopes;
+    var authCodeUrlParams = {
       ...this.authCodeUrlParams,
       scopes: requestScopes,
       prompt: prompt_type.toString()
     };
-    const authCodeUrl = await this.clientApplication.getAuthCodeUrl(authCodeUrlParams);
+    var authCodeUrl = await this.clientApplication.getAuthCodeUrl(authCodeUrlParams);
     this.authCodeListener = new CustomFileProtocolListener('msal');
     this.authCodeListener.start();
-    const authCode = await this.listenForAuthCode(authCodeUrl, prompt_type);
+    var authCode = await this.listenForAuthCode(authCodeUrl, prompt_type);
     return await this.clientApplication
       .acquireTokenByCode({
         ...this.authCodeRequest,
@@ -474,8 +474,8 @@ export class ElectronAuthenticator {
     return new Promise((resolve, reject) => {
       this.authWindow.webContents.on('will-redirect', (_event, responseUrl) => {
         try {
-          const parsedUrl = new URL(responseUrl);
-          const authCode = parsedUrl.searchParams.get('code');
+          var parsedUrl = new URL(responseUrl);
+          var authCode = parsedUrl.searchParams.get('code');
           resolve(authCode);
         } catch (err) {
           this.authWindow.destroy();
@@ -495,7 +495,7 @@ export class ElectronAuthenticator {
   protected async attemptSilentLogin() {
     this.account = this.account || (await this.getAccount());
     if (this.account) {
-      const token = await this.getAccessToken();
+      var token = await this.getAccessToken();
       if (token) {
         this.mainWindow.webContents.send('mgtAuthState', AuthState.LOGGED_IN);
       } else {
@@ -514,8 +514,8 @@ export class ElectronAuthenticator {
    * @memberof ElectronAuthenticator
    */
   private async getAccount(): Promise<AccountDetails> {
-    const cache = this.clientApplication.getTokenCache();
-    const currentAccounts = await cache.getAllAccounts();
+    var cache = this.clientApplication.getTokenCache();
+    var currentAccounts = await cache.getAllAccounts();
     if (currentAccounts?.length >= 1) {
       return currentAccounts[0];
     }
