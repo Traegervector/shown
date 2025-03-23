@@ -104,9 +104,9 @@ export abstract class MgtBaseProvider extends MgtBaseComponent {
   protected firstUpdated(changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>) {
     super.firstUpdated(changedProperties);
 
-    const higherPriority = false;
+    let higherPriority = false;
     if (this.dependsOn) {
-      const higherPriorityProvider = this.dependsOn;
+      let higherPriorityProvider = this.dependsOn;
       while (higherPriorityProvider) {
         if (higherPriorityProvider.isAvailable) {
           higherPriority = true;
