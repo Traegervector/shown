@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   removeTaskSubtitle: 'Delete Task',
   cancelNewTaskSubtitle: 'Cancel',
   newTaskPlaceholder: 'Adding a task...',
