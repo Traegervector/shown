@@ -118,7 +118,7 @@ type SearchResource = Partial<
  */
 type SearchResponseCollection = CollectionResponse<SearchResponse>;
 
-export const registerMgtSearchResultsComponent = () => {
+export var registerMgtSearchResultsComponent = () => {
   registerFluentComponents(fluentSkeleton, fluentButton, fluentTooltip, fluentDivider);
 
   registerMgtFileComponent();
@@ -487,7 +487,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @memberof MgtSearchResults
    */
   protected async loadState() {
-    const provider = Providers.globalProvider;
+    var provider = Providers.globalProvider;
 
     this.error = null;
 
@@ -497,10 +497,10 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
 
     if (this.queryString) {
       try {
-        const requestOptions = this.getRequestOptions();
+        var requestOptions = this.getRequestOptions();
 
         let cache: CacheStore<CacheResponse>;
-        const key = JSON.stringify({
+        var key = JSON.stringify({
           endpoint: `${this.version}${this.searchEndpoint}`,
           requestOptions
         });
@@ -508,14 +508,14 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
 
         if (this.shouldRetrieveCache()) {
           cache = CacheService.getCache<CacheResponse>(schemas.search, schemas.search.stores.responses);
-          const result: CacheResponse = getIsResponseCacheEnabled() ? await cache.getValue(key) : null;
+          var result: CacheResponse = getIsResponseCacheEnabled() ? await cache.getValue(key) : null;
           if (result && getResponseInvalidationTime(this.cacheInvalidationPeriod) > Date.now() - result.timeCached) {
             response = JSON.parse(result.response) as SearchResponseCollection;
           }
         }
 
         if (!response) {
-          const graph = provider.graph.forComponent(this);
+          var graph = provider.graph.forComponent(this);
           let request = graph.api(this.searchEndpoint).version(this.version);
 
           if (this.scopes?.length) {
@@ -525,15 +525,15 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
           response = (await request.post({ requests: [requestOptions] })) as SearchResponseCollection;
 
           if (this.fetchThumbnail) {
-            const thumbnailBatch = graph.createBatch<BinaryThumbnail>();
-            const thumbnailBatchBeta = BetaGraph.fromGraph(graph).createBatch<BinaryThumbnail>();
+            var thumbnailBatch = graph.createBatch<BinaryThumbnail>();
+            var thumbnailBatchBeta = BetaGraph.fromGraph(graph).createBatch<BinaryThumbnail>();
 
-            const hits =
+            var hits =
               response.value?.length && response.value[0].hitsContainers?.length
                 ? response.value[0].hitsContainers[0]?.hits ?? []
                 : [];
-            for (const element of hits) {
-              const resource = element.resource as SearchResource;
+            for (var element of hits) {
+              var resource = element.resource as SearchResource;
               if (
                 (resource.size > 0 || resource.webUrl?.endsWith('.aspx')) &&
                 (resource['@odata.type'] === '#microsoft.graph.driveItem' ||
@@ -558,11 +558,11 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
              *
              * @param thumbnailResponse
              */
-            const augmentResponse = (thumbnailResponse: Map<string, BatchResponse<BinaryThumbnail>>) => {
+            var augmentResponse = (thumbnailResponse: Map<string, BatchResponse<BinaryThumbnail>>) => {
               if (thumbnailResponse && thumbnailResponse.size > 0) {
-                for (const [k, value] of thumbnailResponse) {
-                  const result: SearchHit = response.value[0].hitsContainers[0].hits[k] as SearchHit;
-                  const thumbnail: Thumbnail =
+                for (var [k, value] of thumbnailResponse) {
+                  var result: SearchHit = response.value[0].hitsContainers[0].hits[k] as SearchHit;
+                  var thumbnail: Thumbnail =
                     result.resource['@odata.type'] === '#microsoft.graph.listItem'
                       ? { url: value.content.thumbnailWebUrl }
                       : { url: value.content.url };
@@ -661,7 +661,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @memberof MgtSearchResults
    */
   protected renderResult(result: SearchHit): TemplateResult {
-    const type = this.getResourceType(result.resource);
+    var type = this.getResourceType(result.resource);
     if (this.hasTemplate(`result-${type}`)) {
       return this.renderTemplate(`result-${type}`, result, result.hitId);
     } else {
@@ -696,7 +696,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    */
   private renderFooter(hitsContainer: SearchHitsContainer) {
     if (this.pagingRequired(hitsContainer)) {
-      const pages = this.getActivePages(hitsContainer.total);
+      var pages = this.getActivePages(hitsContainer.total);
 
       return html`
         <div class="search-results-pages">
@@ -724,8 +724,8 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @param totalResults Total number of results of the search query
    */
   private getActivePages(totalResults: number) {
-    const getFirstPage = () => {
-      const medianPage = this.currentPage - Math.floor(this.pagingMax / 2) - 1;
+    var getFirstPage = () => {
+      var medianPage = this.currentPage - Math.floor(this.pagingMax / 2) - 1;
 
       if (medianPage >= Math.floor(this.pagingMax / 2)) {
         return medianPage;
@@ -734,8 +734,8 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
       }
     };
 
-    const pages: number[] = [];
-    const firstPage = getFirstPage();
+    var pages: number[] = [];
+    var firstPage = getFirstPage();
 
     if (firstPage + 1 > this.pagingMax - this.currentPage || this.pagingMax === this.currentPage) {
       for (
@@ -894,7 +894,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * Scroll to the top of the search results
    */
   private scrollToFirstResult() {
-    const target = this.renderRoot.querySelector('.search-results');
+    var target = this.renderRoot.querySelector('.search-results');
     target.scrollIntoView({
       block: 'start',
       behavior: 'smooth'
@@ -916,7 +916,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @param result
    */
   private renderDriveItem(result: SearchHit) {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return mgtHtml`
       <div class="search-result-grid">
         <div class="search-result-icon">
@@ -965,7 +965,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @returns
    */
   private renderSite(result: SearchHit): HTMLTemplateResult {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return html`
       <div class="search-result-grid">
         <div class="search-result-icon">
@@ -994,7 +994,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @returns
    */
   private renderList(result: SearchHit): HTMLTemplateResult {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return mgtHtml`
       <div class="search-result-grid">
         <div class="search-result-icon">
@@ -1023,7 +1023,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @returns
    */
   private renderListItem(result: SearchHit): HTMLTemplateResult {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return mgtHtml`
       <div class="search-result-grid">
         <div class="search-result-icon">
@@ -1071,7 +1071,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @returns
    */
   private renderPerson(result: SearchHit): HTMLTemplateResult {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return mgtHtml`
       <div class="search-result">
         <mgt-person
@@ -1118,7 +1118,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @param result
    */
   private renderAnswer(result: SearchHit, icon: SvgIcon) {
-    const resource = result.resource as SearchResource;
+    var resource = result.resource as SearchResource;
     return html`
       <div class="search-result-grid search-result-answer">
         <div class="search-result-icon">
@@ -1141,8 +1141,8 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @param result
    */
   private renderDefault(result: SearchHit) {
-    const resource = result.resource as SearchResource;
-    const resourceUrl = this.getResourceUrl(resource);
+    var resource = result.resource as SearchResource;
+    var resourceUrl = this.getResourceUrl(resource);
     return html`
       <div class="search-result-grid">
         <div class="search-result-icon">
@@ -1238,7 +1238,7 @@ export class MgtSearchResults extends MgtTemplatedTaskComponent {
    * @returns
    */
   private getRequestOptions(): SearchRequest | BetaSearchRequest {
-    const requestOptions: SearchRequest = {
+    var requestOptions: SearchRequest = {
       entityTypes: this.entityTypes as EntityType[],
       query: {
         queryString: this.queryString
