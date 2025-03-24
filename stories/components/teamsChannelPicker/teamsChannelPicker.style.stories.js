@@ -7,7 +7,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const customCSSProperties = () => html`
+export let customCSSProperties = () => html`
   <style>
     .teams-channel-picker {
       --channel-picker-input-border-color: pink; /* sets input border color */
