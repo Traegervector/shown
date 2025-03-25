@@ -28,8 +28,8 @@ class Deferred<T = unknown> {
   }
 }
 
-var getMiddleOfElement = (element: Element) => {
-  var { x, y, width, height } = element.getBoundingClientRect();
+const getMiddleOfElement = (element: Element) => {
+  const { x, y, width, height } = element.getBoundingClientRect();
 
   return {
     x: Math.floor(x + window.scrollX + width / 2),
@@ -43,7 +43,7 @@ describe('mgt-theme-toggle - media behavior tests', () => {
   it('should render as checked whe color scheme is dark', async () => {
     await emulateMedia({ colorScheme: 'dark' });
     expect(matchMedia('(prefers-color-scheme: dark)').matches).to.be.true;
-    var darkToggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
+    const darkToggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
     await expect(darkToggle).shadowDom.to.equal(
       `<fluent-switch
         aria-checked="true"
@@ -59,8 +59,8 @@ describe('mgt-theme-toggle - media behavior tests', () => {
     );
   });
   it('should emit darkmodechanged true on inital render when the color scheme is dark', async () => {
-    var deferred = new Deferred<boolean>();
-    var listener = (e: CustomEvent<boolean>) => {
+    const deferred = new Deferred<boolean>();
+    const listener = (e: CustomEvent<boolean>) => {
       deferred.resolve(e.detail);
     };
     await emulateMedia({ colorScheme: 'dark' });
@@ -73,7 +73,7 @@ describe('mgt-theme-toggle - media behavior tests', () => {
   it('should render as unchecked when color scheme is light', async () => {
     await emulateMedia({ colorScheme: 'light' });
     expect(matchMedia('(prefers-color-scheme: light)').matches).to.be.true;
-    var lightToggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
+    const lightToggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
     await expect(lightToggle).shadowDom.to.equal(
       `<fluent-switch
         aria-checked="false"
@@ -95,7 +95,7 @@ describe('mgt-theme-toggle - tests', () => {
     registerMgtThemeToggleComponent();
   });
   it('should render', async () => {
-    var toggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
+    const toggle = await fixture('<mgt-theme-toggle></mgt-theme-toggle>');
     await expect(toggle).shadowDom.to.equal(
       `<fluent-switch
         aria-checked="false"
@@ -113,13 +113,13 @@ describe('mgt-theme-toggle - tests', () => {
 
   it("should emit darkmodechanged with the current 'checked' state on click", async () => {
     let darkModeDeferred = new Deferred<boolean>();
-    var listener = (e: CustomEvent<boolean>) => {
+    const listener = (e: CustomEvent<boolean>) => {
       darkModeDeferred.resolve(e.detail);
     };
 
-    var element = await fixture(html`<mgt-theme-toggle @darkmodechanged=${listener}></mgt-theme-toggle>`);
-    var toggle: HTMLInputElement = element.shadowRoot.querySelector('[role=switch]');
-    var { x, y } = getMiddleOfElement(element);
+    const element = await fixture(html`<mgt-theme-toggle @darkmodechanged=${listener}></mgt-theme-toggle>`);
+    const toggle: HTMLInputElement = element.shadowRoot.querySelector('[role=switch]');
+    const { x, y } = getMiddleOfElement(element);
 
     // darkmodechanged emitted when setting initial value of checked
     expect(await darkModeDeferred.promise).to.be.false;
@@ -141,7 +141,7 @@ describe('mgt-theme-toggle - tests', () => {
   });
 
   it('should have a checked switch if mode is dark', async () => {
-    var toggle = await fixture('<mgt-theme-toggle mode="dark"></mgt-theme-toggle>');
+    const toggle = await fixture('<mgt-theme-toggle mode="dark"></mgt-theme-toggle>');
     await expect(toggle).shadowDom.to.equal(
       `<fluent-switch
         aria-checked="true"
