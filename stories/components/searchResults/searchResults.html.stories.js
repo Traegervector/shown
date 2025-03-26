@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const searchResults = () => html`
+export let searchResults = () => html`
   <mgt-search-results
     entity-types="driveItem"
     fetch-thumbnail="true"
@@ -22,7 +22,7 @@ export const searchResults = () => html`
   </mgt-search-results>
 `;
 
-export const localization = () => html`
+export let localization = () => html`
   <mgt-search-results entity-types="driveItem" query-string="contoso">
   </mgt-search-results>
   <script>
@@ -41,14 +41,14 @@ export const localization = () => html`
   </script>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-search-results
     entity-types="driveItem"
     fetch-thumbnail="true"
     query-string="contoso">
   </mgt-search-results>
   <script>
-    const searchResults = document.querySelector('mgt-search-results');
+    let searchResults = document.querySelector('mgt-search-results');
     searchResults.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
