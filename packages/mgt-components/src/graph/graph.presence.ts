@@ -23,13 +23,13 @@ interface CachePresence extends CacheItem {
 /**
  * Defines the expiration time
  */
-var getPresenceInvalidationTime = (): number =>
+const getPresenceInvalidationTime = (): number =>
   CacheService.config.presence.invalidationPeriod || CacheService.config.defaultInvalidationPeriod;
 
 /**
  * Whether the groups store is enabled
  */
-var getIsPresenceCacheEnabled = (): boolean =>
+const getIsPresenceCacheEnabled = (): boolean =>
   CacheService.config.presence.isEnabled && CacheService.config.isEnabled;
 
 /**
@@ -40,21 +40,21 @@ var getIsPresenceCacheEnabled = (): boolean =>
  * @param {string} userId - id for the user or null for current signed in user
  * @memberof BetaGraph
  */
-export var getUserPresence = async (graph: IGraph, userId?: string): Promise<Presence> => {
+export const getUserPresence = async (graph: IGraph, userId?: string): Promise<Presence> => {
   let cache: CacheStore<CachePresence>;
 
   if (getIsPresenceCacheEnabled()) {
     cache = CacheService.getCache(schemas.presence, schemas.presence.stores.presence);
-    var presence = await cache.getValue(userId || 'me');
+    const presence = await cache.getValue(userId || 'me');
     if (presence && getPresenceInvalidationTime() > Date.now() - presence.timeCached) {
       return JSON.parse(presence.presence) as Presence;
     }
   }
 
-  var validScopes = userId ? ['presence.read.all'] : ['presence.read', 'presence.read.all'];
-  var resource = userId ? `/users/${userId}/presence` : '/me/presence';
+  const validScopes = userId ? ['presence.read.all'] : ['presence.read', 'presence.read.all'];
+  const resource = userId ? `/users/${userId}/presence` : '/me/presence';
 
-  var result = (await graph.api(resource).middlewareOptions(prepScopes(validScopes)).get()) as Presence;
+  const result = (await graph.api(resource).middlewareOptions(prepScopes(validScopes)).get()) as Presence;
   if (getIsPresenceCacheEnabled()) {
     await cache.putValue(userId || 'me', { presence: JSON.stringify(result) });
   }
@@ -68,23 +68,23 @@ export var getUserPresence = async (graph: IGraph, userId?: string): Promise<Pre
  * @returns {}
  * @memberof BetaGraph
  */
-export var getUsersPresenceByPeople = async (graph: IGraph, people?: IDynamicPerson[]) => {
+export const getUsersPresenceByPeople = async (graph: IGraph, people?: IDynamicPerson[]) => {
   if (!people || people.length === 0) {
     return {};
   }
 
-  var peoplePresence: Record<string, Presence> = {};
-  var peoplePresenceToQuery: string[] = [];
-  var validScopes = ['presence.read.all'];
+  const peoplePresence: Record<string, Presence> = {};
+  const peoplePresenceToQuery: string[] = [];
+  const validScopes = ['presence.read.all'];
   let cache: CacheStore<CachePresence>;
 
   if (getIsPresenceCacheEnabled()) {
     cache = CacheService.getCache(schemas.presence, schemas.presence.stores.presence);
   }
 
-  for (var person of people) {
+  for (const person of people) {
     if (person?.id) {
-      var id = person.id;
+      const id = person.id;
       peoplePresence[id] = null;
       let presence: CachePresence;
       if (getIsPresenceCacheEnabled()) {
@@ -100,14 +100,14 @@ export var getUsersPresenceByPeople = async (graph: IGraph, people?: IDynamicPer
 
   try {
     if (peoplePresenceToQuery.length > 0) {
-      var presenceResult = (await graph
+      const presenceResult = (await graph
         .api('/communications/getPresencesByUserId')
         .middlewareOptions(prepScopes(validScopes))
         .post({
           ids: peoplePresenceToQuery
         })) as CollectionResponse<Presence>;
 
-      for (var r of presenceResult.value) {
+      for (const r of presenceResult.value) {
         peoplePresence[r.id] = r;
         if (getIsPresenceCacheEnabled()) {
           await cache.putValue(r.id, { presence: JSON.stringify(r) });
@@ -123,7 +123,7 @@ export var getUsersPresenceByPeople = async (graph: IGraph, people?: IDynamicPer
        * must filter out the contacts, which will either 404 or have PresenceUnknown response
        * caching will be handled by getUserPresence
        */
-      var response = await Promise.all(
+      const response = await Promise.all(
         people
           .filter(
             person =>
@@ -135,7 +135,7 @@ export var getUsersPresenceByPeople = async (graph: IGraph, people?: IDynamicPer
           .map(person => getUserPresence(graph, person.id))
       );
 
-      for (var r of response) {
+      for (const r of response) {
         peoplePresence[r.id] = r;
       }
       return peoplePresence;
