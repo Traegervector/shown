@@ -12,7 +12,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-export const strings = {
+export let strings = {
   cancelNewTaskSubtitle: 'Cancel',
   newTaskPlaceholder: 'Add a task',
   newTaskLabel: 'New Task Input',
