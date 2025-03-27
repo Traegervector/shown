@@ -54,7 +54,7 @@ export class SessionCache {
  * @param storageType can be 'sessionStorage' or 'localStorage'.
  * @returns true if the storage is available for use.
  */
-export const storageAvailable = (storageType: string): boolean => {
+export var storageAvailable = (storageType: string): boolean => {
   let storage: Storage;
   try {
     if (storageType === 'sessionStorage') {
@@ -62,7 +62,7 @@ export const storageAvailable = (storageType: string): boolean => {
     } else {
       storage = window.localStorage;
     }
-    const x = '__storage_test__';
+    var x = '__storage_test__';
     storage.setItem(x, x);
     storage.removeItem(x);
     return true;
