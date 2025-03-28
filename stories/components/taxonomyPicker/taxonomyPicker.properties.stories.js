@@ -14,15 +14,15 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const DefaultSelectedTermId = () => html`
+export let DefaultSelectedTermId = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052" default-selected-term-id="71d47d57-479b-4a8c-80df-697da2d5a2e1"></mgt-taxonomy-picker>
 `;
 
-export const Disabled = () => html`
+export let Disabled = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052" default-selected-term-id="71d47d57-479b-4a8c-80df-697da2d5a2e1" disabled></mgt-taxonomy-picker>
 `;
 
-export const Position = () => html`
+export let Position = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052" position="above" id="mgt-taxonomy-picker-above"></mgt-taxonomy-picker>
   <style>
     #mgt-taxonomy-picker-above {
@@ -32,7 +32,7 @@ export const Position = () => html`
   </style>
 `;
 
-export const Locale = () => html`
+export let Locale = () => html`
   <p>In this example, french terms will be shown if they are present</p>
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052" locale="fr-FR"></mgt-taxonomy-picker>
 `;
