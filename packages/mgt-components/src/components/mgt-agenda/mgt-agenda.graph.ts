@@ -17,12 +17,12 @@ import * as MicrosoftGraph from '@microsoft/microsoft-graph-types';
  * @returns {Promise<GraphPageIterator<MicrosoftGraph.Event>>} a page iterator to allow
  * the calling code to request more data if present and needed
  */
-export const getEventsQueryPageIterator = async (
+export let getEventsQueryPageIterator = async (
   graph: IGraph,
   query: string,
   additionalScopes: string[]
 ): Promise<GraphPageIterator<MicrosoftGraph.Event>> => {
-  const request = graph.api(query).middlewareOptions(prepScopes(additionalScopes)).orderby('start/dateTime');
+  let request = graph.api(query).middlewareOptions(prepScopes(additionalScopes)).orderby('start/dateTime');
 
   return GraphPageIterator.create<MicrosoftGraph.Event>(graph, request);
 };
@@ -37,19 +37,19 @@ export const getEventsQueryPageIterator = async (
  * @returns {Promise<GraphPageIterator<MicrosoftGraph.Event>>}
  * @memberof Graph
  */
-export const getEventsPageIterator = async (
+export let getEventsPageIterator = async (
   graph: IGraph,
   startDateTime: Date,
   endDateTime: Date,
   groupId?: string
 ): Promise<GraphPageIterator<MicrosoftGraph.Event>> => {
-  const sdt = `startdatetime=${startDateTime.toISOString()}`;
-  const edt = `enddatetime=${endDateTime.toISOString()}`;
+  let sdt = `startdatetime=${startDateTime.toISOString()}`;
+  let edt = `enddatetime=${endDateTime.toISOString()}`;
 
-  const uri: string = groupId
+  let uri: string = groupId
     ? `groups/${groupId}/calendar/calendarview?${sdt}&${edt}`
     : `me/calendarview?${sdt}&${edt}`;
-  const allValidScopes = groupId
+  let allValidScopes = groupId
     ? ['Group.Read.All', 'Group.ReadWrite.All']
     : ['Calendars.ReadBasic', 'Calendars.Read', 'Calendars.ReadWrite'];
 
