@@ -20,5 +20,5 @@ export type ThemeToggleProps = {
 	updated?: (e: CustomEvent<undefined>) => void;
 }
 
-export let ThemeToggle = wrapMgt<ThemeToggleProps>('theme-toggle', registerMgtThemeToggleComponent);
+export const ThemeToggle = wrapMgt<ThemeToggleProps>('theme-toggle', registerMgtThemeToggleComponent);
 
