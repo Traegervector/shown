@@ -18,5 +18,5 @@ export type SpinnerProps = {
 	updated?: (e: CustomEvent<undefined>) => void;
 }
 
-export let Spinner = wrapMgt<SpinnerProps>('spinner', registerMgtSpinnerComponent);
+export const Spinner = wrapMgt<SpinnerProps>('spinner', registerMgtSpinnerComponent);
 
