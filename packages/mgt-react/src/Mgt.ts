@@ -19,7 +19,7 @@ export class Mgt extends Wc {
 
   protected getTag(): string {
     let tag: string = super.getTag() as string;
-    const tagPrefix = `${customElementHelper.prefix}-`;
+    var tagPrefix = `${customElementHelper.prefix}-`;
     if (!tag.startsWith(tagPrefix)) {
       tag = tagPrefix + tag;
     }
@@ -30,19 +30,19 @@ export class Mgt extends Wc {
   // type mismatch due to version drift
   // @ts-expect-error - TS2416: Property 'render' in type 'Mgt' is not assignable to the same property in base type 'Wc'
   public render(): React.DOMElement<React.DOMAttributes<HTMLElement>, HTMLElement> {
-    const tag = this.getTag();
+    var tag = this.getTag();
     if (!tag) {
       throw new Error('"wcType" must be set!');
     }
 
     this.processTemplates(this.props.children);
 
-    const templateElements = [];
+    var templateElements = [];
 
     if (this._templates) {
-      for (const t in this._templates) {
+      for (var t in this._templates) {
         if (Object.prototype.hasOwnProperty.call(this._templates, t)) {
-          const element = React.createElement('template', { key: t, 'data-type': t }, null);
+          var element = React.createElement('template', { key: t, 'data-type': t }, null);
           templateElements.push(element);
         }
       }
@@ -95,9 +95,9 @@ export class Mgt extends Wc {
       return;
     }
 
-    const templateType = e.detail.templateType;
-    const dataContext = e.detail.context;
-    const element = e.detail.element;
+    var templateType = e.detail.templateType;
+    var dataContext = e.detail.context;
+    var element = e.detail.element;
 
     let template = this._templates[templateType];
 
@@ -120,11 +120,11 @@ export class Mgt extends Wc {
       return;
     }
 
-    const templates: Record<string, ReactElement> = {};
+    var templates: Record<string, ReactElement> = {};
 
     React.Children.forEach(children, child => {
-      const element = child as ReactElement<{ template: string }>;
-      const template = element?.props?.template;
+      var element = child as ReactElement<{ template: string }>;
+      var template = element?.props?.template;
       if (template) {
         templates[template] = element;
       } else {
@@ -145,11 +145,11 @@ export class Mgt extends Wc {
  * @param {(string | Function)} tag
  * @returns React component
  */
-export const wrapMgt = <T = WcProps>(tag: string, registerElementFunction: () => void) => {
+export var wrapMgt = <T = WcProps>(tag: string, registerElementFunction: () => void) => {
   registerElementFunction();
-  const WrapMgt = (props: T, ref: React.ForwardedRef<unknown>): React.CElement<WcTypeProps, Mgt> =>
+  var WrapMgt = (props: T, ref: React.ForwardedRef<unknown>): React.CElement<WcTypeProps, Mgt> =>
     React.createElement(Mgt, { wcType: tag, innerRef: ref, ...props });
-  const component: React.ForwardRefExoticComponent<
+  var component: React.ForwardRefExoticComponent<
     React.PropsWithoutRef<T & React.HTMLAttributes<unknown>> & React.RefAttributes<unknown>
   > = React.forwardRef(WrapMgt);
   return component;
