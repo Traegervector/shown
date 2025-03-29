@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const todos = () => html`
+export let todos = () => html`
   <mgt-todo></mgt-todo>
   <react>
     import { Todo } from '@microsoft/mgt-react';
@@ -25,17 +25,17 @@ export const todos = () => html`
   </react>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-todo></mgt-todo>
   <react>
     import { Todo } from '@microsoft/mgt-react';
 
     export default () => {
-    const onUpdated = useCallback((e: CustomEvent<undefined>) => {
+    let onUpdated = useCallback((e: CustomEvent<undefined>) => {
       console.log('updated', e);
     });
 
-    const onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
+    let onTemplateRendered = useCallback((e: CustomEvent<MgtElement.TemplateRenderedData>) => {
       console.log('templateRendered', e);
     });
 
@@ -48,7 +48,7 @@ export const events = () => html`
   };
   </react>
   <script>
-    const todo = document.querySelector('mgt-todo');
+    let todo = document.querySelector('mgt-todo');
     todo.addEventListener('updated', (e) => {
       console.log('updated', e);
     });
