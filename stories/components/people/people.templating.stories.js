@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let DefaultTemplates = () => html`
+export const DefaultTemplates = () => html`
 <style>
   ul {
     list-style-type: none;
@@ -52,14 +52,14 @@ export let DefaultTemplates = () => html`
 	</template>
 </mgt-people>`;
 
-export let PersonTemplate = () => html`
+export const PersonTemplate = () => html`
 <mgt-people>
   <template data-type="person">
     {{person.displayName}} |
   </template>
 </mgt-people>`;
 
-export let OverflowTemplate = () => html`
+export const OverflowTemplate = () => html`
 <mgt-people>
   <template data-type="overflow">
     and {{extra}} left
