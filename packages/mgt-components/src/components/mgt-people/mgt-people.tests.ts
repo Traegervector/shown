@@ -14,7 +14,7 @@ describe('mgt-people - tests', () => {
   Providers.globalProvider = new MockProvider(true);
 
   it('should render with overflow', async () => {
-    const mgtPeople = await fixture(html`<mgt-people
+    let mgtPeople = await fixture(html`<mgt-people
           people-queries="Lidia, Megan, Lynne, Brian, Joni">
         </mgt-people>
         `);
