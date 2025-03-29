@@ -39,7 +39,7 @@ export type AvatarSize = 'small' | 'large' | 'auto';
  */
 export type OfficeGraphInsightString = 'trending' | 'used' | 'shared';
 
-let viewTypes = ['image', 'oneline', 'twolines', 'threelines', 'fourlines'] as let;
+const viewTypes = ['image', 'oneline', 'twolines', 'threelines', 'fourlines'] as const;
 /**
  * Enumeration to define what parts of the person component render
  *
@@ -48,11 +48,11 @@ let viewTypes = ['image', 'oneline', 'twolines', 'threelines', 'fourlines'] as l
  */
 export type ViewType = (typeof viewTypes)[number];
 
-export let isViewType = (value: unknown): value is ViewType => {
+export const isViewType = (value: unknown): value is ViewType => {
   return typeof value === 'string' && viewTypes.includes(value as ViewType);
 };
 
-export let viewTypeConverter = (value: string, defaultValue: ViewType = 'twolines'): ViewType => {
+export const viewTypeConverter = (value: string, defaultValue: ViewType = 'twolines'): ViewType => {
   if (isViewType(value)) {
     return value;
   }
