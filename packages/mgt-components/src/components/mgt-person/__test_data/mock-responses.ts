@@ -8,7 +8,7 @@
 /**
  * Sample response for a $batch request to get a user and their photo
  */
-export let userPhotoBatchResponse = {
+export const userPhotoBatchResponse = {
   responses: [
     {
       id: '1',
