@@ -39,7 +39,7 @@ interface PersonViewConfig {
   avatarSize: AvatarSize;
 }
 
-export var registerMgtLoginComponent = () => {
+export const registerMgtLoginComponent = () => {
   registerFluentComponents(fluentListbox, fluentProgressRing, fluentButton, fluentCard);
 
   registerMgtFlyoutComponent();
@@ -213,7 +213,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   public async login(): Promise<void> {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     // (If we have user details or the consumer doesn't cancel the loginInitiated event) and the provider doesn't support multi-account, we don't have to login.
     // This condition is to prevent the login popup from showing up when the user is already logged in while still ensuring the loginIntiated event is raised
     if ((this.userDetails || !this.fireCustomEvent('loginInitiated')) && !provider.isMultiAccountSupportedAndEnabled) {
@@ -241,18 +241,18 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
       return;
     }
 
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (provider?.logout) {
       await provider.logout();
     }
   };
 
   private readonly completeLogout = () => {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (provider.state === ProviderState.SignedOut) {
       this.userDetails = null;
       if (provider.isMultiAccountSupportedAndEnabled) {
-        var activeAccount = provider.getActiveAccount();
+        const activeAccount = provider.getActiveAccount();
         localStorage.removeItem(activeAccount?.id + this._userDetailsKey);
       }
       this.hideFlyout();
@@ -287,7 +287,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected async loadState() {
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (provider && !this.userDetails) {
       if (provider.state === ProviderState.SignedIn) {
         this.userDetails = await getUserWithPhoto(provider.graph.forComponent(this));
@@ -320,18 +320,18 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @returns {TemplateResult}
    */
   protected renderButton(): TemplateResult {
-    var isSignedIn = Providers.globalProvider?.state === ProviderState.SignedIn;
-    var loginClasses = classMap({
+    const isSignedIn = Providers.globalProvider?.state === ProviderState.SignedIn;
+    const loginClasses = classMap({
       'signed-in': isSignedIn && Boolean(this.userDetails),
       'signed-out': !isSignedIn,
       small: this.loginView === 'avatar'
     });
-    var appearance = isSignedIn ? 'stealth' : 'neutral';
-    var showSignedInState = isSignedIn && this.userDetails;
-    var buttonContentTemplate = showSignedInState
+    const appearance = isSignedIn ? 'stealth' : 'neutral';
+    const showSignedInState = isSignedIn && this.userDetails;
+    const buttonContentTemplate = showSignedInState
       ? this.renderSignedInButtonContent(this.userDetails, this._image)
       : this.renderSignedOutButtonContent();
-    var expandedState: boolean | undefined = showSignedInState ? this._isFlyoutOpen : undefined;
+    const expandedState: boolean | undefined = showSignedInState ? this._isFlyoutOpen : undefined;
     return html`
       <fluent-button
         id="login-button"
@@ -385,10 +385,10 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
       return;
     }
 
-    var el = this.renderRoot.querySelector('.popup-content');
-    var focusableEls = el.querySelectorAll('ul, fluent-button');
-    var firstFocusableEl = el.querySelector('#signout-button') || focusableEls[0];
-    var lastFocusableEl =
+    const el = this.renderRoot.querySelector('.popup-content');
+    const focusableEls = el.querySelectorAll('ul, fluent-button');
+    const firstFocusableEl = el.querySelector('#signout-button') || focusableEls[0];
+    const lastFocusableEl =
       el.querySelector('#signin-different-account-button') || focusableEls[focusableEls.length - 1];
 
     if (e.key === 'Tab' && e.shiftKey && firstFocusableEl === e.target) {
@@ -400,10 +400,10 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
       (firstFocusableEl as HTMLElement)?.focus();
     }
     if (e.key === 'Escape') {
-      var loginButton = this.renderRoot.querySelector('#login-button');
+      const loginButton = this.renderRoot.querySelector('#login-button');
       (loginButton as HTMLElement)?.focus();
     }
-    var fluentCardEl = this.renderRoot.querySelector('fluent-card');
+    const fluentCardEl = this.renderRoot.querySelector('fluent-card');
     if (e.shiftKey && e.key === 'Tab' && e.target === fluentCardEl) {
       this.hideFlyout();
     }
@@ -457,7 +457,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected renderFlyoutPersonDetails(personDetails: IDynamicPerson, personImage: string): TemplateResult {
-    var template = this.renderTemplate('flyout-person-details', { personDetails, personImage });
+    const template = this.renderTemplate('flyout-person-details', { personDetails, personImage });
     return (
       template ||
       mgtHtml`
@@ -480,7 +480,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected renderFlyoutCommands(): TemplateResult {
-    var template = this.renderTemplate('flyout-commands', { handleSignOut: () => this.logout() });
+    const template = this.renderTemplate('flyout-commands', { handleSignOut: () => this.logout() });
     return (
       template ||
       html`
@@ -535,7 +535,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
   }
 
   private parsePersonDisplayConfiguration(): PersonViewConfig {
-    var displayConfig: PersonViewConfig = { view: 'twolines', avatarSize: 'small' };
+    const displayConfig: PersonViewConfig = { view: 'twolines', avatarSize: 'small' };
     switch (this.loginView) {
       case 'avatar':
         displayConfig.view = 'image';
@@ -562,8 +562,8 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected renderSignedInButtonContent(personDetails: IDynamicPerson, personImage: string): TemplateResult {
-    var template = this.renderTemplate('signed-in-button-content', { personDetails, personImage });
-    var displayConfig = this.parsePersonDisplayConfiguration();
+    const template = this.renderTemplate('signed-in-button-content', { personDetails, personImage });
+    const displayConfig = this.parsePersonDisplayConfiguration();
     return (
       template ||
       mgtHtml`
@@ -590,8 +590,8 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
       Providers.globalProvider.state === ProviderState.SignedIn &&
       Providers.globalProvider.isMultiAccountSupportedAndEnabled
     ) {
-      var provider = Providers.globalProvider;
-      var accounts = provider.getAllAccounts();
+      const provider = Providers.globalProvider;
+      const accounts = provider.getAllAccounts();
 
       if (accounts?.length > 1) {
         return html`
@@ -606,7 +606,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
               ${accounts
                 .filter(a => a.id !== provider.getActiveAccount().id)
                 .map(account => {
-                  var details = localStorage.getItem(account.id + this._userDetailsKey);
+                  const details = localStorage.getItem(account.id + this._userDetailsKey);
                   return mgtHtml`
                     <li
                       tabindex="-1"
@@ -633,18 +633,18 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
   }
 
   private readonly handleAccountListKeyDown = (event: KeyboardEvent) => {
-    var list: HTMLUListElement = this.renderRoot.querySelector('ul.account-list');
+    const list: HTMLUListElement = this.renderRoot.querySelector('ul.account-list');
     let item: HTMLLIElement;
-    var listItems: HTMLCollection = list?.children;
+    const listItems: HTMLCollection = list?.children;
     // Default all tabindex values in li nodes to -1
-    for (var element of listItems) {
-      var el = element as HTMLLIElement;
+    for (const element of listItems) {
+      const el = element as HTMLLIElement;
       el.setAttribute('tabindex', '-1');
       el.blur();
     }
 
-    var childElementCount = list.childElementCount;
-    var keyName = event.key;
+    const childElementCount = list.childElementCount;
+    const keyName = event.key;
     if (keyName === 'ArrowDown') {
       this._arrowKeyLocation = (this._arrowKeyLocation + 1 + childElementCount) % childElementCount;
     } else if (keyName === 'ArrowUp') {
@@ -695,7 +695,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected renderSignedOutButtonContent(): TemplateResult {
-    var template = this.renderTemplate('signed-out-button-content', null);
+    const template = this.renderTemplate('signed-out-button-content', null);
     return (
       template ||
       html`
@@ -710,7 +710,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected showFlyout(): void {
-    var flyout = this.flyout;
+    const flyout = this.flyout;
     if (flyout) {
       flyout.open();
     }
@@ -723,7 +723,7 @@ export class MgtLogin extends MgtTemplatedTaskComponent {
    * @memberof MgtLogin
    */
   protected hideFlyout(): void {
-    var flyout = this.flyout;
+    const flyout = this.flyout;
     if (flyout) {
       flyout.close();
     }
