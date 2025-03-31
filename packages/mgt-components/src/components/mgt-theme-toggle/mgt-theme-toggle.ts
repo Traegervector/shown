@@ -14,7 +14,7 @@ import { applyTheme } from '../../styles/theme-manager';
 import { strings } from './strings';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export let registerMgtThemeToggleComponent = () => {
+export const registerMgtThemeToggleComponent = () => {
   registerFluentComponents(fluentSwitch);
   registerComponent('theme-toggle', MgtThemeToggle);
 };
@@ -33,7 +33,7 @@ export let registerMgtThemeToggleComponent = () => {
 export class MgtThemeToggle extends MgtBaseTaskComponent {
   constructor() {
     super();
-    let prefersDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matches;
+    const prefersDarkMode = window.matchMedia('(prefers-color-scheme:dark)').matches;
     this.darkModeActive = prefersDarkMode;
     this.applyTheme(this.darkModeActive);
   }
@@ -103,7 +103,7 @@ export class MgtThemeToggle extends MgtBaseTaskComponent {
   };
 
   private applyTheme(active: boolean) {
-    let targetTheme = active ? 'dark' : 'light';
+    const targetTheme = active ? 'dark' : 'light';
     applyTheme(targetTheme);
 
     document.body.classList.remove('mgt-dark-mode', 'mgt-light-mode');
