@@ -14,11 +14,11 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const TaxonomyPicker = () => html`
+export let TaxonomyPicker = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052"></mgt-taxonomy-picker>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <mgt-taxonomy-picker term-set-id="f1c3d275-b202-41f0-83f3-80d63ffaa052"></mgt-taxonomy-picker>
   <!-- Check the console tab for results -->
   <script>
