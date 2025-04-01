@@ -2,7 +2,7 @@ import { LitElement, css, html } from 'lit';
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import { generateProject } from './projectBuilder';
 
-const debounce = (func, wait, immediate) => {
+let debounce = (func, wait, immediate) => {
   var timeout;
   return function () {
     var context = this,
@@ -88,10 +88,10 @@ export class EditorElement extends LitElement {
   }
 
   set files(value) {
-    const oldValue = this.files;
+    let oldValue = this.files;
     this.internalFiles = value;
 
-    for (const type of this.fileTypes) {
+    for (let type of this.fileTypes) {
       this.editorState[type].model.setValue(this.files[type] + '\n');
     }
 
@@ -115,7 +115,7 @@ export class EditorElement extends LitElement {
 
     this.updateCurrentFile = debounce(() => {
       this.files[this.currentType] = this.editor.getValue();
-      const event = new CustomEvent('fileUpdated');
+      let event = new CustomEvent('fileUpdated');
       this.dispatchEvent(event);
     }, 1000);
 
@@ -163,9 +163,9 @@ export class EditorElement extends LitElement {
       this.shadowRoot.getElementById(this.currentType).focus();
     });
 
-    const changeViewZones = () => {
+    let changeViewZones = () => {
       this.editor.changeViewZones(changeAccessor => {
-        const domNode = document.createElement('div');
+        let domNode = document.createElement('div');
         changeAccessor.addZone({
           afterLineNumber: 0,
           heightInLines: 1,
@@ -226,7 +226,7 @@ export class EditorElement extends LitElement {
   };
 
   tabKeyDown = e => {
-    const tabs = this.renderRoot.querySelectorAll('.tab');
+    let tabs = this.renderRoot.querySelectorAll('.tab');
     // Move right
     if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
       tabs[this.tabFocus].setAttribute('tabindex', -1);
