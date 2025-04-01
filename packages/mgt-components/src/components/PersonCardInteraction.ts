@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-let interactions = ['none', 'hover', 'click'] as let;
+const interactions = ['none', 'hover', 'click'] as const;
 
 /**
  * Defines how a person card is shown when a user interacts with
@@ -14,10 +14,10 @@ let interactions = ['none', 'hover', 'click'] as let;
  */
 export type PersonCardInteraction = (typeof interactions)[number];
 
-export let isPersonCardInteraction = (value: unknown): value is PersonCardInteraction =>
+export const isPersonCardInteraction = (value: unknown): value is PersonCardInteraction =>
   typeof value === 'string' && interactions.includes(value as PersonCardInteraction);
 
-export let personCardConverter = (
+export const personCardConverter = (
   value: string,
   defaultValue: PersonCardInteraction = 'none'
 ): PersonCardInteraction => {
