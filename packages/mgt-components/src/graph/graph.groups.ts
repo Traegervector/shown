@@ -17,7 +17,7 @@ import {
 import { Group } from '@microsoft/microsoft-graph-types';
 import { schemas } from './cacheStores';
 
-var groupTypeValues = ['any', 'unified', 'security', 'mailenabledsecurity', 'distribution'] as var;
+const groupTypeValues = ['any', 'unified', 'security', 'mailenabledsecurity', 'distribution'] as const;
 
 /**
  * Group Type enumeration
@@ -26,9 +26,9 @@ var groupTypeValues = ['any', 'unified', 'security', 'mailenabledsecurity', 'dis
  * @enum {string}
  */
 export type GroupType = (typeof groupTypeValues)[number];
-export var isGroupType = (groupType: string): groupType is (typeof groupTypeValues)[number] =>
+export const isGroupType = (groupType: string): groupType is (typeof groupTypeValues)[number] =>
   groupTypeValues.includes(groupType as GroupType);
-export var groupTypeConverter = (value: string, defaultValue: GroupType = 'any'): GroupType =>
+export const groupTypeConverter = (value: string, defaultValue: GroupType = 'any'): GroupType =>
   isGroupType(value) ? value : defaultValue;
 
 /**
@@ -58,15 +58,15 @@ interface CacheGroupQuery extends CacheItem {
 /**
  * Defines the expiration time
  */
-var getGroupsInvalidationTime = (): number =>
+const getGroupsInvalidationTime = (): number =>
   CacheService.config.groups.invalidationPeriod || CacheService.config.defaultInvalidationPeriod;
 
 /**
  * Whether the groups store is enabled
  */
-var getIsGroupsCacheEnabled = (): boolean => CacheService.config.groups.isEnabled && CacheService.config.isEnabled;
+const getIsGroupsCacheEnabled = (): boolean => CacheService.config.groups.isEnabled && CacheService.config.isEnabled;
 
-var validGroupQueryScopes = [
+const validGroupQueryScopes = [
   'GroupMember.Read.All',
   'Group.Read.All',
   'Directory.Read.All',
@@ -74,7 +74,7 @@ var validGroupQueryScopes = [
   'Directory.ReadWrite.All'
 ];
 
-var validTransitiveGroupMemberScopes = [
+const validTransitiveGroupMemberScopes = [
   'GroupMember.Read.All',
   'Group.Read.All',
   'Directory.Read.All',
@@ -92,20 +92,20 @@ var validTransitiveGroupMemberScopes = [
  * @param {GroupType} [groupTypes=["any"]] - the type of group to search for
  * @returns {Promise<Group[]>} An array of Groups
  */
-export var findGroups = async (
+export const findGroups = async (
   graph: IGraph,
   query: string,
   top = 10,
   groupTypes: GroupType[] = ['any'],
   groupFilters = ''
 ): Promise<Group[]> => {
-  var groupTypesString = Array.isArray(groupTypes) ? groupTypes.join('+') : JSON.stringify(groupTypes);
+  const groupTypesString = Array.isArray(groupTypes) ? groupTypes.join('+') : JSON.stringify(groupTypes);
   let cache: CacheStore<CacheGroupQuery>;
-  var key = `${query ? query : '*'}*${groupTypesString}*${groupFilters}:${top}`;
+  const key = `${query ? query : '*'}*${groupTypesString}*${groupFilters}:${top}`;
 
   if (getIsGroupsCacheEnabled()) {
     cache = CacheService.getCache(schemas.groups, schemas.groups.stores.groupsQuery);
-    var cacheGroupQuery = await cache.getValue(key);
+    const cacheGroupQuery = await cache.getValue(key);
     if (cacheGroupQuery && getGroupsInvalidationTime() > Date.now() - cacheGroupQuery.timeCached) {
       if (cacheGroupQuery.top >= top) {
         // if request is less than the cache's requests, return a slice of the results
@@ -117,7 +117,7 @@ export var findGroups = async (
 
   let filterQuery = '';
   let responses: Map<string, BatchResponse<CollectionResponse<Group>>>;
-  var batchedResult: Group[] = [];
+  const batchedResult: Group[] = [];
 
   if (query !== '') {
     filterQuery = `(startswith(displayName,'${query}') or startswith(mailNickname,'${query}') or startswith(mail,'${query}'))`;
@@ -128,9 +128,9 @@ export var findGroups = async (
   }
 
   if (!groupTypes.includes('any')) {
-    var batch = graph.createBatch<CollectionResponse<Group>>();
+    const batch = graph.createBatch<CollectionResponse<Group>>();
 
-    var filterGroups: string[] = [];
+    const filterGroups: string[] = [];
 
     if (groupTypes.includes('unified')) {
       filterGroups.push("groupTypes/any(c:c+eq+'Unified')");
@@ -149,18 +149,18 @@ export var findGroups = async (
     }
 
     filterQuery = filterQuery ? `${filterQuery} and ` : '';
-    for (var filter of filterGroups) {
-      var fullUrl = `/groups?$filter=${filterQuery + filter}&$top=${top}`;
+    for (const filter of filterGroups) {
+      const fullUrl = `/groups?$filter=${filterQuery + filter}&$top=${top}`;
       batch.get(filter, fullUrl, validGroupQueryScopes);
     }
 
     try {
       responses = await batch.executeAll();
 
-      for (var filterGroup of filterGroups) {
+      for (const filterGroup of filterGroups) {
         if (responses.get(filterGroup).content.value) {
-          for (var group of responses.get(filterGroup).content.value) {
-            var repeat = batchedResult.find(batchedGroup => batchedGroup.id === group.id);
+          for (const group of responses.get(filterGroup).content.value) {
+            const repeat = batchedResult.find(batchedGroup => batchedGroup.id === group.id);
             if (!repeat) {
               batchedResult.push(group);
             }
@@ -169,8 +169,8 @@ export var findGroups = async (
       }
     } catch (_) {
       try {
-        var queries: Promise<CollectionResponse<Group>>[] = [];
-        for (var filter of filterGroups) {
+        const queries: Promise<CollectionResponse<Group>>[] = [];
+        for (const filter of filterGroups) {
           queries.push(
             graph
               .api('groups')
@@ -189,7 +189,7 @@ export var findGroups = async (
     }
   } else {
     if (batchedResult.length === 0) {
-      var result = (await graph
+      const result = (await graph
         .api('groups')
         .filter(filterQuery)
         .top(top)
@@ -219,7 +219,7 @@ export var findGroups = async (
  * @param {GroupType} [groupTypes=["any"]] - the type of group to search for
  * @returns {Promise<Group[]>} An array of Groups
  */
-export var findGroupsFromGroup = async (
+export const findGroupsFromGroup = async (
   graph: IGraph,
   query: string,
   groupId: string,
@@ -228,12 +228,12 @@ export var findGroupsFromGroup = async (
   groupTypes: GroupType[] = ['any']
 ): Promise<Group[]> => {
   let cache: CacheStore<CacheGroupQuery>;
-  var groupTypesString = Array.isArray(groupTypes) ? groupTypes.join('+') : JSON.stringify(groupTypes);
-  var key = `${groupId}:${query || '*'}:${groupTypesString}:${transitive}`;
+  const groupTypesString = Array.isArray(groupTypes) ? groupTypes.join('+') : JSON.stringify(groupTypes);
+  const key = `${groupId}:${query || '*'}:${groupTypesString}:${transitive}`;
 
   if (getIsGroupsCacheEnabled()) {
     cache = CacheService.getCache(schemas.groups, schemas.groups.stores.groupsQuery);
-    var cacheGroupQuery = await cache.getValue(key);
+    const cacheGroupQuery = await cache.getValue(key);
     if (cacheGroupQuery && getGroupsInvalidationTime() > Date.now() - cacheGroupQuery.timeCached) {
       if (cacheGroupQuery.top >= top) {
         // if request is less than the cache's requests, return a slice of the results
@@ -243,14 +243,14 @@ export var findGroupsFromGroup = async (
     }
   }
 
-  var apiUrl = `groups/${groupId}/${transitive ? 'transitiveMembers' : 'members'}/microsoft.graph.group`;
+  const apiUrl = `groups/${groupId}/${transitive ? 'transitiveMembers' : 'members'}/microsoft.graph.group`;
   let filterQuery = '';
   if (query !== '') {
     filterQuery = `(startswith(displayName,'${query}') or startswith(mailNickname,'${query}') or startswith(mail,'${query}'))`;
   }
 
   if (!groupTypes.includes('any')) {
-    var filterGroups = [];
+    const filterGroups = [];
 
     if (groupTypes.includes('unified')) {
       filterGroups.push("groupTypes/any(c:c+eq+'Unified')");
@@ -271,7 +271,7 @@ export var findGroupsFromGroup = async (
     filterQuery += (query !== '' ? ' and ' : '') + filterGroups.join(' or ');
   }
 
-  var result = (await graph
+  const result = (await graph
     .api(apiUrl)
     .filter(filterQuery)
     .count(true)
@@ -294,18 +294,18 @@ export var findGroupsFromGroup = async (
  * @returns {(Promise<User>)}
  * @memberof Graph
  */
-export var getGroup = async (graph: IGraph, id: string, requestedProps?: string[]): Promise<Group> => {
+export const getGroup = async (graph: IGraph, id: string, requestedProps?: string[]): Promise<Group> => {
   let cache: CacheStore<CacheGroup>;
 
   if (getIsGroupsCacheEnabled()) {
     cache = CacheService.getCache(schemas.groups, schemas.groups.stores.groups);
     // check cache
-    var group = await cache.getValue(id);
+    const group = await cache.getValue(id);
 
     // is it stored and is timestamp good?
     if (group && getGroupsInvalidationTime() > Date.now() - group.timeCached) {
-      var cachedData = group.group ? (JSON.parse(group.group) as Group) : null;
-      var uniqueProps =
+      const cachedData = group.group ? (JSON.parse(group.group) as Group) : null;
+      const uniqueProps =
         requestedProps && cachedData ? requestedProps.filter(prop => !Object.keys(cachedData).includes(prop)) : null;
 
       // return without any worries
@@ -321,7 +321,7 @@ export var getGroup = async (graph: IGraph, id: string, requestedProps?: string[
   }
 
   // else we must grab it
-  var response = (await graph.api(apiString).middlewareOptions(prepScopes(validGroupQueryScopes)).get()) as Group;
+  const response = (await graph.api(apiString).middlewareOptions(prepScopes(validGroupQueryScopes)).get()) as Group;
   if (getIsGroupsCacheEnabled()) {
     await cache.putValue(id, { group: JSON.stringify(response) });
   }
@@ -336,20 +336,20 @@ export var getGroup = async (graph: IGraph, id: string, requestedProps?: string[
  * @param {string[]} groupIds, an array of string ids
  * @returns {Promise<Group[]>}
  */
-export var getGroupsForGroupIds = async (graph: IGraph, groupIds: string[], filters = ''): Promise<Group[]> => {
+export const getGroupsForGroupIds = async (graph: IGraph, groupIds: string[], filters = ''): Promise<Group[]> => {
   if (!groupIds || groupIds.length === 0) {
     return [];
   }
-  var batch = graph.createBatch();
-  var groupDict: Record<string, Group | Promise<Group>> = {};
-  var notInCache: string[] = [];
+  const batch = graph.createBatch();
+  const groupDict: Record<string, Group | Promise<Group>> = {};
+  const notInCache: string[] = [];
   let cache: CacheStore<CacheGroup>;
 
   if (getIsGroupsCacheEnabled()) {
     cache = CacheService.getCache(schemas.groups, schemas.groups.stores.groups);
   }
 
-  for (var id of groupIds) {
+  for (const id of groupIds) {
     groupDict[id] = null;
     let group: CacheGroup;
     if (getIsGroupsCacheEnabled()) {
@@ -367,10 +367,10 @@ export var getGroupsForGroupIds = async (graph: IGraph, groupIds: string[], filt
     }
   }
   try {
-    var responses = await batch.executeAll();
+    const responses = await batch.executeAll();
     // iterate over groupIds to ensure the order of ids
-    for (var id of groupIds) {
-      var response = responses.get(id);
+    for (const id of groupIds) {
+      const response = responses.get(id);
       if (response?.content) {
         groupDict[id] = response.content as Group;
         if (getIsGroupsCacheEnabled()) {
@@ -415,7 +415,7 @@ export var getGroupsForGroupIds = async (graph: IGraph, groupIds: string[], filt
  * @param filters
  * @returns
  */
-export var findGroupsFromGroupIds = async (
+export const findGroupsFromGroupIds = async (
   graph: IGraph,
   query: string,
   groupIds: string[],
@@ -423,10 +423,10 @@ export var findGroupsFromGroupIds = async (
   groupTypes: GroupType[] = ['any'],
   filters = ''
 ): Promise<Group[]> => {
-  var foundGroups: Group[] = [];
-  var graphGroups = await findGroups(graph, query, top, groupTypes, filters);
+  const foundGroups: Group[] = [];
+  const graphGroups = await findGroups(graph, query, top, groupTypes, filters);
   if (graphGroups) {
-    for (var group of graphGroups) {
+    for (const group of graphGroups) {
       if (group.id && groupIds.includes(group.id)) {
         foundGroups.push(group);
       }
