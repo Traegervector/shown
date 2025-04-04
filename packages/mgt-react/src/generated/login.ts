@@ -30,5 +30,5 @@ export type LoginProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let Login = wrapMgt<LoginProps>('login', registerMgtLoginComponent);
+export const Login = wrapMgt<LoginProps>('login', registerMgtLoginComponent);
 
