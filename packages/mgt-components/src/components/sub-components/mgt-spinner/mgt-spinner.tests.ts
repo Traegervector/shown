@@ -9,7 +9,7 @@ import { fixture, html, expect } from '@open-wc/testing';
 import './mgt-spinner';
 import { registerMgtSpinnerComponent } from './mgt-spinner';
 
-const spinner: Element;
+let spinner: Element;
 describe('mgt-spinner tests', () => {
   // before(() => reg);
   beforeEach(async () => {
