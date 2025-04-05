@@ -14,23 +14,23 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const setPlaceholder = () => html`
+export var setPlaceholder = () => html`
 <mgt-people-picker placeholder="Select people"></mgt-people-picker>
 `;
 
-export const showPresence = () => html`
+export var showPresence = () => html`
 <mgt-people-picker show-presence></mgt-people-picker>
 `;
 
-export const personCard = () => html`
+export var personCard = () => html`
   <mgt-people-picker person-card="hover"></mgt-people-picker>
 `;
 
-export const groupId = () => html`
+export var groupId = () => html`
 <mgt-people-picker group-id="02bd9fd6-8f93-4758-87c3-1fb73740a315"></mgt-people-picker>
 `;
 
-export const singleSelectMode = () => html`
+export var singleSelectMode = () => html`
 <mgt-people-picker selection-mode="single"></mgt-people-picker>
 
 <h2>Render in a modal and clear on opening the modal</h2>
@@ -60,14 +60,14 @@ export const singleSelectMode = () => html`
 </style>
 
 <script>
-const modal = document.getElementById("modal")
-const closeModal = document.getElementById("close-modal")
-const modalContent = document.getElementById("modal-content")
-const modalPicker = document.getElementById("modal-picker")
+var modal = document.getElementById("modal")
+var closeModal = document.getElementById("close-modal")
+var modalContent = document.getElementById("modal-content")
+var modalPicker = document.getElementById("modal-picker")
 modal.addEventListener('click', () => {
   modalContent.style.display = "flex"
   modalPicker.selectedPeople = []
-  const input = modalPicker.shadowRoot.querySelector('fluent-text-field').shadowRoot.querySelector('input');
+  var input = modalPicker.shadowRoot.querySelector('fluent-text-field').shadowRoot.querySelector('input');
   input.focus();
 })
 
@@ -78,7 +78,7 @@ closeModal.addEventListener('click', () => {
 </script>
 `;
 
-export const disableSuggestions = () => html`
+export var disableSuggestions = () => html`
 <h1>Disable suggestions</h1>
 <mgt-people-picker disable-suggestions></mgt-people-picker>
 <h1>Disable suggestions with default selected user Ids</h1>
@@ -90,7 +90,7 @@ default-selected-user-ids="e3d0513b-449e-4198-ba6f-bd97ae7cae85, 40079818-3808-4
   
 `;
 
-export const dynamicGroupId = () => html`
+export var dynamicGroupId = () => html`
 <div class="groups">
   <label class="notes">Pick a group:
     <select id="groupChooser">
@@ -139,7 +139,7 @@ function loadGroups() {
       .get()
       .then(groups => {
         for(let group of groups.value) {
-          const id = group.id;
+          var id = group.id;
           let option = document.createElement('option');
           option.setAttribute("value", id);
           option.innerText = group.displayName;
@@ -154,7 +154,7 @@ function setGroupValue(selected) {
 }
 
 groupChooser.addEventListener('change', function(e) {
-  const selection = e.target.value;
+  var selection = e.target.value;
   if (selection !== -1) {
       setGroupValue(selection);
   }
@@ -162,52 +162,52 @@ groupChooser.addEventListener('change', function(e) {
 </script>
 `;
 
-export const pickPeopleAndGroups = () => html`
+export var pickPeopleAndGroups = () => html`
   <mgt-people-picker type="any"></mgt-people-picker>
   <!-- type can be "any", "person", "group" -->
 `;
 
-export const pickPeopleAndGroupsNested = () => html`
+export var pickPeopleAndGroupsNested = () => html`
   <mgt-people-picker type="any" transitive-search="true"></mgt-people-picker>
   <!-- type can be "any", "person", "group" -->
 `;
 
-export const pickGroups = () => html`
+export var pickGroups = () => html`
   <mgt-people-picker type="group"></mgt-people-picker>
   <!-- type can be "any", "person", "group" -->
 `;
 
-export const pickDistributionGroups = () => html`
+export var pickDistributionGroups = () => html`
   <mgt-people-picker type="group" group-type="distribution"></mgt-people-picker>
   <!-- group-type can be "any", "unified", "security", "mailenabledsecurity", "distribution" -->
 `;
 
-export const pickMultipleGroups = () => html`
+export var pickMultipleGroups = () => html`
   <mgt-people-picker type="group" group-type="unified,distribution,security"></mgt-people-picker>
   <!-- group-type can be "any", "unified", "security", "mailenabledsecurity", "distribution" -->
 `;
 
-export const pickMultipleGroupsShowMax = () => html`
+export var pickMultipleGroupsShowMax = () => html`
   <mgt-people-picker type="group" group-type="unified,security,mailenabledsecurity" show-max="3"></mgt-people-picker>
   <!-- group-type can be "any", "unified", "security", "mailenabledsecurity", "distribution" -->
 `;
 
-export const pickPeople = () => html`
+export var pickPeople = () => html`
   <mgt-people-picker type="person"></mgt-people-picker>
   <!-- type can be "any", "person", "group" -->
 `;
 
-export const pickOnlyOrganizationUsers = () => html`
+export var pickOnlyOrganizationUsers = () => html`
   <mgt-people-picker type="person" user-type="user"></mgt-people-picker>
   <!-- user-type can be "any", "user", "contact" -->
 `;
 
-export const pickOnlyContacts = () => html`
+export var pickOnlyContacts = () => html`
   <mgt-people-picker type="person" user-type="contact"></mgt-people-picker>
   <!-- user-type can be "any", "user", "contact" -->
 `;
 
-export const pickerOverflowGradient = () => html`
+export var pickerOverflowGradient = () => html`
   <mgt-people-picker
     default-selected-user-ids="e8a02cc7-df4d-4778-956d-784cc9506e5a,eeMcKFN0P0aANVSXFM_xFQ==,48d31887-5fad-4d73-a9f5-3c356e68a038,e3d0513b-449e-4198-ba6f-bd97ae7cae85"
   ></mgt-people-picker>
@@ -218,60 +218,60 @@ export const pickerOverflowGradient = () => html`
   </style>
 `;
 
-export const pickerDisabled = () => html`
+export var pickerDisabled = () => html`
   <mgt-people-picker
     default-selected-user-ids="e3d0513b-449e-4198-ba6f-bd97ae7cae85, 40079818-3808-4585-903b-02605f061225" disabled>
   </mgt-people-picker>
 `;
 
-export const pickerDisableImages = () => html`
+export var pickerDisableImages = () => html`
   <mgt-people-picker
     default-selected-user-ids="e3d0513b-449e-4198-ba6f-bd97ae7cae85, 40079818-3808-4585-903b-02605f061225" disable-images>
   </mgt-people-picker>
 `;
 
-export const pickerDefaultSelectedUserIds = () => html`
+export var pickerDefaultSelectedUserIds = () => html`
   <mgt-people-picker
     default-selected-user-ids="e3d0513b-449e-4198-ba6f-bd97ae7cae85, 40079818-3808-4585-903b-02605f061225">
   </mgt-people-picker>
 `;
 
-export const pickerDefaultSelectedGroupIds = () => html`
+export var pickerDefaultSelectedGroupIds = () => html`
   <mgt-people-picker
     default-selected-group-ids="94cb7dd0-cb3b-49e0-ad15-4efeb3c7d3e9, f2861ed7-abca-4556-bf0c-39ddc717ad81">
   </mgt-people-picker>
 `;
 
-export const pickerDefaultSelectedUserAndGroupIds = () => html`
+export var pickerDefaultSelectedUserAndGroupIds = () => html`
   <mgt-people-picker
     default-selected-user-ids="e3d0513b-449e-4198-ba6f-bd97ae7cae85, 40079818-3808-4585-903b-02605f061225"
     default-selected-group-ids="94cb7dd0-cb3b-49e0-ad15-4efeb3c7d3e9, f2861ed7-abca-4556-bf0c-39ddc717ad81">
   </mgt-people-picker>
 `;
 
-export const pickerAllowAnyEmail = () => html`
+export var pickerAllowAnyEmail = () => html`
   <mgt-people-picker allow-any-email></mgt-people-picker>
   <!-- Type any email address and press comma(,), semicolon(;), or enter keys to add it -->
   <script type="module">
-    const peoplePicker = document.querySelector('mgt-people-picker');
+    var peoplePicker = document.querySelector('mgt-people-picker');
     peoplePicker.selectedPeople = [{mail: "any@mail.com", displayName: "any@mail.com"}]
   </script>
 `;
 
-export const pickerUserIds = () => html`
+export var pickerUserIds = () => html`
   <mgt-people-picker
       user-ids="2804bc07-1e1f-4938-9085-ce6d756a32d2 ,e8a02cc7-df4d-4778-956d-784cc9506e5a,c8913c86-ceea-4d39-b1ea-f63a5b675166">
   </mgt-people-picker>
 `;
 
-export const pickerUserFilters = () => html`
+export var pickerUserFilters = () => html`
   <mgt-people-picker
     user-filters="startsWith(displayName,'a')"
     user-type="user">
   </mgt-people-picker>
 `;
 
-export const pickerPeopleFilters = () => html`
+export var pickerPeopleFilters = () => html`
   <mgt-people-picker
       people-filters="jobTitle eq 'Retail Manager'">
   </mgt-people-picker>
@@ -281,21 +281,21 @@ export const pickerPeopleFilters = () => html`
   </mgt-people-picker>
 `;
 
-export const pickerGroupFilters = () => html`
+export var pickerGroupFilters = () => html`
   <mgt-people-picker
     group-filters="startsWith(displayName, 'a')"
     type="group">
   </mgt-people-picker>
 `;
 
-export const pickerGroupIds = () => html`
+export var pickerGroupIds = () => html`
   <!-- This should show all the users in the groups of the group IDs -->
   <mgt-people-picker
     group-ids="94cb7dd0-cb3b-49e0-ad15-4efeb3c7d3e9,f2861ed7-abca-4556-bf0c-39ddc717ad81">
   </mgt-people-picker>
 `;
 
-export const pickerGroupIdsWithUserFilters = () => html`
+export var pickerGroupIdsWithUserFilters = () => html`
   <!-- This should return an empty result -->
   <mgt-people-picker
     group-ids="94cb7dd0-cb3b-49e0-ad15-4efeb3c7d3e9,f2861ed7-abca-4556-bf0c-39ddc717ad81"
@@ -309,7 +309,7 @@ export const pickerGroupIdsWithUserFilters = () => html`
   </mgt-people-picker>
 `;
 
-export const pickerGroupIdsWithTypeGroup = () => html`
+export var pickerGroupIdsWithTypeGroup = () => html`
   <!-- This should show the groups in the group-ids as groups -->
   <mgt-people-picker
     group-ids="94cb7dd0-cb3b-49e0-ad15-4efeb3c7d3e9,f2861ed7-abca-4556-bf0c-39ddc717ad81"
@@ -317,7 +317,7 @@ export const pickerGroupIdsWithTypeGroup = () => html`
   </mgt-people-picker>
 `;
 
-export const pickerWithAriaLabel = () => html`
+export var pickerWithAriaLabel = () => html`
   <!-- This will set the aria-label attribute on the input element of the combo box -->
   <mgt-people-picker
     aria-label="Type to search for a user or group"
@@ -325,16 +325,16 @@ export const pickerWithAriaLabel = () => html`
   </mgt-people-picker>
 `;
 
-export const asyncDefaultSelectedUserIds = () => {
+export var asyncDefaultSelectedUserIds = () => {
   return html`
 
   <mgt-people-picker id="async-picker"></mgt-people-picker>
   <script type="module">
   window.setTimeout(() => {
-    const userIds = 'e3d0513b-449e-4198-ba6f-bd97ae7cae85,40079818-3808-4585-903b-02605f061225'.split(
+    var userIds = 'e3d0513b-449e-4198-ba6f-bd97ae7cae85,40079818-3808-4585-903b-02605f061225'.split(
       ','
     );
-    const picker = document.getElementById('async-picker');
+    var picker = document.getElementById('async-picker');
     picker.defaultSelectedUserIds = userIds;
     console.log('defaultSelectedUserIds set');
   }, 2000);
