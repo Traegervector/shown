@@ -50,12 +50,12 @@ import { registerMgtArrowOptionsComponent } from '../sub-components/mgt-arrow-op
  */
 export type TaskFilter = (task: PlannerTask) => boolean;
 
-var plannerAssignment = {
+const plannerAssignment = {
   '@odata.type': '#microsoft.graph.plannerAssignment',
   orderHint: ' !'
 };
 
-export var registerMgtPlannerComponent = () => {
+export const registerMgtPlannerComponent = () => {
   registerFluentComponents(fluentSelect, fluentOption, fluentTextField, fluentButton, fluentCheckbox, fluentSkeleton);
 
   registerMgtArrowOptionsComponent();
@@ -148,8 +148,8 @@ export var registerMgtPlannerComponent = () => {
  *
  * @cssprop --task-complete-background-color - {Color} The background color of a task that is complete.
  * @cssprop --task-incomplete-background-color - {Color} The background color of a task that is incomplete.
- * @cssprop --task-complete-border - {Length} The border of a task that is complete.  Default is 2px dotted var(--neutral-fill-strong-rest).
- * @cssprop --task-incomplete-border - {Length} The border of a task that is incomplete. Default is 1px solid var(--neutral-fill-strong-rest).
+ * @cssprop --task-complete-border - {Length} The border of a task that is complete.  Default is 2px dotted const(--neutral-fill-strong-rest).
+ * @cssprop --task-incomplete-border - {Length} The border of a task that is incomplete. Default is 1px solid const(--neutral-fill-strong-rest).
  * @cssprop --task-complete-border-radius - {Length} The border radius of a task that is incomplete. Default is 4px.
  * @cssprop --task-incomplete-border-radius - {Length} The border radius of a task that is incomplete. Default is 4px.
  * @cssprop --task-complete-padding - {Length} The padding of a task that is complete. Default is 10px.
@@ -322,7 +322,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   @state() private _me: User = null;
 
   private get filteredTasks(): ITask[] {
-    var temp = this._tasks
+    const temp = this._tasks
       .filter(task => this.isTaskInSelectedGroupFilter(task))
       .filter(task => this.isTaskInSelectedFolderFilter(task))
       .filter(task => !this._hiddenTasks.includes(task.id));
@@ -421,7 +421,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
    * Renders the contentful state of the component.
    */
   protected renderContent = () => {
-    var loadingTask = this._inTaskLoad && !this._hasDoneInitialLoad ? this.renderLoadingTask() : null;
+    const loadingTask = this._inTaskLoad && !this._hasDoneInitialLoad ? this.renderLoadingTask() : null;
 
     let header: TemplateResult;
 
@@ -453,19 +453,19 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
    * @memberof MgtPlanner
    */
   protected async loadState() {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
 
-    var provider = Providers.globalProvider;
+    const provider = Providers.globalProvider;
     if (!provider || provider.state !== ProviderState.SignedIn) {
       return;
     }
 
     this._inTaskLoad = true;
     if (!this._me) {
-      var graph = provider.graph.forComponent(this);
+      const graph = provider.graph.forComponent(this);
       this._me = await getMe(graph);
     }
 
@@ -493,14 +493,14 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   };
 
   private async _loadTargetPlannerTasks(ts: ITaskSource) {
-    var group = await ts.getTaskGroup(this.targetId);
+    const group = await ts.getTaskGroup(this.targetId);
     let folders = await ts.getTaskFoldersForTaskGroup(group.id);
 
     if (this.targetBucketId) {
       folders = folders.filter(folder => folder.id === this.targetBucketId);
     }
 
-    var tasks = (
+    const tasks = (
       await Promise.all(folders.map(folder => ts.getTasksForTaskFolder(folder.id, folder.parentId)))
     ).reduce((cur, ret) => [...cur, ...ret], []);
 
@@ -510,13 +510,13 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async _loadAllTasks(ts: ITaskSource) {
-    var groups = await ts.getTaskGroups();
-    var folders = (await Promise.all(groups.map(group => ts.getTaskFoldersForTaskGroup(group.id)))).reduce(
+    const groups = await ts.getTaskGroups();
+    const folders = (await Promise.all(groups.map(group => ts.getTaskFoldersForTaskGroup(group.id)))).reduce(
       (cur, ret) => [...cur, ...ret],
       []
     );
 
-    var tasks = (
+    const tasks = (
       await Promise.all(folders.map(folder => ts.getTasksForTaskFolder(folder.id, folder.parentId)))
     ).reduce((cur, ret) => [...cur, ...ret], []);
 
@@ -526,13 +526,13 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async _loadTasksForGroup(ts: ITaskSource) {
-    var groups = await ts.getTaskGroupsForGroup(this.groupId);
-    var folders = (await Promise.all(groups.map(group => ts.getTaskFoldersForTaskGroup(group.id)))).reduce(
+    const groups = await ts.getTaskGroupsForGroup(this.groupId);
+    const folders = (await Promise.all(groups.map(group => ts.getTaskFoldersForTaskGroup(group.id)))).reduce(
       (cur, ret) => [...cur, ...ret],
       []
     );
 
-    var tasks = (
+    const tasks = (
       await Promise.all(folders.map(folder => ts.getTasksForTaskFolder(folder.id, folder.parentId)))
     ).reduce((cur, ret) => [...cur, ...ret], []);
 
@@ -548,12 +548,12 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
     immediateParentId: string,
     assignments: PlannerAssignments = {}
   ) {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
 
-    var newTask = {
+    const newTask = {
       assignments,
       dueDate,
       immediateParentId,
@@ -571,7 +571,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async completeTask(task: ITask) {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
@@ -582,7 +582,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async uncompleteTask(task: ITask) {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
@@ -594,7 +594,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async removeTask(task: ITask, e: Event) {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
@@ -613,7 +613,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private async assignPeople(task: ITask, people: (User | Person | Contact)[] = []) {
-    var ts = this.getTaskSource();
+    const ts = this.getTaskSource();
     if (!ts) {
       return;
     }
@@ -626,12 +626,12 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
       }
     }
 
-    var newTaskAssigneesIds: string[] = people.map(person => {
+    const newTaskAssigneesIds: string[] = people.map(person => {
       return person.id;
     });
 
     // new people from people picker
-    var isEqual =
+    const isEqual =
       newTaskAssigneesIds.length === currentTaskAssigneesIds.length &&
       newTaskAssigneesIds.sort().every((value, index) => {
         return value === currentTaskAssigneesIds[index];
@@ -641,10 +641,10 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
       return;
     }
 
-    var peopleObj: Record<string, PlannerAssignments> = {};
+    const peopleObj: Record<string, PlannerAssignments> = {};
 
     // Removes an assignee to a task by setting the value to null
-    for (var p of currentTaskAssigneesIds) {
+    for (const p of currentTaskAssigneesIds) {
       if (newTaskAssigneesIds.includes(p)) {
         peopleObj[p] = plannerAssignment;
       } else {
@@ -666,12 +666,12 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private readonly onAddTaskClick = () => {
-    var picker = this.getPeoplePicker(null);
+    const picker = this.getPeoplePicker(null);
 
-    var peopleObj: Record<string, unknown> = {};
+    const peopleObj: Record<string, unknown> = {};
 
     if (picker) {
-      for (var person of picker?.selectedPeople ?? []) {
+      for (const person of picker?.selectedPeople ?? []) {
         peopleObj[person.id] = plannerAssignment;
       }
     }
@@ -704,7 +704,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   };
 
   private renderPlanOptions(): TemplateResult {
-    var p = Providers.globalProvider;
+    const p = Providers.globalProvider;
 
     if (!p || p.state !== ProviderState.SignedIn) {
       return null;
@@ -714,7 +714,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
       return html`<span class="loading-header"></span>`;
     }
 
-    var addButton =
+    const addButton =
       this.readOnly || this._isNewTaskVisible
         ? null
         : html`
@@ -727,46 +727,46 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
           </fluent-button>
         `;
 
-    var currentGroup = this._groups.find(d => d.id === this._currentGroup) || {
+    const currentGroup = this._groups.find(d => d.id === this._currentGroup) || {
       title: this.strings.baseSelfAssigned
     };
-    var groupOptions = {
+    const groupOptions = {
       [this.strings.baseSelfAssigned]: () => {
         this._currentGroup = null;
         this._currentFolder = null;
       }
     };
-    for (var group of this._groups) {
+    for (const group of this._groups) {
       groupOptions[group.title] = () => {
         this._currentGroup = group.id;
         this._currentFolder = null;
       };
     }
-    var groupSelect: TemplateResult = mgtHtml`
+    const groupSelect: TemplateResult = mgtHtml`
         <mgt-arrow-options
           class="arrow-options"
           .options="${groupOptions}"
           .value="${currentGroup.title}"
         ></mgt-arrow-options>`;
 
-    var separator = !this._currentGroup ? null : getSvg(SvgIcon.ChevronRight);
+    const separator = !this._currentGroup ? null : getSvg(SvgIcon.ChevronRight);
 
-    var currentFolder = this._folders.find(d => d.id === this._currentFolder) || {
+    const currentFolder = this._folders.find(d => d.id === this._currentFolder) || {
       name: this.strings.bucketsSelfAssigned
     };
-    var folderOptions = {
+    const folderOptions = {
       [this.strings.bucketsSelfAssigned]: () => {
         this._currentFolder = null;
       }
     };
 
-    for (var folder of this._folders.filter(d => d.parentId === this._currentGroup)) {
+    for (const folder of this._folders.filter(d => d.parentId === this._currentGroup)) {
       folderOptions[folder.name] = () => {
         this._currentFolder = folder.id;
       };
     }
 
-    var folderSelect = this.targetBucketId
+    const folderSelect = this.targetBucketId
       ? html`
             <span class="plan-title">
               ${this._folders[0]?.name || ''}
@@ -784,7 +784,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private readonly handleDateChange = (e: UIEvent) => {
-    var value = (e.target as HTMLInputElement).value;
+    const value = (e.target as HTMLInputElement).value;
     if (value) {
       this._newTaskDueDate = new Date(value + 'T17:00');
     } else {
@@ -793,9 +793,9 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   };
 
   private renderNewTask() {
-    var iconColor = 'var(--neutral-foreground-hint)';
+    const iconColor = 'const(--neutral-foreground-hint)';
 
-    var taskTitle = html`
+    const taskTitle = html`
       <fluent-text-field
         autocomplete="off"
         ?autofocus=${this.isNewTaskVisible}
@@ -810,14 +810,14 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
       this._newTaskGroupId = this._groups[0].id;
     }
 
-    var groupOptions = html`
+    const groupOptions = html`
       ${repeat(
         this._groups,
         grp => grp.id,
         grp => html`<fluent-option value="${grp.id}">${grp.title}</fluent-option>`
       )}`;
 
-    var group = this._currentGroup
+    const group = this._currentGroup
       ? html`
           <span class="new-task-group">
             ${this.renderPlannerIcon(iconColor)}
@@ -829,7 +829,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
               ${this._groups.length > 0 ? groupOptions : html`<fluent-option selected>No groups found</fluent-option>`}
             </fluent-select>`;
 
-    var folders = this._folders.filter(
+    const folders = this._folders.filter(
       folder =>
         (this._currentGroup && folder.parentId === this._currentGroup) ||
         (!this._currentGroup && folder.parentId === this._newTaskGroupId)
@@ -838,14 +838,14 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
       this._newTaskFolderId = folders[0].id;
     }
 
-    var folderOptions = html`
+    const folderOptions = html`
       ${repeat(
         folders,
         folder => folder.id,
         folder => html`<fluent-option value="${folder.id}">${folder.name}</fluent-option>`
       )}`;
 
-    var taskFolder = this._currentFolder
+    const taskFolder = this._currentFolder
       ? html`
           <span class="new-task-bucket">
             ${this.renderBucketIcon(iconColor)}
@@ -858,9 +858,9 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
           ${folders.length > 0 ? folderOptions : html`<fluent-option selected>No folders found</fluent-option>`}
         </fluent-select>`;
 
-    var dateField = { dark: this._isDarkMode, 'new-task': true };
+    const dateField = { dark: this._isDarkMode, 'new-task': true };
 
-    var taskDue = html`
+    const taskDue = html`
       <fluent-text-field
         autocomplete="off"
         type="date"
@@ -870,9 +870,9 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
         @change=${this.handleDateChange}>
       </fluent-text-field>`;
 
-    var taskPeople = this.renderAssignedPeople(null);
+    const taskPeople = this.renderAssignedPeople(null);
 
-    var newTaskActionButtons = this._newTaskBeingAdded
+    const newTaskActionButtons = this._newTaskBeingAdded
       ? html`<div class="task-add-button-container"></div>`
       : html`
           <fluent-button
@@ -916,9 +916,9 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private togglePeoplePicker(task: ITask) {
-    var picker = this.getPeoplePicker(task);
-    var mgtPeople = this.getMgtPeople(task);
-    var flyout = this.getFlyout(task);
+    const picker = this.getPeoplePicker(task);
+    const mgtPeople = this.getMgtPeople(task);
+    const flyout = this.getFlyout(task);
 
     if (picker && mgtPeople && flyout) {
       if (flyout.isOpen) {
@@ -932,8 +932,8 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private updateAssignedPeople(task: ITask) {
-    var picker = this.getPeoplePicker(task);
-    var mgtPeople = this.getMgtPeople(task);
+    const picker = this.getPeoplePicker(task);
+    const mgtPeople = this.getMgtPeople(task);
 
     if (picker && picker.selectedPeople !== mgtPeople.people) {
       mgtPeople.people = picker.selectedPeople;
@@ -942,28 +942,28 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private getPeoplePicker(task: ITask): MgtPeoplePicker {
-    var taskId = task ? task.id : 'new-task';
+    const taskId = task ? task.id : 'new-task';
     return this.renderRoot.querySelector<MgtPeoplePicker>(`.picker-${taskId}`);
   }
 
   private getMgtPeople(task: ITask): MgtPeople {
-    var taskId = task ? task.id : 'new-task';
+    const taskId = task ? task.id : 'new-task';
     return this.renderRoot.querySelector<MgtPeople>(`.people-${taskId}`);
   }
 
   private getFlyout(task: ITask): MgtFlyout {
-    var taskId = task ? task.id : 'new-task';
+    const taskId = task ? task.id : 'new-task';
     return this.renderRoot.querySelector(`.flyout-${taskId}`);
   }
 
   private renderTask(task: ITask) {
-    var { name = 'Task', completed = false, dueDate } = task;
+    const { name = 'Task', completed = false, dueDate } = task;
 
-    var groupTitle = this._currentGroup ? null : this.getPlanTitle(task.topParentId);
-    var folderTitle = this._currentFolder ? null : this.getFolderName(task.immediateParentId);
+    const groupTitle = this._currentGroup ? null : this.getPlanTitle(task.topParentId);
+    const folderTitle = this._currentFolder ? null : this.getFolderName(task.immediateParentId);
 
-    var context = { task: { ...task._raw, groupTitle, folderTitle } };
-    var taskTemplate = this.renderTemplate('task', context, task.id);
+    const context = { task: { ...task._raw, groupTitle, folderTitle } };
+    const taskTemplate = this.renderTemplate('task', context, task.id);
     if (taskTemplate) {
       return taskTemplate;
     }
@@ -971,8 +971,8 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
     let taskDetails = this.renderTemplate('task-details', context, `task-details-${task.id}`);
 
     if (!taskDetails) {
-      var iconColor = 'var(--neutral-foreground-hint)';
-      var group = this._currentGroup
+      const iconColor = 'const(--neutral-foreground-hint)';
+      const group = this._currentGroup
         ? null
         : html`
               <div class="task-group">
@@ -981,7 +981,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
               </div>
             `;
 
-      var folder = this._currentFolder
+      const folder = this._currentFolder
         ? null
         : html`
             <div class="task-bucket">
@@ -990,7 +990,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
             </div>
           `;
 
-      var taskDue = !dueDate
+      const taskDue = !dueDate
         ? null
         : html`
             <div class="task-due">
@@ -998,12 +998,12 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
             </div>
           `;
 
-      var taskPeople = this.renderAssignedPeople(task);
+      const taskPeople = this.renderAssignedPeople(task);
 
       taskDetails = html`${group} ${folder} ${taskPeople} ${taskDue}`;
     }
 
-    var taskOptions =
+    const taskOptions =
       this.readOnly || this.hideOptions
         ? null
         : mgtHtml`
@@ -1014,7 +1014,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
               }}"
             ></mgt-dot-options>`;
 
-    var taskClasses = classMap({
+    const taskClasses = classMap({
       task: true,
       complete: completed,
       incomplete: !completed,
@@ -1060,7 +1060,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
 
   private async checkTask(task: ITask) {
     if (!this.readOnly) {
-      var target = this.shadowRoot.querySelector(`[data-id='task-${task.id}'`);
+      const target = this.shadowRoot.querySelector(`[data-id='task-${task.id}'`);
       if (target) target.classList.add('updating');
       if (!task.completed) {
         await this.completeTask(task);
@@ -1099,29 +1099,29 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
 
   private renderAssignedPeople(task: ITask): TemplateResult {
     let assignedGroupId: string;
-    var taskAssigneeClasses = {
+    const taskAssigneeClasses = {
       'new-task-assignee': task === null,
       'task-assignee': task !== null,
       'task-detail': task !== null
     };
 
-    var taskId = task ? task.id : 'new-task';
+    const taskId = task ? task.id : 'new-task';
     taskAssigneeClasses[`flyout-${taskId}`] = true;
 
-    var assignedPeople = task ? Object.keys(task.assignments).map(key => key) : [];
+    const assignedPeople = task ? Object.keys(task.assignments).map(key => key) : [];
 
     if (!this.newTaskVisible) {
-      var raw: PlannerTask = task?._raw;
-      var planId = raw?.planId;
+      const raw: PlannerTask = task?._raw;
+      const planId = raw?.planId;
       if (planId) {
-        var group = this._groups.filter(grp => grp.id === planId);
+        const group = this._groups.filter(grp => grp.id === planId);
         assignedGroupId = group.pop()?.containerId;
       }
     }
 
-    var planGroupId = this.isNewTaskVisible ? this._newTaskContainerId : assignedGroupId;
+    const planGroupId = this.isNewTaskVisible ? this._newTaskContainerId : assignedGroupId;
 
-    var assignedPeopleTemplate: HTMLTemplateResult = mgtHtml`
+    const assignedPeopleTemplate: HTMLTemplateResult = mgtHtml`
       <mgt-people
         class="people people-${taskId}"
         .userIds=${assignedPeople}
@@ -1141,7 +1141,7 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
         </template>
       </mgt-people>`;
 
-    var picker = mgtHtml`
+    const picker = mgtHtml`
       <mgt-people-picker
         class="people-picker picker-${taskId}"
         .groupId=${ifDefined(planGroupId)}
@@ -1223,12 +1223,12 @@ export class MgtPlanner extends MgtTemplatedTaskComponent {
   }
 
   private getTaskSource(): ITaskSource | null {
-    var p = Providers.globalProvider;
+    const p = Providers.globalProvider;
     if (!p || p.state !== ProviderState.SignedIn) {
       return null;
     }
 
-    var graph = p.graph.forComponent(this);
+    const graph = p.graph.forComponent(this);
     return new PlannerTaskSource(graph);
   }
 
