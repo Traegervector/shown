@@ -7,8 +7,8 @@
 
 import { GraphError } from '@microsoft/microsoft-graph-client';
 
-export let isGraphError = (e: unknown): e is GraphError => {
-  let test = e as GraphError;
+export const isGraphError = (e: unknown): e is GraphError => {
+  const test = e as GraphError;
   return (
     test.statusCode &&
     'code' in test &&
