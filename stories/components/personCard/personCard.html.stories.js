@@ -14,29 +14,29 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const personCard = () => html`
+export let personCard = () => html`
   <mgt-person-card person-query="me" id="online" show-presence></mgt-person-card>
 
   <!-- Person Card without Presence -->
   <!-- <mgt-person-card person-query="me"></mgt-person-card> -->
   <script>
-    const online = {
+    let online = {
       activity: 'Available',
       availability: 'Available',
       id: null
     };
-    const onlinePerson = document.getElementById('online');
+    let onlinePerson = document.getElementById('online');
     onlinePerson.personPresence = online;
   </script>
 `;
 
-export const events = () => html`
+export let events = () => html`
   <!-- Open dev console and click on an event -->
   <!-- See js tab for event subscription -->
 
   <mgt-person-card person-query="me"></mgt-person-card>
   <script>
-    const personCard = document.querySelector('mgt-person-card');
+    let personCard = document.querySelector('mgt-person-card');
     personCard.addEventListener('expanded', () => {
       console.log("expanded");
     })
@@ -46,13 +46,13 @@ export const events = () => html`
   </script>
 `;
 
-export const RTL = () => html`
+export let RTL = () => html`
   <body dir="rtl">
     <mgt-person-card person-query="me"></mgt-person-card>
   </body>
 `;
 
-export const localization = () => html`
+export let localization = () => html`
   <mgt-person-card person-query="me"></mgt-person-card>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -103,7 +103,7 @@ export const localization = () => html`
   </script>
 `;
 
-export const AnonymousDisplay = () => html`
+export let AnonymousDisplay = () => html`
 <div style="margin-bottom: 10px">
   <strong>Note:</strong> this story forces an anonymous context and explicity sets the user being displayed.<br />
   Refer to the JavaScript tab for setup details.
@@ -112,7 +112,7 @@ export const AnonymousDisplay = () => html`
 <script>
   import { Providers, Msal2Provider } from './mgt.storybook.js';
   Providers.globalProvider = new Msal2Provider({ clientId: "fake" });
-  const personCard = document.querySelector('.anonymous-display');
+  let personCard = document.querySelector('.anonymous-display');
   personCard.personDetails = {
       displayName: 'Megan Bowen',
       jobTitle: 'CEO',
