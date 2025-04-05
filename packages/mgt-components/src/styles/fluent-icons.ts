@@ -5,7 +5,7 @@
  * -------------------------------------------------------------------------------------------
  */
 
-let fileTypeMap: Record<string, string> = {
+const fileTypeMap: Record<string, string> = {
   PowerPoint: 'pptx',
   Word: 'docx',
   Excel: 'xlsx',
@@ -34,7 +34,7 @@ let fileTypeMap: Record<string, string> = {
   Other: 'genericfile'
 };
 
-let baseUri = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20201008.001/assets/item-types';
+const baseUri = 'https://spoprod-a.akamaihd.net/files/fabric-cdn-prod_20201008.001/assets/item-types';
 
 /**
  * Available icon sizes
@@ -49,8 +49,8 @@ export type IconSize = 16 | 20 | 24 | 32 | 40 | 48 | 64 | 96;
  * @param extension
  * @returns
  */
-export let getFileTypeIconUri = (type: string, size: IconSize, extension: 'png' | 'svg') => {
-  let fileType: string = fileTypeMap[type] || 'genericfile';
+export const getFileTypeIconUri = (type: string, size: IconSize, extension: 'png' | 'svg') => {
+  const fileType: string = fileTypeMap[type] || 'genericfile';
   return `${baseUri}/${size.toString()}/${fileType}.${extension}`;
 };
 
@@ -62,8 +62,8 @@ export let getFileTypeIconUri = (type: string, size: IconSize, extension: 'png' 
  * @param extension
  * @returns
  */
-export let getFileTypeIconUriByExtension = (type: string, size: IconSize, extension: 'png' | 'svg') => {
-  let found = Object.keys(fileTypeMap).find(key => fileTypeMap[key] === type);
+export const getFileTypeIconUriByExtension = (type: string, size: IconSize, extension: 'png' | 'svg') => {
+  const found = Object.keys(fileTypeMap).find(key => fileTypeMap[key] === type);
   if (found) {
     return `${baseUri}/${size.toString()}/${type}.${extension}`;
   } else if (type === 'jpg' || type === 'png') {
