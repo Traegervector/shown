@@ -19,7 +19,7 @@ import { DataChangedDetail, registerMgtGetComponent } from '../mgt-get/mgt-get';
 import { registerComponent } from '@microsoft/mgt-element';
 import { registerMgtSpinnerComponent } from '../sub-components/mgt-spinner/mgt-spinner';
 
-export const registerMgtTaxonomyPickerComponent = () => {
+export var registerMgtTaxonomyPickerComponent = () => {
   registerFluentComponents(fluentCombobox, fluentOption);
 
   registerMgtSpinnerComponent();
@@ -338,7 +338,7 @@ export class MgtTaxonomyPicker extends MgtTemplatedTaskComponent {
    * @memberof MgtTaxonomyPicker
    */
   protected renderTaxonomyPickerItem(term: MicrosoftGraph.TermStore.Term): TemplateResult {
-    const selected: boolean = this.defaultSelectedTermId && this.defaultSelectedTermId === term.id;
+    var selected: boolean = this.defaultSelectedTermId && this.defaultSelectedTermId === term.id;
 
     return html`
         <fluent-option value=${term.id} ?selected=${selected} @click=${(e: MouseEvent) => this.handleClick(e, term)}> ${
@@ -388,12 +388,12 @@ export class MgtTaxonomyPicker extends MgtTemplatedTaskComponent {
 
   protected firstUpdated(changedProperties: PropertyValueMap<unknown> | Map<PropertyKey, unknown>): void {
     super.firstUpdated(changedProperties);
-    const parent = this.renderRoot;
+    var parent = this.renderRoot;
     parent.addEventListener('dataChange', (e: CustomEvent<DataChangedDetail>): void => this.handleDataChange(e));
   }
 
   private handleDataChange(e: CustomEvent<DataChangedDetail>): void {
-    const error = e.detail.error ? e.detail.error : null;
+    var error = e.detail.error ? e.detail.error : null;
 
     if (error) {
       this.error = error;
@@ -405,16 +405,16 @@ export class MgtTaxonomyPicker extends MgtTemplatedTaskComponent {
       this.locale = this.locale.toLowerCase();
     }
 
-    const response = e.detail.response.value;
+    var response = e.detail.response.value;
 
     // if response is not null and has values, if locale is specified, then
     // get the label in response that has languageTag equal to locale and make it the first label and append the rest of the labels
 
-    const terms = response.map((item: MicrosoftGraph.TermStore.Term) => {
-      const labels = item.labels;
+    var terms = response.map((item: MicrosoftGraph.TermStore.Term) => {
+      var labels = item.labels;
       if (labels && labels.length > 0) {
         if (this.locale) {
-          const label = labels.find(l => l.languageTag.toLowerCase() === this.locale);
+          var label = labels.find(l => l.languageTag.toLowerCase() === this.locale);
           if (label) {
             item.labels = [label, ...labels.filter(l => l.languageTag.toLowerCase() !== this.locale)];
           }
