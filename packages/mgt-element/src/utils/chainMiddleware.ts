@@ -14,11 +14,11 @@ import { Middleware } from '@microsoft/microsoft-graph-client';
  * @returns {Middleware}
  */
 
-export var chainMiddleware = (...middleware: Middleware[]): Middleware => {
-  var rootMiddleware = middleware[0];
+export const chainMiddleware = (...middleware: Middleware[]): Middleware => {
+  const rootMiddleware = middleware[0];
   let current = rootMiddleware;
   for (let i = 1; i < middleware.length; ++i) {
-    var next = middleware[i];
+    const next = middleware[i];
     if (current.setNext) {
       current.setNext(next);
     }
