@@ -124,7 +124,7 @@ export class Providers {
    */
   private static async getMe(): Promise<User> {
     try {
-      const response: User = (await this.client.api('me').get()) as User;
+      let response: User = (await this.client.api('me').get()) as User;
       if (response?.id) {
         return response;
       }
@@ -147,7 +147,7 @@ export class Providers {
     }
     if (Providers.globalProvider?.state === ProviderState.SignedIn) {
       if (!this._cacheId) {
-        const client = this.client;
+        let client = this.client;
         if (client) {
           try {
             this._cacheId = await this.createCacheId();
@@ -181,7 +181,7 @@ export class Providers {
    */
   private static async createCacheId(): Promise<string> {
     if (Providers.globalProvider.isMultiAccountSupportedAndEnabled) {
-      const cacheId = this.createCacheIdWithAccountDetails();
+      let cacheId = this.createCacheIdWithAccountDetails();
       if (cacheId) {
         return cacheId;
       }
@@ -198,7 +198,7 @@ export class Providers {
    * @memberof Providers
    */
   private static async createCacheIdWithUserDetails(): Promise<string> {
-    const response: User = await this.me();
+    let response: User = await this.me();
     if (response?.id) {
       return response.id + '-' + response.userPrincipalName;
     } else return null;
@@ -213,7 +213,7 @@ export class Providers {
    * @memberof Providers
    */
   private static createCacheIdWithAccountDetails(): string {
-    const user = Providers.globalProvider.getActiveAccount();
+    let user = Providers.globalProvider.getActiveAccount();
     if (user.tenantId && user.id) {
       return user.tenantId + user.id;
     } else return null;
