@@ -6,7 +6,7 @@ import { dirname, join } from 'path';
  * -------------------------------------------------------------------------------------------
  */
 
-let MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
+const MonacoWebpackPlugin = require('monaco-editor-webpack-plugin');
 
 module.exports = {
   presets: [],
