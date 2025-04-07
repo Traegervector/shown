@@ -30,7 +30,7 @@ export default {
   }
 };
 
-export const Get = () => html`
+export let Get = () => html`
 <mgt-get resource="/me/messages" scopes="mail.read">
   <template>
     <pre>{{ JSON.stringify(value, null, 2) }}</pre>
