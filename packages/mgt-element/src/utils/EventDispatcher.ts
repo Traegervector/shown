@@ -49,7 +49,7 @@ export class EventDispatcher<E> {
    * @memberof EventDispatcher
    */
   public remove(eventHandler: EventHandler<E>) {
-    for (const i = 0; i < this.eventHandlers.length; i++) {
+    for (let i = 0; i < this.eventHandlers.length; i++) {
       if (this.eventHandlers[i] === eventHandler) {
         this.eventHandlers.splice(i, 1);
         i--;
