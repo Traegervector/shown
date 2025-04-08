@@ -166,7 +166,7 @@ export abstract class MgtBaseTaskComponent extends LitElement {
     cancelable = false,
     composed = false
   ): boolean {
-    const event = new CustomEvent(eventName, {
+    let event = new CustomEvent(eventName, {
       bubbles,
       cancelable,
       composed,
