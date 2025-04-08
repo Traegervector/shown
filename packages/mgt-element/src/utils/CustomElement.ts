@@ -16,11 +16,11 @@ import { customElementHelper } from '../components/customElementHelper';
  * @param tagName the base name for the custom element tag
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export let customElement = (tagName: string): ((classOrDescriptor: unknown) => any) => {
-  let mgtTagName = `${customElementHelper.prefix}-${tagName}`;
-  let mgtElement = customElements.get(mgtTagName);
-  let unknownVersion = ' Unknown likely <3.0.0';
-  let version = (element: CustomElementConstructor): string =>
+export const customElement = (tagName: string): ((classOrDescriptor: unknown) => any) => {
+  const mgtTagName = `${customElementHelper.prefix}-${tagName}`;
+  const mgtElement = customElements.get(mgtTagName);
+  const unknownVersion = ' Unknown likely <3.0.0';
+  const version = (element: CustomElementConstructor): string =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access
     ((element as any).packageVersion || unknownVersion) as string;
   if (mgtElement) {
