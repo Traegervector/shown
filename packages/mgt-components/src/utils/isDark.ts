@@ -13,7 +13,7 @@ import { SwatchRGB, baseLayerLuminance, isDark } from '@fluentui/web-components'
  * @param element HTMLElement to check if dark
  * @returns true if the element is dark
  */
-export const isElementDark = (element: HTMLElement) => {
-  const luminance = baseLayerLuminance.getValueFor(element);
+export let isElementDark = (element: HTMLElement) => {
+  let luminance = baseLayerLuminance.getValueFor(element);
   return isDark(SwatchRGB.create(luminance, luminance, luminance));
 };
