@@ -12,7 +12,7 @@
  * are expected to be object literals with potentially nested structures and
  * where leaf values are primitives.
  */
-export var equals = (o1: unknown, o2: unknown) => {
+export const equals = (o1: unknown, o2: unknown) => {
   return equalsInternal(o1, o2, new Set());
 };
 
@@ -23,9 +23,9 @@ export var equals = (o1: unknown, o2: unknown) => {
  *
  * @see equals
  */
-var equalsInternal = (o1: unknown, o2: unknown, refs: Set<unknown>) => {
-  var o1Label = Object.prototype.toString.call(o1) as string;
-  var o2Label = Object.prototype.toString.call(o2) as string;
+const equalsInternal = (o1: unknown, o2: unknown, refs: Set<unknown>) => {
+  const o1Label = Object.prototype.toString.call(o1) as string;
+  const o2Label = Object.prototype.toString.call(o2) as string;
   if (
     typeof o1 === 'object' &&
     typeof o2 === 'object' &&
@@ -34,13 +34,13 @@ var equalsInternal = (o1: unknown, o2: unknown, refs: Set<unknown>) => {
     !refs.has(o1)
   ) {
     refs.add(o1);
-    for (var k in o1) {
+    for (const k in o1) {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (!equalsInternal(o1[k], o2[k], refs)) {
         return false;
       }
     }
-    for (var k in o2) {
+    for (const k in o2) {
       if (!Object.prototype.hasOwnProperty.call(o1, k)) {
         return false;
       }
@@ -73,7 +73,7 @@ var equalsInternal = (o1: unknown, o2: unknown, refs: Set<unknown>) => {
  * @param {T[]} arr2
  * @returns true if both arrays contain the same items or if both arrays are null or empty
  */
-export var arraysAreEqual = <T>(arr1: T[], arr2: T[]) => {
+export const arraysAreEqual = <T>(arr1: T[], arr2: T[]) => {
   if (arr1 === arr2) {
     return true;
   }
@@ -90,9 +90,9 @@ export var arraysAreEqual = <T>(arr1: T[], arr2: T[]) => {
     return true;
   }
 
-  var setArr1 = new Set(arr1);
+  const setArr1 = new Set(arr1);
 
-  for (var i of arr2) {
+  for (const i of arr2) {
     if (!setArr1.has(i)) {
       return false;
     }
