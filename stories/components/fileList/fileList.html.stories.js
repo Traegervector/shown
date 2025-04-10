@@ -14,17 +14,17 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let fileList = () => html`
+export const fileList = () => html`
   <mgt-file-list></mgt-file-list>
 `;
 
-export let RTL = () => html`
+export const RTL = () => html`
   <body dir="rtl">
     <mgt-file-list></mgt-file-list>
   </body>
 `;
 
-export let localization = () => html`
+export const localization = () => html`
   <mgt-file-list></mgt-file-list>
   <script>
   import { LocalizationHelper } from '@microsoft/mgt-element';
@@ -41,13 +41,13 @@ export let localization = () => html`
   </script>
 `;
 
-export let events = () => html`
+export const events = () => html`
   <p>Clicked File:</p>
   <mgt-file></mgt-file>
   <mgt-file-list disable-open-on-click></mgt-file-list>
   <script>
     document.querySelector('mgt-file-list').addEventListener('itemClick', e => {
-      let file = document.querySelector('mgt-file');
+      const file = document.querySelector('mgt-file');
       file.fileDetails = e.detail;
     });
 
@@ -67,7 +67,7 @@ export let events = () => html`
   </style>
 `;
 
-export let openFolderBreadcrumbs = () => html`
+export const openFolderBreadcrumbs = () => html`
     <style>
       body {
         font-family: 'Segoe UI', 'Segoe UI Web (West European)', 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto,
@@ -109,27 +109,27 @@ export let openFolderBreadcrumbs = () => html`
     <mgt-file-list id="parent-file-list"></mgt-file-list>
 
     <script type="module">
-      let fileList = document.getElementById('parent-file-list');
-      let nav = document.getElementById('nav');
+      const fileList = document.getElementById('parent-file-list');
+      const nav = document.getElementById('nav');
 
       // handle create and remove menu items
       fileList.addEventListener('itemClick', e => {
         if (e.detail && e.detail.folder) {
-          let id = e.detail.id;
-          let name = e.detail.name;
-          let breadcrumbId = "breadcrumb-"+ id;
+          const id = e.detail.id;
+          const name = e.detail.name;
+          const breadcrumbId = "breadcrumb-"+ id;
 
           // check if it is set
-          let breadcrumbSet = document.getElementById(breadcrumbId);
+          const breadcrumbSet = document.getElementById(breadcrumbId);
           if (!breadcrumbSet) {
             // create breadcrumb menu item
-            let li = document.createElement('li');
-            let a = document.createElement('a');
+            const li = document.createElement('li');
+            const a = document.createElement('a');
             li.setAttribute('id', breadcrumbId);
             a.appendChild(document.createTextNode(name));
             li.appendChild(a);
             if (nav.children.length > 1){
-              let firstBreadcrumb = nav.children[0];
+              const firstBreadcrumb = nav.children[0];
               nav.replaceChildren(firstBreadcrumb);
             }
             nav.appendChild(li);
