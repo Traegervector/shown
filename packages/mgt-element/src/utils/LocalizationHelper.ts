@@ -55,7 +55,7 @@ export class LocalizationHelper {
   public static getDocumentDirection(): 'rtl' | 'ltr' | 'auto' {
     // Re-set the dir to ltr if the dir attribute is already loaded and the first two options
     // are returning null values.
-    let parsed = document.body?.getAttribute('dir') || document.documentElement?.getAttribute('dir');
+    const parsed = document.body?.getAttribute('dir') || document.documentElement?.getAttribute('dir');
     switch (parsed) {
       case 'rtl':
         return 'rtl';
@@ -113,7 +113,7 @@ export class LocalizationHelper {
         }
       });
     });
-    let options = { attributes: true, attributeFilter: ['dir'] };
+    const options = { attributes: true, attributeFilter: ['dir'] };
     this.mutationObserver.observe(document.body, options);
     this.mutationObserver.observe(document.documentElement, options);
   }
@@ -136,8 +136,8 @@ export class LocalizationHelper {
 
     if (this._strings && stringObj) {
       // check for top level strings, applied per component, overridden by specific component def
-      for (let prop of Object.entries(stringObj)) {
-        let overrideValue = this._strings[prop[0]];
+      for (const prop of Object.entries(stringObj)) {
+        const overrideValue = this._strings[prop[0]];
         if (typeof overrideValue === 'string') {
           stringObj[prop[0]] = overrideValue;
         }
@@ -145,8 +145,8 @@ export class LocalizationHelper {
 
       // strings defined component specific
       if (this._strings._components?.[tagName]) {
-        let strings = this._strings._components[tagName];
-        for (let key of Object.keys(strings)) {
+        const strings = this._strings._components[tagName];
+        for (const key of Object.keys(strings)) {
           if (stringObj[key]) {
             stringObj[key] = strings[key];
           }
