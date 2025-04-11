@@ -78,9 +78,9 @@ export const eventTemplate = () => html`
   <script>
     document.querySelector('mgt-agenda').templateContext = {
       dayFromDateTime: dateTimeString => {
-        var date = new Date(dateTimeString);
+        let date = new Date(dateTimeString);
         date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-        var monthNames = [
+        let monthNames = [
           'January',
           'February',
           'March',
@@ -95,9 +95,9 @@ export const eventTemplate = () => html`
           'December'
         ];
 
-        var monthIndex = date.getMonth();
-        var day = date.getDate();
-        var year = date.getFullYear();
+        let monthIndex = date.getMonth();
+        let day = date.getDate();
+        let year = date.getFullYear();
 
         return monthNames[monthIndex] + ' ' + day + ' ' + year;
       },
@@ -107,19 +107,19 @@ export const eventTemplate = () => html`
           return 'ALL DAY';
         }
 
-        var prettyPrintTimeFromDateTime = date => {
+        let prettyPrintTimeFromDateTime = date => {
           date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
-          var hours = date.getHours();
-          var minutes = date.getMinutes();
-          var ampm = hours >= 12 ? 'PM' : 'AM';
+          let hours = date.getHours();
+          let minutes = date.getMinutes();
+          let ampm = hours >= 12 ? 'PM' : 'AM';
           hours = hours % 12;
           hours = hours ? hours : 12;
-          var minutesStr = minutes < 10 ? '0' + minutes : minutes;
+          let minutesStr = minutes < 10 ? '0' + minutes : minutes;
           return hours + ':' + minutesStr + ' ' + ampm;
         };
 
-        var start = prettyPrintTimeFromDateTime(new Date(event.start.dateTime));
-        var end = prettyPrintTimeFromDateTime(new Date(event.end.dateTime));
+        let start = prettyPrintTimeFromDateTime(new Date(event.start.dateTime));
+        let end = prettyPrintTimeFromDateTime(new Date(event.end.dateTime));
 
         return start + ' - ' + end;
       }
