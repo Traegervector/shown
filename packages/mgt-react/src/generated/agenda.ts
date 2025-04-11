@@ -29,5 +29,5 @@ export type AgendaProps = {
 	updated?: (e: CustomEvent<undefined>) => void;
 }
 
-export const Agenda = wrapMgt<AgendaProps>('agenda', registerMgtAgendaComponent);
+export let Agenda = wrapMgt<AgendaProps>('agenda', registerMgtAgendaComponent);
 
