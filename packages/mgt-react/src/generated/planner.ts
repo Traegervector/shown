@@ -36,5 +36,5 @@ export type PlannerProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let Planner = wrapMgt<PlannerProps>('planner', registerMgtPlannerComponent);
+export const Planner = wrapMgt<PlannerProps>('planner', registerMgtPlannerComponent);
 
