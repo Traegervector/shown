@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const NoDataTemplate = () => html`
+export let NoDataTemplate = () => html`
     <mgt-taxonomy-picker
         term-set-id="138a652e-7f23-46f6-b480-13da2308c235"
         term-id="12241156-a7f6-4dfb-8d91-5d9ab596c3c7"
@@ -25,7 +25,7 @@ export const NoDataTemplate = () => html`
     </mgt-taxonomy-picker>
   `;
 
-export const ErrorTemplate = () => html`
+export let ErrorTemplate = () => html`
     <mgt-taxonomy-picker
         term-set-id="138a652e-7f23-46f6-b480-13da2308c2351"
       >
