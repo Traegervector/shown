@@ -33,5 +33,5 @@ export type PersonCardProps = {
 	templateRendered?: (e: CustomEvent<TemplateRenderedData>) => void;
 }
 
-export let PersonCard = wrapMgt<PersonCardProps>('person-card', registerMgtPersonCardComponent);
+export const PersonCard = wrapMgt<PersonCardProps>('person-card', registerMgtPersonCardComponent);
 
