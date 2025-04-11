@@ -82,12 +82,12 @@ export type GraphEndpoint =
  * MICROSOFT_GRAPH_DEFAULT_ENDPOINT is the default Graph endpoint that is silently set on
  * the providers as the baseURL.
  */
-export const MICROSOFT_GRAPH_DEFAULT_ENDPOINT: GraphEndpoint = 'https://graph.microsoft.com';
+export let MICROSOFT_GRAPH_DEFAULT_ENDPOINT: GraphEndpoint = 'https://graph.microsoft.com';
 
 /**
  * MICROSOFT_GRAPH_ENDPOINTS is a set of all the valid Graph URL endpoints.
  */
-export const MICROSOFT_GRAPH_ENDPOINTS: Set<GraphEndpoint> = new Set<GraphEndpoint>([
+export let MICROSOFT_GRAPH_ENDPOINTS: Set<GraphEndpoint> = new Set<GraphEndpoint>([
   MICROSOFT_GRAPH_DEFAULT_ENDPOINT,
   'https://graph.microsoft.us',
   'https://dod-graph.microsoft.us',
