@@ -16,7 +16,7 @@ import { IDynamicPerson } from './types';
  * @returns {(Promise<IDynamicPerson>)}
  * @memberof Graph
  */
-export const getUserWithPhoto = async (
+export let getUserWithPhoto = async (
   _graph: IGraph,
   _userId?: string,
   _requestedProps?: string[]
