@@ -323,7 +323,7 @@ import { html } from 'lit';
  * @param svgIcon defined by name
  * @param color hex value
  */
-export let getSvg = (svgIcon: SvgIcon, color?: string) => {
+export const getSvg = (svgIcon: SvgIcon, color?: string) => {
   switch (svgIcon) {
     case SvgIcon.ArrowDown:
       return html`
