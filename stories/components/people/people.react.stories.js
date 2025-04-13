@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let People = () => html`
+export const People = () => html`
   <mgt-people show-max="5"></mgt-people>
   <react>
     import { People } from '@microsoft/mgt-react';
@@ -25,11 +25,11 @@ export let People = () => html`
   </react>
 `;
 
-export let PeopleQueries = () => html`
+export const PeopleQueries = () => html`
   <mgt-people></mgt-people>
   <react>
     import { People } from '@microsoft/mgt-react';
-    let peopleDisplay: string[] = ['LidiaH', 'Megan Bowen', 'Lynne Robbins', 'JoniS'];
+    const peopleDisplay: string[] = ['LidiaH', 'Megan Bowen', 'Lynne Robbins', 'JoniS'];
 
     export default () => (
       <People peopleQueries={peopleDisplay}></People>
@@ -37,18 +37,18 @@ export let PeopleQueries = () => html`
   </react>
 `;
 
-export let Events = () => html`
+export const Events = () => html`
   <mgt-people></mgt-people>
   <react>
     import { useCallback } from 'react';
     import { People } from '@microsoft/mgt-react';
 
     export default () => {
-      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      let onPeopleLoaded = useCallback((e: CustomEvent<undefined>) => {
+      const onPeopleLoaded = useCallback((e: CustomEvent<undefined>) => {
         console.log('People loaded', e);
       }, []);
 
