@@ -14,7 +14,7 @@ describe('mgt-person - tests', () => {
   Providers.globalProvider = new MockProvider(true);
 
   it('should provide required scopes', () => {
-    const expectedScopes = [
+    let expectedScopes = [
       'User.Read.All',
       'People.Read.All',
       'Sites.Read.All',
@@ -23,7 +23,7 @@ describe('mgt-person - tests', () => {
       'Contacts.Read',
       'Chat.ReadWrite'
     ];
-    const scopes = MgtPersonCard.requiredScopes;
+    let scopes = MgtPersonCard.requiredScopes;
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     expect(scopes).to.be.not.undefined;
     expect(scopes).to.have.members(expectedScopes);
