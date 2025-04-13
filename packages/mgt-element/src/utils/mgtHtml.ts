@@ -14,7 +14,7 @@ import { customElementHelper } from '../components/customElementHelper';
  *
  * @type {WeakMap}
  */
-const stringsCache = new WeakMap<TemplateStringsArray, TemplateStringsArray>();
+var stringsCache = new WeakMap<TemplateStringsArray, TemplateStringsArray>();
 
 /**
  * Rewrites strings in an array using the supplied matcher RegExp
@@ -23,9 +23,9 @@ const stringsCache = new WeakMap<TemplateStringsArray, TemplateStringsArray>();
  * @param strings The array of strings to be re-written
  * @param matcher A RegExp to be used for matching strings for replacement
  */
-const rewriteStrings = (strings: readonly string[], matcher: RegExp, replacement: string): readonly string[] => {
-  const temp: string[] = [];
-  for (const s of strings) {
+var rewriteStrings = (strings: readonly string[], matcher: RegExp, replacement: string): readonly string[] => {
+  var temp: string[] = [];
+  for (var s of strings) {
     temp.push(s.replace(matcher, replacement));
   }
   return temp;
@@ -34,13 +34,13 @@ const rewriteStrings = (strings: readonly string[], matcher: RegExp, replacement
 /**
  * Generates a template literal tag function that returns an HTMLTemplateResult.
  */
-const tag = (strings: TemplateStringsArray, ...values: unknown[]): HTMLTemplateResult => {
+var tag = (strings: TemplateStringsArray, ...values: unknown[]): HTMLTemplateResult => {
   // re-write <mgt-([a-z]+) if necessary
   if (customElementHelper.isDisambiguated) {
     let cached = stringsCache.get(strings);
     if (!cached) {
-      const matcher = new RegExp('(</?)mgt-(?!' + customElementHelper.disambiguation + '-)');
-      const newPrefix = `$1${customElementHelper.prefix}-`;
+      var matcher = new RegExp('(</?)mgt-(?!' + customElementHelper.disambiguation + '-)');
+      var newPrefix = `$1${customElementHelper.prefix}-`;
       cached = Object.assign(rewriteStrings(strings, matcher, newPrefix), {
         raw: rewriteStrings(strings.raw, matcher, newPrefix)
       });
@@ -57,9 +57,9 @@ const tag = (strings: TemplateStringsArray, ...values: unknown[]): HTMLTemplateR
  * configured disambiguation if necessary.
  *
  * ```ts
- * const header = (title: string) => mgtHtml`<mgt-flyout>${title}</mgt-flyout>`;
+ * var header = (title: string) => mgtHtml`<mgt-flyout>${title}</mgt-flyout>`;
  * ```
  *
  * The `mgtHtml` tag is a wrapper for the `html` tag from `lit` which provides for dynamic tag re-writing
  */
-export const mgtHtml = tag;
+export var mgtHtml = tag;
