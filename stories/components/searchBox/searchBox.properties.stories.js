@@ -14,14 +14,14 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let setSearchBoxSearchTerm = () => html`
+export const setSearchBoxSearchTerm = () => html`
   <mgt-search-box search-term="contoso"></mgt-search-box>
 `;
 
-export let setSearchBoxDebounceDelay = () => html`
+export const setSearchBoxDebounceDelay = () => html`
   <mgt-search-box debounce-delay="1000"></mgt-search-box>
 `;
 
-export let setPlaceholder = () => html`
+export const setPlaceholder = () => html`
   <mgt-search-box placeholder="Search for content..."></mgt-search-box>
 `;
