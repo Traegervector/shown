@@ -25,9 +25,9 @@ export const userPreferenceDriven = () => html`
   </p>
   <style>
 body {
-    background-color: var(--fill-color);
-    color: var(--neutral-foreground-rest);
-    font-family: var(--body-font);
+    background-color: let(--fill-color);
+    color: let(--neutral-foreground-rest);
+    font-family: let(--body-font);
 }
 </style>
 `;
@@ -36,7 +36,7 @@ export const darkModeOn = () => html`
   <mgt-theme-toggle mode="dark"></mgt-theme-toggle>
   <style>
 body {
-    background-color: var(--fill-color);
+    background-color: let(--fill-color);
 }
   </style>
 `;
@@ -45,7 +45,7 @@ export const lightModeOn = () => html`
   <mgt-theme-toggle mode="light"></mgt-theme-toggle>
   <style>
 body {
-    background-color: var(--fill-color);
+    background-color: let(--fill-color);
 }
   </style>
 `;
@@ -83,14 +83,14 @@ export const themingWithoutToggle = () => html`
 <mgt-people-picker id="picker-two"></mgt-people-picker>
 <style>
 body {
-  background-color: var(--fill-color);
-  font-family: var(--body-font);
+  background-color: let(--fill-color);
+  font-family: let(--body-font);
 }
 #login-two {
   background-color: aliceblue;
 }
 #login-three {
-  background-color: var(--fill-color);
+  background-color: let(--fill-color);
 }
 </style>
 
@@ -114,7 +114,7 @@ export const localization = () => html`
 <mgt-theme-toggle></mgt-theme-toggle>
   <style>
 body {
-    background-color: var(--fill-color);
+    background-color: let(--fill-color);
 }
   </style>
   <script>
@@ -135,7 +135,7 @@ export const events = () => html`
   <mgt-theme-toggle></mgt-theme-toggle>
   <style>
 body {
-    background-color: var(--fill-color);
+    background-color: let(--fill-color);
 }
   </style>
   <script>
