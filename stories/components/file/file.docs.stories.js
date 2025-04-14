@@ -23,6 +23,6 @@ export default {
   }
 };
 
-export const file = () => html`
+export let file = () => html`
   <mgt-file file-query="/me/drive/items/01BYE5RZZFWGWWVNHHKVHYXE3OUJHGWCT2"></mgt-file>
 `;
