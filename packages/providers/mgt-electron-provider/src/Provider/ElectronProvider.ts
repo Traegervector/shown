@@ -65,7 +65,7 @@ export class ElectronProvider extends IProvider {
    * @memberof ElectronProvider
    */
   async getAccessToken(options?: AuthenticationProviderOptions): Promise<string> {
-    let token = (await ipcRenderer.invoke('token', options)) as string;
+    const token = (await ipcRenderer.invoke('token', options)) as string;
     return token;
   }
 
