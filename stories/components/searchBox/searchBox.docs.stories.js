@@ -21,6 +21,6 @@ export default {
   }
 };
 
-export let searchBox = () => html`
+export const searchBox = () => html`
   <mgt-search-box></mgt-search-box>
 `;
