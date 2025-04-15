@@ -317,7 +317,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public async getTaskGroups(): Promise<ITaskGroup[]> {
-    let plans = await getAllMyPlannerPlans(this.graph);
+    const plans = await getAllMyPlannerPlans(this.graph);
     return plans.map(
       plan => ({ id: plan.id, title: plan.title, containerId: plan?.container?.containerId }) as ITaskGroup
     );
@@ -331,7 +331,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public async getTaskGroupsForGroup(id: string): Promise<ITaskGroup[]> {
-    let plans = await getPlansForGroup(this.graph, id);
+    const plans = await getPlansForGroup(this.graph, id);
 
     return plans.map(plan => ({ id: plan.id, title: plan.title }) as ITaskGroup);
   }
@@ -344,7 +344,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public async getTaskGroup(id: string): Promise<ITaskGroup> {
-    let plan = await getSinglePlannerPlan(this.graph, id);
+    const plan = await getSinglePlannerPlan(this.graph, id);
 
     return { id: plan.id, title: plan.title, _raw: plan };
   }
@@ -357,7 +357,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public async getTaskFoldersForTaskGroup(id: string): Promise<ITaskFolder[]> {
-    let buckets = await getBucketsForPlannerPlan(this.graph, id);
+    const buckets = await getBucketsForPlannerPlan(this.graph, id);
 
     return buckets.map(
       bucket =>
@@ -378,7 +378,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public async getTasksForTaskFolder(id: string): Promise<ITask[]> {
-    let tasks = await getTasksForPlannerBucket(this.graph, id);
+    const tasks = await getTasksForPlannerBucket(this.graph, id);
 
     return tasks.map(
       task =>
@@ -467,7 +467,7 @@ export class PlannerTaskSource extends TaskSourceBase implements ITaskSource {
    * @memberof PlannerTaskSource
    */
   public isAssignedToMe(task: ITask, myId: string): boolean {
-    let keys = Object.keys(task.assignments);
+    const keys = Object.keys(task.assignments);
     return keys.includes(myId);
   }
 }
