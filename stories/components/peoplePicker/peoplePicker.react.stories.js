@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let peoplePicker = () => html`
+export const peoplePicker = () => html`
    <mgt-people-picker></mgt-people-picker>
   <react>
     import { PeoplePicker } from '@microsoft/mgt-react';
@@ -25,7 +25,7 @@ export let peoplePicker = () => html`
   </react>
  `;
 
-export let events = () => html`
+export const events = () => html`
   <mgt-people-picker></mgt-people-picker>
   <react>
     // Check the console tab for the event to fire
@@ -33,11 +33,11 @@ export let events = () => html`
     import { PeoplePicker, IDynamicPerson } from '@microsoft/mgt-react';
 
     export default () => {
-      let onUpdated = useCallback((e: CustomEvent<undefined>) => {
+      const onUpdated = useCallback((e: CustomEvent<undefined>) => {
         console.log('updated', e);
       }, []);
 
-      let onSelectionChanged = useCallback((e: CustomEvent<IDynamicPerson[]>) => {
+      const onSelectionChanged = useCallback((e: CustomEvent<IDynamicPerson[]>) => {
         console.log(e.detail);
       }, []);
 
