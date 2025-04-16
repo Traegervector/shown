@@ -14,7 +14,7 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export let customCSSProperties = () => html`
+export const customCSSProperties = () => html`
 <mgt-login class="login"></mgt-login>
 <style>
   .login {
@@ -44,7 +44,7 @@ export let customCSSProperties = () => html`
 </style>
 <script>
   import { Providers, MockProvider } from './mgt.storybook.js';
-  let signedInAccounts = [{
+  const signedInAccounts = [{
       name: 'Megan Bowen',
       mail: 'MeganB@M365x214355.onmicrosoft.com',
       id: '48d31887-5fad-4d73-a9f5-3c356e68a038'
