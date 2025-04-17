@@ -1,7 +1,7 @@
 import * as beautify from 'js-beautify';
 
-export var beautifyContent = (type, content) => {
-  var options = {
+export const beautifyContent = (type, content) => {
+  const options = {
     indent_size: '2',
     indent_char: ' ',
     max_preserve_newlines: '0',
