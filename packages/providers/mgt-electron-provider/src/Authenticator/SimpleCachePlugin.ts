@@ -16,8 +16,8 @@
  * PLEASE DO NOT USE THIS IN PRODUCTION ENVIRONMENTS.
  */
 
-const fs = require('fs');
-const path = require('path');
+let fs = require('fs');
+let path = require('path');
 
 import { CACHE_LOCATION } from './Constants';
 
@@ -27,7 +27,7 @@ import { CACHE_LOCATION } from './Constants';
  * @param {*} cacheContext
  * @return {*}
  */
-const beforeCacheAccess = async cacheContext => {
+let beforeCacheAccess = async cacheContext => {
   // eslint-disable-next-line no-console
   console.warn('🦒: PLEASE DO NOT USE THIS CACHE PLUGIN IN PRODUCTION ENVIRONMENTS!!!!');
   return new Promise<void>((resolve, reject) => {
@@ -41,7 +41,7 @@ const beforeCacheAccess = async cacheContext => {
         }
       });
     } else {
-      const dir = path.dirname(CACHE_LOCATION);
+      let dir = path.dirname(CACHE_LOCATION);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
       }
@@ -59,9 +59,9 @@ const beforeCacheAccess = async cacheContext => {
  *
  * @param {*} cacheContext
  */
-const afterCacheAccess = async cacheContext => {
+let afterCacheAccess = async cacheContext => {
   if (cacheContext.cacheHasChanged) {
-    const dir = path.dirname(CACHE_LOCATION);
+    let dir = path.dirname(CACHE_LOCATION);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir);
     }
@@ -78,7 +78,7 @@ const afterCacheAccess = async cacheContext => {
  * PLEASE DO NOT USE THIS IN PRODUCTION ENVIRONMENTS.
  */
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const SimpleCachePlugin = {
+export let SimpleCachePlugin = {
   beforeCacheAccess,
   afterCacheAccess
 };
