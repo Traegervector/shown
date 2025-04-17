@@ -10,7 +10,7 @@ import { MgtBaseTaskComponent } from '@microsoft/mgt-element';
 import { styles } from './mgt-spinner-css';
 import { registerComponent } from '@microsoft/mgt-element';
 
-export let registerMgtSpinnerComponent = () => registerComponent('spinner', MgtSpinner);
+export const registerMgtSpinnerComponent = () => registerComponent('spinner', MgtSpinner);
 
 /**
  * Custom Component used to handle loading state in components.
