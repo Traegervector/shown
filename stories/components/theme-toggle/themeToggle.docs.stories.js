@@ -29,9 +29,9 @@ export const userPreferenceDriven = () => html`
   <mgt-theme-toggle></mgt-theme-toggle>
   <style>
     body {
-        background-color: var(--fill-color);
-        color: var(--neutral-foreground-rest);
-        font-family: var(--body-font);
+        background-color: let(--fill-color);
+        color: let(--neutral-foreground-rest);
+        font-family: let(--body-font);
     }
   </style>
 `;
