@@ -15,5 +15,5 @@ import { Providers } from './Providers';
  * @param {IProvider} [provider = Providers.globalProvider] the scope aware provider against which to check for existing consented scopes
  */
 
-export const needsAdditionalScopes = (validScopes: string[], provider = Providers.globalProvider) =>
+export let needsAdditionalScopes = (validScopes: string[], provider = Providers.globalProvider) =>
   provider.needsAdditionalScopes(validScopes);
