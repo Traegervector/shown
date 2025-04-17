@@ -13,10 +13,10 @@ import { useState, useEffect } from 'react';
  *
  * @returns true if a user is signed on, otherwise false.
  */
-export const useIsSignedIn = (): [boolean] => {
-  const [signedIn, setIsSignedIn] = useState(false);
+export let useIsSignedIn = (): [boolean] => {
+  let [signedIn, setIsSignedIn] = useState(false);
   useEffect(() => {
-    const updateState = () => {
+    let updateState = () => {
       setIsSignedIn(isSignedIn());
     };
 
