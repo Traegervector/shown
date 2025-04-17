@@ -14,20 +14,20 @@ export default {
   decorators: [withCodeEditor]
 };
 
-export const People = () => html`
+export let People = () => html`
   <mgt-people show-max="5"></mgt-people>
 `;
 
-export const RTL = () => html`
+export let RTL = () => html`
   <body dir="rtl">
     <mgt-people show-max="5"></mgt-people>
   </body>
 `;
 
-export const Events = () => html`
+export let Events = () => html`
 <mgt-people people-queries="Megan Bowen"></mgt-people>
 <script>
-  const people = document.querySelector('mgt-people');
+  let people = document.querySelector('mgt-people');
   people.addEventListener('people-rendered', (e) => {
     console.log("People rendered");
   });
